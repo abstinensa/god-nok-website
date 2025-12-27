@@ -3,36 +3,348 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>God Nok</title>
+    <title>God Nok - Official Website</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <header>
-        <nav>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
             <div class="logo">GOD NOK</div>
-        </nav>
-    </header>
-
-    <main>
-        <div class="hero">
-            <h1>GOD NOK</h1>
-            <h2>gir god KOK!</h2>
-            <p class="coming-soon">Coming Soon</p>
+            <button class="menu-toggle" aria-label="Toggle menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+            <ul class="nav-menu">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#music">Music</a></li>
+                <li><a href="#shows">Live</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#merch">Merch</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
-    </main>
+    </nav>
 
-    <footer>
-        <div class="footer-content">
-            <div class="social-links">
-                <a href="#" aria-label="Instagram">Instagram</a>
-                <a href="#" aria-label="Spotify">Spotify</a>
-                <a href="#" aria-label="Apple Music">Apple Music</a>
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1 class="hero-title">GOD NOK</h1>
+            <p class="hero-subtitle">gir god KOK!</p>
+            <div class="hero-buttons">
+                <a href="#music" class="btn btn-primary">Listen Now</a>
+                <a href="#shows" class="btn btn-secondary">See Shows</a>
             </div>
-            <p class="copyright">God Nok © 2025</p>
+        </div>
+        <div class="scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+    </section>
+
+    <!-- Music Section -->
+    <section id="music" class="section music-section">
+        <div class="container">
+            <h2 class="section-title">Music</h2>
+            
+            <div class="album-grid">
+                <div class="album-card">
+                    <div class="album-cover">
+                        <div class="album-placeholder">
+                            <span>💰</span>
+                        </div>
+                    </div>
+                    <h3>Penger Talks</h3>
+                    <p>EP · 2025</p>
+                    <div class="album-links">
+                        <a href="#" class="album-link">Spotify</a>
+                        <a href="#" class="album-link">Apple Music</a>
+                    </div>
+                </div>
+
+                <div class="album-card">
+                    <div class="album-cover">
+                        <div class="album-placeholder">
+                            <span>🎸</span>
+                        </div>
+                    </div>
+                    <h3>Rik & Rå</h3>
+                    <p>Single · 2024</p>
+                    <div class="album-links">
+                        <a href="#" class="album-link">Spotify</a>
+                        <a href="#" class="album-link">Apple Music</a>
+                    </div>
+                </div>
+
+                <div class="album-card">
+                    <div class="album-cover">
+                        <div class="album-placeholder">
+                            <span>💸</span>
+                        </div>
+                    </div>
+                    <h3>Cash Flow</h3>
+                    <p>Single · 2024</p>
+                    <div class="album-links">
+                        <a href="#" class="album-link">Spotify</a>
+                        <a href="#" class="album-link">Apple Music</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="streaming-links">
+                <h3>Stream Everywhere</h3>
+                <div class="streaming-buttons">
+                    <a href="#" class="streaming-btn">
+                        <span>🎵</span> Spotify
+                    </a>
+                    <a href="#" class="streaming-btn">
+                        <span>🍎</span> Apple Music
+                    </a>
+                    <a href="#" class="streaming-btn">
+                        <span>▶️</span> YouTube
+                    </a>
+                    <a href="#" class="streaming-btn">
+                        <span>☁️</span> SoundCloud
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Shows Section -->
+    <section id="shows" class="section shows-section">
+        <div class="container">
+            <h2 class="section-title">Live Shows</h2>
+            
+            <div class="shows-list">
+                <div class="show-item">
+                    <div class="show-date">
+                        <span class="date-day">15</span>
+                        <span class="date-month">FEB</span>
+                    </div>
+                    <div class="show-info">
+                        <h3>Oslo, Rockefeller</h3>
+                        <p>Oslo, Norge</p>
+                    </div>
+                    <a href="#" class="btn btn-outline">Tickets</a>
+                </div>
+
+                <div class="show-item">
+                    <div class="show-date">
+                        <span class="date-day">22</span>
+                        <span class="date-month">FEB</span>
+                    </div>
+                    <div class="show-info">
+                        <h3>Bergen, Garage</h3>
+                        <p>Bergen, Norge</p>
+                    </div>
+                    <a href="#" class="btn btn-outline">Tickets</a>
+                </div>
+
+                <div class="show-item">
+                    <div class="show-date">
+                        <span class="date-day">8</span>
+                        <span class="date-month">MAR</span>
+                    </div>
+                    <div class="show-info">
+                        <h3>Trondheim, Samfundet</h3>
+                        <p>Trondheim, Norge</p>
+                    </div>
+                    <a href="#" class="btn btn-outline">Tickets</a>
+                </div>
+
+                <div class="show-item">
+                    <div class="show-date">
+                        <span class="date-day">15</span>
+                        <span class="date-month">MAR</span>
+                    </div>
+                    <div class="show-info">
+                        <h3>Stavanger, Folken</h3>
+                        <p>Stavanger, Norge</p>
+                    </div>
+                    <a href="#" class="btn btn-outline">Tickets</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="section about-section">
+        <div class="container">
+            <h2 class="section-title">About</h2>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <p class="lead">God Nok er bandet som gir deg god KOK – god kvalitet på koken, alltid.</p>
+                    
+                    <p>Født i Oslo's underground scene i 2023, har God Nok raskt bygget seg et rykte for å levere energiske live-show og låter som treffer rett i hjertet. Med en lyd som blander norsk rock, punk og en dose humor, skaper bandet noe helt unikt.</p>
+                    
+                    <p>Bandets debutEP "Penger Talks" (2025) har allerede skapt bølger på norsk radio og streamingplattformer. Med tekster som utforsker hverdagens absurditeter, penger, kjærlighet og det å være "god nok" i en perfeksjonistisk verden, resonerer musikken med en hel generasjon.</p>
+
+                    <div class="band-members">
+                        <h3>Band Members</h3>
+                        <ul>
+                            <li><strong>Lars</strong> - Vokal & Gitar</li>
+                            <li><strong>Maria</strong> - Bass & Backing Vocals</li>
+                            <li><strong>Erik</strong> - Trommer</li>
+                            <li><strong>Sofie</strong> - Keyboards & Synth</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="about-image">
+                    <div class="about-placeholder">
+                        <span>🎸</span>
+                        <p>God Nok</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Merch Section -->
+    <section id="merch" class="section merch-section">
+        <div class="container">
+            <h2 class="section-title">Merch</h2>
+            
+            <div class="merch-grid">
+                <div class="merch-item">
+                    <div class="merch-image">
+                        <div class="merch-placeholder">
+                            <span>👕</span>
+                        </div>
+                    </div>
+                    <h3>God Nok T-Shirt</h3>
+                    <p class="price">299 kr</p>
+                    <a href="#" class="btn btn-small">Shop Now</a>
+                </div>
+
+                <div class="merch-item">
+                    <div class="merch-image">
+                        <div class="merch-placeholder">
+                            <span>🧢</span>
+                        </div>
+                    </div>
+                    <h3>KOK Cap</h3>
+                    <p class="price">199 kr</p>
+                    <a href="#" class="btn btn-small">Shop Now</a>
+                </div>
+
+                <div class="merch-item">
+                    <div class="merch-image">
+                        <div class="merch-placeholder">
+                            <span>🎧</span>
+                        </div>
+                    </div>
+                    <h3>Limited Hoodie</h3>
+                    <p class="price">499 kr</p>
+                    <a href="#" class="btn btn-small">Shop Now</a>
+                </div>
+
+                <div class="merch-item">
+                    <div class="merch-image">
+                        <div class="merch-placeholder">
+                            <span>💿</span>
+                        </div>
+                    </div>
+                    <h3>Penger Talks Vinyl</h3>
+                    <p class="price">349 kr</p>
+                    <a href="#" class="btn btn-small">Shop Now</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="section contact-section">
+        <div class="container">
+            <h2 class="section-title">Get in Touch</h2>
+            
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Booking & Management</h3>
+                    <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
+                    
+                    <h3>Press Inquiries</h3>
+                    <p><a href="mailto:press@godnok.no">press@godnok.no</a></p>
+                    
+                    <h3>Follow Us</h3>
+                    <div class="social-links">
+                        <a href="#">Instagram</a>
+                        <a href="#">Facebook</a>
+                        <a href="#">TikTok</a>
+                        <a href="#">YouTube</a>
+                    </div>
+                </div>
+
+                <div class="newsletter">
+                    <h3>Join the Mailing List</h3>
+                    <p>Få de siste nyhetene, konserter og eksklusivt innhold.</p>
+                    <form class="newsletter-form">
+                        <input type="email" placeholder="Din e-post" required>
+                        <button type="submit" class="btn btn-primary">Subscribe</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">GOD NOK</div>
+                <p class="footer-tagline">gir god KOK!</p>
+                <p class="copyright">© 2025 God Nok. All rights reserved.</p>
+            </div>
         </div>
     </footer>
+
+    <script>
+        // Mobile menu toggle
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navMenu = document.querySelector('.nav-menu');
+        
+        menuToggle.addEventListener('click', () => {
+            navMenu.classList.toggle('active');
+            menuToggle.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                navMenu.classList.remove('active');
+                menuToggle.classList.remove('active');
+            });
+        });
+
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Navbar background on scroll
+        const navbar = document.querySelector('.navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 100) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+    </script>
 </body>
 </html>
