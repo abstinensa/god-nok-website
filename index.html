@@ -3,347 +3,1020 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>God Nok - Official Website</title>
+    <title>GOD NOK - Official Site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #FF3366;
+            --secondary: #FFD700;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --accent: #00FFB3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 30% 50%, rgba(255,51,102,0.15), transparent 60%),
+                        radial-gradient(circle at 70% 50%, rgba(255,215,0,0.15), transparent 60%),
+                        var(--dark);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(5rem, 18vw, 15rem);
+            font-weight: 700;
+            line-height: 0.85;
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light) 0%, var(--primary) 50%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255,51,102,0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 40px rgba(255,215,0,0.5));
+            }
+        }
+
+        .hero h2 {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 3rem;
+            text-transform: lowercase;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .hero-cta {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-btn {
+            padding: 1.2rem 3rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .cta-primary {
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: var(--light);
+            box-shadow: 0 10px 30px rgba(255,51,102,0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,51,102,0.5);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .cta-secondary:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        .section-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-align: center;
+            margin-bottom: 5rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== MUSIC SECTION ===== */
+        #music {
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .album-card:hover::before {
+            left: 100%;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255,51,102,0.2);
+        }
+
+        .album-cover {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255,51,102,0.3), rgba(255,215,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .album-card h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .album-card p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+        }
+
+        .album-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .album-link {
+            padding: 0.6rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .album-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        /* ===== SHOWS SECTION ===== */
+        #shows {
+            background: var(--gray);
+        }
+
+        .shows-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .show-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 3rem;
+            padding: 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--primary);
+            margin-bottom: 1.5rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .show-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(10px);
+        }
+
+        .show-date {
+            text-align: center;
+        }
+
+        .date-day {
+            font-family: 'Antonio', sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--primary);
+        }
+
+        .date-month {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .show-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .show-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+        }
+
+        .ticket-btn {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ticket-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: linear-gradient(180deg, var(--gray), var(--dark));
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .about-text .highlight {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1.4;
+        }
+
+        .band-members {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .band-members h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .members-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .member {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .member strong {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .about-visual {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, rgba(255,51,102,0.2), rgba(0,255,179,0.2));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 3px solid var(--secondary);
+            z-index: -1;
+        }
+
+        .about-visual span {
+            font-size: 8rem;
+        }
+
+        .about-visual p {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+        }
+
+        /* ===== MERCH SECTION ===== */
+        #merch {
+            background: var(--dark);
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .merch-item {
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .merch-item:hover {
+            transform: scale(1.05);
+        }
+
+        .merch-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--gray), rgba(255,51,102,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .merch-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .merch-item h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .shop-btn {
+            padding: 0.8rem 2rem;
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .shop-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+        }
+
+        /* ===== CONTACT SECTION ===== */
+        #contact {
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+        }
+
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+        }
+
+        .contact-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info a {
+            color: var(--light);
+            text-decoration: none;
+            font-size: 1.1rem;
+            transition: color 0.3s;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent);
+        }
+
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            padding: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .newsletter h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .newsletter p {
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .newsletter-form input {
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            color: var(--light);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .newsletter-form button {
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: var(--light);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,51,102,0.3);
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            padding: 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 968px) {
+            .about-content,
+            .contact-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+            }
+
+            .show-item {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s;
+                border-left: 2px solid var(--primary);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            .album-grid,
+            .merch-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Navigation -->
-    <nav class="navbar">
-        <div class="nav-container">
-            <div class="logo">GOD NOK</div>
-            <button class="menu-toggle" aria-label="Toggle menu">
-                <span></span>
-                <span></span>
-                <span></span>
-            </button>
-            <ul class="nav-menu">
-                <li><a href="#home">Home</a></li>
-                <li><a href="#music">Music</a></li>
-                <li><a href="#shows">Live</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#merch">Merch</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </div>
+    <nav>
+        <div class="logo">GOD NOK</div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="#home" onclick="closeMenu()">Home</a></li>
+            <li><a href="#music" onclick="closeMenu()">Music</a></li>
+            <li><a href="#shows" onclick="closeMenu()">Shows</a></li>
+            <li><a href="#about" onclick="closeMenu()">About</a></li>
+            <li><a href="#merch" onclick="closeMenu()">Merch</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
+        </ul>
     </nav>
 
-    <!-- Hero Section -->
+    <!-- Hero -->
     <section id="home" class="hero">
         <div class="hero-content">
-            <h1 class="hero-title">GOD NOK</h1>
-            <p class="hero-subtitle">gir god KOK!</p>
-            <div class="hero-buttons">
-                <a href="#music" class="btn btn-primary">Listen Now</a>
-                <a href="#shows" class="btn btn-secondary">See Shows</a>
+            <h1>GOD NOK</h1>
+            <h2>gir god KOK!</h2>
+            <div class="hero-cta">
+                <a href="#music" class="cta-btn cta-primary">Listen Now</a>
+                <a href="#shows" class="cta-btn cta-secondary">See Shows</a>
             </div>
-        </div>
-        <div class="scroll-indicator">
-            <span>Scroll</span>
-            <div class="scroll-line"></div>
         </div>
     </section>
 
-    <!-- Music Section -->
-    <section id="music" class="section music-section">
-        <div class="container">
-            <h2 class="section-title">Music</h2>
-            
-            <div class="album-grid">
-                <div class="album-card">
-                    <div class="album-cover">
-                        <div class="album-placeholder">
-                            <span>💰</span>
-                        </div>
-                    </div>
-                    <h3>Penger Talks</h3>
-                    <p>EP · 2025</p>
-                    <div class="album-links">
-                        <a href="#" class="album-link">Spotify</a>
-                        <a href="#" class="album-link">Apple Music</a>
-                    </div>
-                </div>
-
-                <div class="album-card">
-                    <div class="album-cover">
-                        <div class="album-placeholder">
-                            <span>🎸</span>
-                        </div>
-                    </div>
-                    <h3>Rik & Rå</h3>
-                    <p>Single · 2024</p>
-                    <div class="album-links">
-                        <a href="#" class="album-link">Spotify</a>
-                        <a href="#" class="album-link">Apple Music</a>
-                    </div>
-                </div>
-
-                <div class="album-card">
-                    <div class="album-cover">
-                        <div class="album-placeholder">
-                            <span>💸</span>
-                        </div>
-                    </div>
-                    <h3>Cash Flow</h3>
-                    <p>Single · 2024</p>
-                    <div class="album-links">
-                        <a href="#" class="album-link">Spotify</a>
-                        <a href="#" class="album-link">Apple Music</a>
-                    </div>
+    <!-- Music -->
+    <section id="music">
+        <h2 class="section-title">Music</h2>
+        <div class="album-grid">
+            <div class="album-card">
+                <div class="album-cover">💰</div>
+                <h3>Penger Talks</h3>
+                <p>EP · 2025</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
                 </div>
             </div>
-
-            <div class="streaming-links">
-                <h3>Stream Everywhere</h3>
-                <div class="streaming-buttons">
-                    <a href="#" class="streaming-btn">
-                        <span>🎵</span> Spotify
-                    </a>
-                    <a href="#" class="streaming-btn">
-                        <span>🍎</span> Apple Music
-                    </a>
-                    <a href="#" class="streaming-btn">
-                        <span>▶️</span> YouTube
-                    </a>
-                    <a href="#" class="streaming-btn">
-                        <span>☁️</span> SoundCloud
-                    </a>
+            <div class="album-card">
+                <div class="album-cover">🎸</div>
+                <h3>Rik & Rå</h3>
+                <p>Single · 2024</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
+                </div>
+            </div>
+            <div class="album-card">
+                <div class="album-cover">💸</div>
+                <h3>Cash Flow</h3>
+                <p>Single · 2024</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Live Shows Section -->
-    <section id="shows" class="section shows-section">
-        <div class="container">
-            <h2 class="section-title">Live Shows</h2>
-            
-            <div class="shows-list">
-                <div class="show-item">
-                    <div class="show-date">
-                        <span class="date-day">15</span>
-                        <span class="date-month">FEB</span>
-                    </div>
-                    <div class="show-info">
-                        <h3>Oslo, Rockefeller</h3>
-                        <p>Oslo, Norge</p>
-                    </div>
-                    <a href="#" class="btn btn-outline">Tickets</a>
+    <!-- Shows -->
+    <section id="shows">
+        <h2 class="section-title">Live Shows</h2>
+        <div class="shows-container">
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">15</div>
+                    <div class="date-month">FEB</div>
                 </div>
-
-                <div class="show-item">
-                    <div class="show-date">
-                        <span class="date-day">22</span>
-                        <span class="date-month">FEB</span>
-                    </div>
-                    <div class="show-info">
-                        <h3>Bergen, Garage</h3>
-                        <p>Bergen, Norge</p>
-                    </div>
-                    <a href="#" class="btn btn-outline">Tickets</a>
+                <div class="show-info">
+                    <h3>Oslo, Rockefeller</h3>
+                    <p>Oslo, Norge</p>
                 </div>
-
-                <div class="show-item">
-                    <div class="show-date">
-                        <span class="date-day">8</span>
-                        <span class="date-month">MAR</span>
-                    </div>
-                    <div class="show-info">
-                        <h3>Trondheim, Samfundet</h3>
-                        <p>Trondheim, Norge</p>
-                    </div>
-                    <a href="#" class="btn btn-outline">Tickets</a>
+                <a href="#" class="ticket-btn">Tickets</a>
+            </div>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">22</div>
+                    <div class="date-month">FEB</div>
                 </div>
-
-                <div class="show-item">
-                    <div class="show-date">
-                        <span class="date-day">15</span>
-                        <span class="date-month">MAR</span>
-                    </div>
-                    <div class="show-info">
-                        <h3>Stavanger, Folken</h3>
-                        <p>Stavanger, Norge</p>
-                    </div>
-                    <a href="#" class="btn btn-outline">Tickets</a>
+                <div class="show-info">
+                    <h3>Bergen, Garage</h3>
+                    <p>Bergen, Norge</p>
                 </div>
+                <a href="#" class="ticket-btn">Tickets</a>
+            </div>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">8</div>
+                    <div class="date-month">MAR</div>
+                </div>
+                <div class="show-info">
+                    <h3>Trondheim, Samfundet</h3>
+                    <p>Trondheim, Norge</p>
+                </div>
+                <a href="#" class="ticket-btn">Tickets</a>
+            </div>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">15</div>
+                    <div class="date-month">MAR</div>
+                </div>
+                <div class="show-info">
+                    <h3>Stavanger, Folken</h3>
+                    <p>Stavanger, Norge</p>
+                </div>
+                <a href="#" class="ticket-btn">Tickets</a>
             </div>
         </div>
     </section>
 
-    <!-- About Section -->
-    <section id="about" class="section about-section">
-        <div class="container">
-            <h2 class="section-title">About</h2>
-            
-            <div class="about-content">
-                <div class="about-text">
-                    <p class="lead">God Nok er bandet som gir deg god KOK – god kvalitet på koken, alltid.</p>
-                    
-                    <p>Født i Oslo's underground scene i 2023, har God Nok raskt bygget seg et rykte for å levere energiske live-show og låter som treffer rett i hjertet. Med en lyd som blander norsk rock, punk og en dose humor, skaper bandet noe helt unikt.</p>
-                    
-                    <p>Bandets debutEP "Penger Talks" (2025) har allerede skapt bølger på norsk radio og streamingplattformer. Med tekster som utforsker hverdagens absurditeter, penger, kjærlighet og det å være "god nok" i en perfeksjonistisk verden, resonerer musikken med en hel generasjon.</p>
-
-                    <div class="band-members">
-                        <h3>Band Members</h3>
-                        <ul>
-                            <li><strong>Lars</strong> - Vokal & Gitar</li>
-                            <li><strong>Maria</strong> - Bass & Backing Vocals</li>
-                            <li><strong>Erik</strong> - Trommer</li>
-                            <li><strong>Sofie</strong> - Keyboards & Synth</li>
-                        </ul>
+    <!-- About -->
+    <section id="about">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p class="highlight">God Nok er bandet som gir deg god KOK – god kvalitet på koken, alltid.</p>
+                <p>Født i Oslo's underground scene i 2023, har God Nok raskt bygget seg et rykte for å levere energiske live-show og låter som treffer rett i hjertet.</p>
+                <p>Med en lyd som blander norsk rock, punk og en dose humor, skaper bandet noe helt unikt. Musikken resonerer med en hel generasjon som navigerer hverdagens absurditeter.</p>
+                <div class="band-members">
+                    <h3>Band Members</h3>
+                    <div class="members-list">
+                        <div class="member"><strong>Lars</strong> - Vokal & Gitar</div>
+                        <div class="member"><strong>Maria</strong> - Bass & Backing Vocals</div>
+                        <div class="member"><strong>Erik</strong> - Trommer</div>
+                        <div class="member"><strong>Sofie</strong> - Keyboards & Synth</div>
                     </div>
                 </div>
-
-                <div class="about-image">
-                    <div class="about-placeholder">
-                        <span>🎸</span>
-                        <p>God Nok</p>
-                    </div>
-                </div>
+            </div>
+            <div class="about-visual">
+                <span>🎸</span>
+                <p>GOD NOK</p>
             </div>
         </div>
     </section>
 
-    <!-- Merch Section -->
-    <section id="merch" class="section merch-section">
-        <div class="container">
-            <h2 class="section-title">Merch</h2>
-            
-            <div class="merch-grid">
-                <div class="merch-item">
-                    <div class="merch-image">
-                        <div class="merch-placeholder">
-                            <span>👕</span>
-                        </div>
-                    </div>
-                    <h3>God Nok T-Shirt</h3>
-                    <p class="price">299 kr</p>
-                    <a href="#" class="btn btn-small">Shop Now</a>
-                </div>
-
-                <div class="merch-item">
-                    <div class="merch-image">
-                        <div class="merch-placeholder">
-                            <span>🧢</span>
-                        </div>
-                    </div>
-                    <h3>KOK Cap</h3>
-                    <p class="price">199 kr</p>
-                    <a href="#" class="btn btn-small">Shop Now</a>
-                </div>
-
-                <div class="merch-item">
-                    <div class="merch-image">
-                        <div class="merch-placeholder">
-                            <span>🎧</span>
-                        </div>
-                    </div>
-                    <h3>Limited Hoodie</h3>
-                    <p class="price">499 kr</p>
-                    <a href="#" class="btn btn-small">Shop Now</a>
-                </div>
-
-                <div class="merch-item">
-                    <div class="merch-image">
-                        <div class="merch-placeholder">
-                            <span>💿</span>
-                        </div>
-                    </div>
-                    <h3>Penger Talks Vinyl</h3>
-                    <p class="price">349 kr</p>
-                    <a href="#" class="btn btn-small">Shop Now</a>
-                </div>
+    <!-- Merch -->
+    <section id="merch">
+        <h2 class="section-title">Merch</h2>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <div class="merch-image">👕</div>
+                <h3>God Nok T-Shirt</h3>
+                <div class="price">299 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+            <div class="merch-item">
+                <div class="merch-image">🧢</div>
+                <h3>KOK Cap</h3>
+                <div class="price">199 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+            <div class="merch-item">
+                <div class="merch-image">🎧</div>
+                <h3>Limited Hoodie</h3>
+                <div class="price">499 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+            <div class="merch-item">
+                <div class="merch-image">💿</div>
+                <h3>Penger Talks Vinyl</h3>
+                <div class="price">349 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
             </div>
         </div>
     </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="section contact-section">
-        <div class="container">
-            <h2 class="section-title">Get in Touch</h2>
-            
-            <div class="contact-content">
-                <div class="contact-info">
-                    <h3>Booking & Management</h3>
-                    <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
-                    
-                    <h3>Press Inquiries</h3>
-                    <p><a href="mailto:press@godnok.no">press@godnok.no</a></p>
-                    
-                    <h3>Follow Us</h3>
-                    <div class="social-links">
-                        <a href="#">Instagram</a>
-                        <a href="#">Facebook</a>
-                        <a href="#">TikTok</a>
-                        <a href="#">YouTube</a>
-                    </div>
+    <!-- Contact -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Booking</h3>
+                <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
+                
+                <h3>Press</h3>
+                <p><a href="mailto:press@godnok.no">press@godnok.no</a></p>
+                
+                <h3>Follow Us</h3>
+                <div class="social-grid">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">TikTok</a>
+                    <a href="#" class="social-link">YouTube</a>
                 </div>
-
-                <div class="newsletter">
-                    <h3>Join the Mailing List</h3>
-                    <p>Få de siste nyhetene, konserter og eksklusivt innhold.</p>
-                    <form class="newsletter-form">
-                        <input type="email" placeholder="Din e-post" required>
-                        <button type="submit" class="btn btn-primary">Subscribe</button>
-                    </form>
-                </div>
+            </div>
+            <div class="newsletter">
+                <h3>Newsletter</h3>
+                <p>Få de siste nyhetene og eksklusivt innhold.</p>
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" placeholder="Din e-post" required>
+                    <button type="submit">Subscribe</button>
+                </form>
             </div>
         </div>
     </section>
 
     <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-logo">GOD NOK</div>
-                <p class="footer-tagline">gir god KOK!</p>
-                <p class="copyright">© 2025 God Nok. All rights reserved.</p>
-            </div>
-        </div>
+    <footer>
+        <div class="footer-logo">GOD NOK</div>
+        <p>© 2025 God Nok. All rights reserved.</p>
     </footer>
 
     <script>
-        // Mobile menu toggle
-        const menuToggle = document.querySelector('.menu-toggle');
-        const navMenu = document.querySelector('.nav-menu');
-        
-        menuToggle.addEventListener('click', () => {
-            navMenu.classList.toggle('active');
-            menuToggle.classList.toggle('active');
-        });
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
 
-        // Close menu when clicking a link
-        document.querySelectorAll('.nav-menu a').forEach(link => {
-            link.addEventListener('click', () => {
-                navMenu.classList.remove('active');
-                menuToggle.classList.remove('active');
-            });
-        });
+        function closeMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.remove('active');
+        }
 
-        // Smooth scrolling
+        // Smooth scroll
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
             });
-        });
-
-        // Navbar background on scroll
-        const navbar = document.querySelector('.navbar');
-        window.addEventListener('scroll', () => {
-            if (window.scrollY > 100) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
         });
     </script>
 </body>
