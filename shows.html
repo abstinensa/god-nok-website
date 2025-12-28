@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Shows - GOD NOK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #FF3366;
+            --secondary: #FFD700;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --accent: #00FFB3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hero-small {
+            padding: 6rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+        }
+
+        .page-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        .content {
+            padding: 5rem 4rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .shows-filter {
+            display: flex;
+            gap: 1.5rem;
+            margin-bottom: 4rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light);
+            cursor: pointer;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .show-card {
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--primary);
+            padding: 3rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+            display: grid;
+            grid-template-columns: 150px 1fr auto;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .show-card:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(10px);
+        }
+
+        .show-date-box {
+            text-align: center;
+            border: 2px solid var(--primary);
+            padding: 1.5rem;
+        }
+
+        .show-day {
+            font-family: 'Antonio', sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--primary);
+        }
+
+        .show-month {
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+        }
+
+        .show-details h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .show-venue {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.7);
+            margin-bottom: 0.5rem;
+        }
+
+        .show-location {
+            color: rgba(255,255,255,0.5);
+        }
+
+        .show-time {
+            margin-top: 1rem;
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .show-tags {
+            display: flex;
+            gap: 0.5rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255,51,102,0.2);
+            border: 1px solid var(--primary);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .show-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .ticket-btn {
+            padding: 1.2rem 2.5rem;
+            background: var(--primary);
+            color: var(--light);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            text-align: center;
+            white-space: nowrap;
+        }
+
+        .ticket-btn:hover {
+            background: var(--secondary);
+            color: var(--dark);
+            transform: translateY(-2px);
+        }
+
+        .ticket-btn.sold-out {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.4);
+            cursor: not-allowed;
+        }
+
+        .ticket-btn.sold-out:hover {
+            transform: none;
+        }
+
+        .info-btn {
+            padding: 0.8rem 2rem;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: var(--light);
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.3s;
+        }
+
+        .info-btn:hover {
+            border-color: var(--light);
+        }
+
+        .booking-info {
+            margin-top: 5rem;
+            padding: 4rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .booking-info h2 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .booking-info p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.7);
+        }
+
+        .booking-info a {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.3rem;
+        }
+
+        footer {
+            background: var(--dark);
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 5rem;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 968px) {
+            .show-card {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .show-date-box {
+                width: fit-content;
+                margin: 0 auto;
+            }
+
+            .show-actions {
+                width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .content {
+                padding: 3rem 2rem;
+            }
+
+            .show-card {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">GOD NOK</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="music.html">Music</a></li>
+            <li><a href="shows.html" class="active">Shows</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="merch.html">Merch</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-small">
+        <h1 class="page-title">Live Shows</h1>
+        <p class="page-subtitle">Se oss live på scenen</p>
+    </div>
+
+    <div class="content">
+        <div class="shows-filter">
+            <button class="filter-btn active">Alle</button>
+            <button class="filter-btn">Februar</button>
+            <button class="filter-btn">Mars</button>
+            <button class="filter-btn">April</button>
+        </div>
+
+        <div class="show-card">
+            <div class="show-date-box">
+                <div class="show-day">15</div>
+                <div class="show-month">FEB</div>
+            </div>
+            <div class="show-details">
+                <h3>Oslo, Rockefeller</h3>
+                <p class="show-venue">Rockefeller Music Hall</p>
+                <p class="show-location">📍 Torggata 16, Oslo</p>
+                <p class="show-time">🕒 Dører: 19:00 | Start: 20:00</p>
+                <div class="show-tags">
+                    <span class="tag">EP Launch</span>
+                    <span class="tag">18+</span>
+                </div>
+            </div>
+            <div class="show-actions">
+                <a href="#" class="ticket-btn">Kjøp Billetter</a>
+                <a href="#" class="info-btn">Mer Info</a>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-date-box">
+                <div class="show-day">22</div>
+                <div class="show-month">FEB</div>
+            </div>
+            <div class="show-details">
+                <h3>Bergen, Garage</h3>
+                <p class="show-venue">Garage</p>
+                <p class="show-location">📍 Christies gate 14, Bergen</p>
+                <p class="show-time">🕒 Dører: 19:30 | Start: 20:30</p>
+                <div class="show-tags">
+                    <span class="tag">20+</span>
+                </div>
+            </div>
+            <div class="show-actions">
+                <a href="#" class="ticket-btn">Kjøp Billetter</a>
+                <a href="#" class="info-btn">Mer Info</a>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-date-box">
+                <div class="show-day">8</div>
+                <div class="show-month">MAR</div>
+            </div>
+            <div class="show-details">
+                <h3>Trondheim, Samfundet</h3>
+                <p class="show-venue">Studentersamfundet</p>
+                <p class="show-location">📍 Elgeseter gate 1, Trondheim</p>
+                <p class="show-time">🕒 Dører: 20:00 | Start: 21:00</p>
+                <div class="show-tags">
+                    <span class="tag">Student Night</span>
+                    <span class="tag">18+</span>
+                </div>
+            </div>
+            <div class="show-actions">
+                <a href="#" class="ticket-btn">Kjøp Billetter</a>
+                <a href="#" class="info-btn">Mer Info</a>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-date-box">
+                <div class="show-day">15</div>
+                <div class="show-month">MAR</div>
+            </div>
+            <div class="show-details">
+                <h3>Stavanger, Folken</h3>
+                <p class="show-venue">Folken</p>
+                <p class="show-location">📍 Tou Scene, Stavanger</p>
+                <p class="show-time">🕒 Dører: 19:00 | Start: 20:00</p>
+                <div class="show-tags">
+                    <span class="tag">18+</span>
+                </div>
+            </div>
+            <div class="show-actions">
+                <button class="ticket-btn sold-out">Utsolgt</button>
+                <a href="#" class="info-btn">Mer Info</a>
+            </div>
+        </div>
+
+        <div class="show-card">
+            <div class="show-date-box">
+                <div class="show-day">5</div>
+                <div class="show-month">APR</div>
+            </div>
+            <div class="show-details">
+                <h3>Kristiansand, Kick</h3>
+                <p class="show-venue">Kick Scene & Studio</p>
+                <p class="show-location">📍 Tordenskjolds gate 12, Kristiansand</p>
+                <p class="show-time">🕒 Dører: 20:00 | Start: 21:00</p>
+                <div class="show-tags">
+                    <span class="tag">18+</span>
+                </div>
+            </div>
+            <div class="show-actions">
+                <a href="#" class="ticket-btn">Kjøp Billetter</a>
+                <a href="#" class="info-btn">Mer Info</a>
+            </div>
+        </div>
+
+        <div class="booking-info">
+            <h2>Book God Nok</h2>
+            <p>Interessert i å booke God Nok for din venue eller festival?</p>
+            <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 God Nok. All rights reserved.</p>
+    </footer>
+</body>
+</html>
