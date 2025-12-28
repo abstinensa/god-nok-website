@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music - GOD NOK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary: #FF3366;
+            --secondary: #FFD700;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --accent: #00FFB3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        nav {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .hero-small {
+            padding: 6rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+        }
+
+        .page-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 3rem;
+        }
+
+        .content {
+            padding: 5rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 3rem;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .album-showcase {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 4rem;
+            margin-bottom: 6rem;
+        }
+
+        .album-detail {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 2.5rem;
+            transition: all 0.3s;
+        }
+
+        .album-detail:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(255,51,102,0.3);
+        }
+
+        .album-cover-large {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255,51,102,0.3), rgba(255,215,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 8rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            margin-bottom: 2rem;
+        }
+
+        .album-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .album-meta {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .tracklist {
+            margin: 2rem 0;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .tracklist h4 {
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .track {
+            padding: 0.8rem 0;
+            display: flex;
+            justify-content: space-between;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .track:last-child {
+            border-bottom: none;
+        }
+
+        .track-name {
+            flex: 1;
+        }
+
+        .track-duration {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.9rem;
+        }
+
+        .streaming-section {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .stream-btn {
+            padding: 1rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: inline-block;
+        }
+
+        .stream-btn:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .all-platforms {
+            margin-top: 4rem;
+            padding: 4rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+        }
+
+        .platform-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .platform-link {
+            padding: 2rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-decoration: none;
+            color: var(--light);
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s;
+            display: block;
+        }
+
+        .platform-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        footer {
+            background: var(--dark);
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 5rem;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+                font-size: 0.8rem;
+            }
+
+            .content {
+                padding: 3rem 2rem;
+            }
+
+            .album-showcase {
+                grid-template-columns: 1fr;
+            }
+
+            .platform-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">GOD NOK</a>
+        <ul class="nav-links">
+            <li><a href="index.html">Home</a></li>
+            <li><a href="music.html" class="active">Music</a></li>
+            <li><a href="shows.html">Shows</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="merch.html">Merch</a></li>
+        </ul>
+    </nav>
+
+    <div class="hero-small">
+        <h1 class="page-title">Music</h1>
+        <p class="page-subtitle">Utforsk vår diskografi</p>
+    </div>
+
+    <div class="content">
+        <h2 class="section-header">Latest Releases</h2>
+        
+        <div class="album-showcase">
+            <div class="album-detail">
+                <div class="album-cover-large">💰</div>
+                <div class="album-info">
+                    <h3>Penger Talks</h3>
+                    <p class="album-meta">EP · 2025 · 5 tracks</p>
+                    <p>Vår debutEP som utforsker temaer om penger, suksess og det moderne livet. Rå energi møter catchy melodier.</p>
+                    
+                    <div class="tracklist">
+                        <h4>Tracklist</h4>
+                        <div class="track">
+                            <span class="track-name">1. Penger Talks</span>
+                            <span class="track-duration">3:24</span>
+                        </div>
+                        <div class="track">
+                            <span class="track-name">2. Cash Flow</span>
+                            <span class="track-duration">2:58</span>
+                        </div>
+                        <div class="track">
+                            <span class="track-name">3. Rik & Rå</span>
+                            <span class="track-duration">3:45</span>
+                        </div>
+                        <div class="track">
+                            <span class="track-name">4. Gold Digger Blues</span>
+                            <span class="track-duration">4:12</span>
+                        </div>
+                        <div class="track">
+                            <span class="track-name">5. God Nok (For Meg)</span>
+                            <span class="track-duration">3:33</span>
+                        </div>
+                    </div>
+
+                    <div class="streaming-section">
+                        <a href="#" class="stream-btn">🎵 Spotify</a>
+                        <a href="#" class="stream-btn">🍎 Apple Music</a>
+                        <a href="#" class="stream-btn">▶️ YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="album-detail">
+                <div class="album-cover-large">🎸</div>
+                <div class="album-info">
+                    <h3>Rik & Rå</h3>
+                    <p class="album-meta">Single · 2024</p>
+                    <p>Den singelen som satte God Nok på kartet. En energisk rocklåt om å leve livet på egne premisser.</p>
+                    
+                    <div class="tracklist">
+                        <h4>Track</h4>
+                        <div class="track">
+                            <span class="track-name">1. Rik & Rå</span>
+                            <span class="track-duration">3:45</span>
+                        </div>
+                    </div>
+
+                    <div class="streaming-section">
+                        <a href="#" class="stream-btn">🎵 Spotify</a>
+                        <a href="#" class="stream-btn">🍎 Apple Music</a>
+                        <a href="#" class="stream-btn">▶️ YouTube</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="album-detail">
+                <div class="album-cover-large">💸</div>
+                <div class="album-info">
+                    <h3>Cash Flow</h3>
+                    <p class="album-meta">Single · 2024</p>
+                    <p>Vår første single. En hardtslående låt om ambisjon, drømmer og pengenes rolle i moderne samfunn.</p>
+                    
+                    <div class="tracklist">
+                        <h4>Track</h4>
+                        <div class="track">
+                            <span class="track-name">1. Cash Flow</span>
+                            <span class="track-duration">2:58</span>
+                        </div>
+                    </div>
+
+                    <div class="streaming-section">
+                        <a href="#" class="stream-btn">🎵 Spotify</a>
+                        <a href="#" class="stream-btn">🍎 Apple Music</a>
+                        <a href="#" class="stream-btn">▶️ YouTube</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="all-platforms">
+            <h2 class="section-header">Stream Everywhere</h2>
+            <p style="margin-bottom: 2rem; color: rgba(255,255,255,0.7);">Finn God Nok på alle dine favoritt-plattformer</p>
+            <div class="platform-grid">
+                <a href="#" class="platform-link">🎵 Spotify</a>
+                <a href="#" class="platform-link">🍎 Apple Music</a>
+                <a href="#" class="platform-link">▶️ YouTube Music</a>
+                <a href="#" class="platform-link">☁️ SoundCloud</a>
+                <a href="#" class="platform-link">📻 Tidal</a>
+                <a href="#" class="platform-link">🎧 Deezer</a>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>© 2025 God Nok. All rights reserved.</p>
+    </footer>
+</body>
+</html>
