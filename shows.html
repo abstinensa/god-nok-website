@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Live Shows - GOD NOK</title>
+    <title>GOD NOK - Official Site</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -24,19 +24,29 @@
             box-sizing: border-box;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
         body {
             font-family: 'DM Sans', sans-serif;
             background: var(--dark);
             color: var(--light);
-            min-height: 100vh;
+            overflow-x: hidden;
         }
 
+        /* ===== NAVIGATION ===== */
         nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
             padding: 2rem 4rem;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid rgba(255,255,255,0.1);
+            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
         }
 
         .logo {
@@ -63,101 +73,406 @@
             font-size: 0.9rem;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            position: relative;
             transition: color 0.3s;
         }
 
-        .nav-links a:hover,
-        .nav-links a.active {
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
             color: var(--primary);
         }
 
-        .hero-small {
-            padding: 6rem 4rem 4rem;
-            text-align: center;
-            background: linear-gradient(180deg, var(--dark), var(--gray));
+        .nav-links a:hover::after {
+            width: 100%;
         }
 
-        .page-title {
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow: hidden;
+            background: radial-gradient(circle at 30% 50%, rgba(255,51,102,0.15), transparent 60%),
+                        radial-gradient(circle at 70% 50%, rgba(255,215,0,0.15), transparent 60%),
+                        var(--dark);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.03) 2px, rgba(255,255,255,0.03) 4px);
+            pointer-events: none;
+        }
+
+        .hero-content {
+            text-align: center;
+            z-index: 10;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
             font-family: 'Antonio', sans-serif;
-            font-size: clamp(4rem, 10vw, 8rem);
+            font-size: clamp(5rem, 18vw, 15rem);
             font-weight: 700;
-            letter-spacing: 0.08em;
+            line-height: 0.85;
+            letter-spacing: 0.05em;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--light), var(--primary));
+            background: linear-gradient(135deg, var(--light) 0%, var(--primary) 50%, var(--secondary) 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
             text-transform: uppercase;
+            animation: glow 3s ease-in-out infinite alternate;
         }
 
-        .page-subtitle {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.6);
+        @keyframes glow {
+            from {
+                filter: drop-shadow(0 0 20px rgba(255,51,102,0.3));
+            }
+            to {
+                filter: drop-shadow(0 0 40px rgba(255,215,0,0.5));
+            }
         }
 
-        .content {
-            padding: 5rem 4rem;
-            max-width: 1200px;
-            margin: 0 auto;
+        .hero h2 {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(2.5rem, 8vw, 6rem);
+            font-weight: 400;
+            letter-spacing: 0.08em;
+            color: var(--accent);
+            margin-bottom: 3rem;
+            text-transform: lowercase;
+            animation: fadeInUp 1s ease-out 0.2s both;
         }
 
-        .shows-filter {
+        .hero-cta {
             display: flex;
-            gap: 1.5rem;
-            margin-bottom: 4rem;
+            gap: 2rem;
             justify-content: center;
             flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
-        .filter-btn {
-            padding: 1rem 2rem;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.2);
-            color: var(--light);
-            cursor: pointer;
-            font-weight: 600;
+        .cta-btn {
+            padding: 1.2rem 3rem;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.1em;
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            position: relative;
+            overflow: hidden;
             transition: all 0.3s;
         }
 
-        .filter-btn:hover,
-        .filter-btn.active {
+        .cta-primary {
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: var(--light);
+            box-shadow: 0 10px 30px rgba(255,51,102,0.3);
+        }
+
+        .cta-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,51,102,0.5);
+        }
+
+        .cta-secondary {
+            background: transparent;
+            color: var(--light);
+            border: 2px solid var(--light);
+        }
+
+        .cta-secondary:hover {
+            background: var(--light);
+            color: var(--dark);
+        }
+
+        /* ===== SECTIONS ===== */
+        section {
+            padding: 8rem 4rem;
+            position: relative;
+        }
+
+        /* ===== COUNTDOWN SECTION ===== */
+        #countdown {
+            background: var(--dark);
+            padding: 6rem 4rem;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #countdown::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,51,102,0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        .countdown-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .countdown-event {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 3rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+        }
+
+        .countdown-timer {
+            display: flex;
+            gap: 2rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 3rem;
+        }
+
+        .time-box {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid var(--primary);
+            padding: 2rem 2.5rem;
+            min-width: 140px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .time-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, transparent, rgba(255,51,102,0.1), transparent);
+            animation: pulse 3s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
+        .time-number {
+            font-family: 'Antonio', sans-serif;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--primary);
+            font-weight: 700;
+            text-shadow: 0 0 20px rgba(255,51,102,0.5);
+        }
+
+        .time-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            color: rgba(255,255,255,0.5);
+            margin-top: 0.5rem;
+        }
+
+        .countdown-cta {
+            margin-top: 2rem;
+        }
+
+        .section-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            text-align: center;
+            margin-bottom: 5rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        /* ===== MUSIC SECTION ===== */
+        #music {
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+        }
+
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .album-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            transition: all 0.3s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .album-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .album-card:hover::before {
+            left: 100%;
+        }
+
+        .album-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 40px rgba(255,51,102,0.2);
+        }
+
+        .album-cover {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, rgba(255,51,102,0.3), rgba(255,215,0,0.3));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            font-size: 5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .album-card h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .album-card p {
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1.5rem;
+        }
+
+        .album-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .album-link {
+            padding: 0.6rem 1.5rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .album-link:hover {
             background: var(--primary);
             border-color: var(--primary);
         }
 
-        .show-card {
-            background: rgba(255,255,255,0.02);
-            border-left: 4px solid var(--primary);
-            padding: 3rem;
-            margin-bottom: 2rem;
-            transition: all 0.3s;
-            display: grid;
-            grid-template-columns: 150px 1fr auto;
-            gap: 3rem;
-            align-items: center;
+        /* ===== SHOWS SECTION ===== */
+        #shows {
+            background: var(--gray);
         }
 
-        .show-card:hover {
+        .shows-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .show-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 3rem;
+            padding: 2.5rem;
+            background: rgba(255,255,255,0.02);
+            border-left: 4px solid var(--primary);
+            margin-bottom: 1.5rem;
+            align-items: center;
+            transition: all 0.3s;
+        }
+
+        .show-item:hover {
             background: rgba(255,255,255,0.05);
             transform: translateX(10px);
         }
 
-        .show-date-box {
+        .show-date {
             text-align: center;
-            border: 2px solid var(--primary);
-            padding: 1.5rem;
         }
 
-        .show-day {
+        .date-day {
             font-family: 'Antonio', sans-serif;
             font-size: 4rem;
             line-height: 1;
             color: var(--primary);
         }
 
-        .show-month {
+        .date-month {
             font-size: 1.2rem;
             font-weight: 700;
             text-transform: uppercase;
@@ -165,53 +480,194 @@
             color: rgba(255,255,255,0.5);
         }
 
-        .show-details h3 {
+        .show-info h3 {
             font-family: 'Antonio', sans-serif;
-            font-size: 2.5rem;
+            font-size: 2rem;
             margin-bottom: 0.5rem;
             letter-spacing: 0.05em;
         }
 
-        .show-venue {
-            font-size: 1.2rem;
-            color: rgba(255,255,255,0.7);
-            margin-bottom: 0.5rem;
-        }
-
-        .show-location {
-            color: rgba(255,255,255,0.5);
-        }
-
-        .show-time {
-            margin-top: 1rem;
-            color: var(--accent);
-            font-weight: 600;
-        }
-
-        .show-tags {
-            display: flex;
-            gap: 0.5rem;
-            margin-top: 1rem;
-            flex-wrap: wrap;
-        }
-
-        .tag {
-            padding: 0.3rem 0.8rem;
-            background: rgba(255,51,102,0.2);
-            border: 1px solid var(--primary);
-            font-size: 0.8rem;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-        }
-
-        .show-actions {
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
+        .show-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
         }
 
         .ticket-btn {
-            padding: 1.2rem 2.5rem;
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .ticket-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* ===== ABOUT SECTION ===== */
+        #about {
+            background: linear-gradient(180deg, var(--gray), var(--dark));
+        }
+
+        .about-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: center;
+        }
+
+        .about-text p {
+            font-size: 1.2rem;
+            line-height: 1.8;
+            margin-bottom: 2rem;
+            color: rgba(255,255,255,0.8);
+        }
+
+        .about-text .highlight {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            color: var(--accent);
+            line-height: 1.4;
+        }
+
+        .band-members {
+            margin-top: 3rem;
+            padding-top: 3rem;
+            border-top: 2px solid rgba(255,255,255,0.1);
+        }
+
+        .band-members h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .members-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .member {
+            padding: 1rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .member strong {
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .about-visual {
+            aspect-ratio: 4/5;
+            background: linear-gradient(135deg, rgba(255,51,102,0.2), rgba(0,255,179,0.2));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid var(--primary);
+            position: relative;
+        }
+
+        .about-visual::before {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            right: -20px;
+            bottom: -20px;
+            border: 3px solid var(--secondary);
+            z-index: -1;
+        }
+
+        .about-visual span {
+            font-size: 8rem;
+        }
+
+        .about-visual p {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.1em;
+            margin-top: 1rem;
+        }
+
+        /* ===== MERCH SECTION ===== */
+        #merch {
+            background: var(--dark);
+        }
+
+        .merch-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 3rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .merch-item {
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .merch-item:hover {
+            transform: scale(1.05);
+        }
+
+        .merch-image {
+            aspect-ratio: 1;
+            background: linear-gradient(135deg, var(--gray), rgba(255,51,102,0.1));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            border: 2px solid rgba(255,255,255,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .merch-image::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent 30%, rgba(255,255,255,0.1) 50%, transparent 70%);
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        @keyframes shine {
+            0% { transform: translateX(-100%) translateY(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) translateY(100%) rotate(45deg); }
+        }
+
+        .merch-item h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.05em;
+        }
+
+        .price {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+        }
+
+        .shop-btn {
+            padding: 0.8rem 2rem;
             background: var(--primary);
             color: var(--light);
             border: none;
@@ -221,93 +677,162 @@
             cursor: pointer;
             transition: all 0.3s;
             text-decoration: none;
-            text-align: center;
-            white-space: nowrap;
+            display: inline-block;
         }
 
-        .ticket-btn:hover {
+        .shop-btn:hover {
             background: var(--secondary);
             color: var(--dark);
-            transform: translateY(-2px);
         }
 
-        .ticket-btn.sold-out {
-            background: rgba(255,255,255,0.1);
-            color: rgba(255,255,255,0.4);
-            cursor: not-allowed;
+        /* ===== CONTACT SECTION ===== */
+        #contact {
+            background: linear-gradient(180deg, var(--dark), var(--gray));
         }
 
-        .ticket-btn.sold-out:hover {
-            transform: none;
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
         }
 
-        .info-btn {
-            padding: 0.8rem 2rem;
-            background: transparent;
-            border: 1px solid rgba(255,255,255,0.3);
+        .contact-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            color: var(--primary);
+        }
+
+        .contact-info p {
+            margin-bottom: 2rem;
+        }
+
+        .contact-info a {
             color: var(--light);
             text-decoration: none;
-            text-align: center;
-            transition: all 0.3s;
+            font-size: 1.1rem;
+            transition: color 0.3s;
         }
 
-        .info-btn:hover {
-            border-color: var(--light);
-        }
-
-        .booking-info {
-            margin-top: 5rem;
-            padding: 4rem;
-            background: rgba(255,255,255,0.02);
-            border: 1px solid rgba(255,255,255,0.1);
-            text-align: center;
-        }
-
-        .booking-info h2 {
-            font-family: 'Antonio', sans-serif;
-            font-size: 3rem;
-            margin-bottom: 1.5rem;
+        .contact-info a:hover {
             color: var(--accent);
         }
 
-        .booking-info p {
-            font-size: 1.2rem;
+        .social-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .social-link {
+            padding: 1rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            text-align: center;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            border-color: var(--primary);
+        }
+
+        .newsletter h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .newsletter p {
             margin-bottom: 2rem;
             color: rgba(255,255,255,0.7);
         }
 
-        .booking-info a {
-            color: var(--primary);
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.3rem;
+        .newsletter-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
         }
 
+        .newsletter-form input {
+            padding: 1.2rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.1);
+            color: var(--light);
+            font-size: 1rem;
+            font-family: inherit;
+        }
+
+        .newsletter-form input:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+
+        .newsletter-form input::placeholder {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .newsletter-form button {
+            padding: 1.2rem;
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: var(--light);
+            border: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(255,51,102,0.3);
+        }
+
+        /* ===== FOOTER ===== */
         footer {
             background: var(--dark);
-            padding: 3rem 4rem;
+            padding: 4rem;
             text-align: center;
             border-top: 1px solid rgba(255,255,255,0.1);
-            margin-top: 5rem;
+        }
+
+        .footer-logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
         }
 
         footer p {
             color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
         }
 
+        /* ===== RESPONSIVE ===== */
         @media (max-width: 968px) {
-            .show-card {
+            .about-content,
+            .contact-container {
                 grid-template-columns: 1fr;
-                gap: 2rem;
+                gap: 3rem;
             }
 
-            .show-date-box {
-                width: fit-content;
-                margin: 0 auto;
-            }
-
-            .show-actions {
-                width: 100%;
+            .show-item {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
             }
         }
 
@@ -317,157 +842,389 @@
             }
 
             .nav-links {
-                gap: 1.5rem;
-                font-size: 0.8rem;
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s;
+                border-left: 2px solid var(--primary);
             }
 
-            .content {
-                padding: 3rem 2rem;
+            .nav-links.active {
+                right: 0;
             }
 
-            .show-card {
-                padding: 2rem;
+            .menu-toggle {
+                display: flex;
+            }
+
+            section {
+                padding: 4rem 2rem;
+            }
+
+            #countdown {
+                padding: 4rem 2rem;
+            }
+
+            .countdown-timer {
+                gap: 1rem;
+            }
+
+            .time-box {
+                padding: 1.5rem 1.5rem;
+                min-width: 100px;
+            }
+
+            .time-number {
+                font-size: 3rem;
+            }
+
+            .album-grid,
+            .merch-grid {
+                grid-template-columns: 1fr;
+                max-width: 400px;
+                margin: 0 auto;
+            }
+
+            .social-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Navigation -->
     <nav>
-        <a href="index.html" class="logo">GOD NOK</a>
-        <ul class="nav-links">
-            <li><a href="index.html">Home</a></li>
-            <li><a href="music.html">Music</a></li>
-            <li><a href="shows.html" class="active">Shows</a></li>
-            <li><a href="about.html">About</a></li>
-            <li><a href="merch.html">Merch</a></li>
+        <div class="logo">GOD NOK</div>
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+            <li><a href="music.html" onclick="closeMenu()">Music</a></li>
+            <li><a href="#video" onclick="closeMenu()">Video</a></li>
+            <li><a href="shows.html" onclick="closeMenu()">Shows</a></li>
+            <li><a href="about.html" onclick="closeMenu()">About</a></li>
+            <li><a href="merch.html" onclick="closeMenu()">Merch</a></li>
+            <li><a href="#contact" onclick="closeMenu()">Contact</a></li>
         </ul>
     </nav>
 
-    <div class="hero-small">
-        <h1 class="page-title">Live Shows</h1>
-        <p class="page-subtitle">Se oss live på scenen</p>
-    </div>
-
-    <div class="content">
-        <div class="shows-filter">
-            <button class="filter-btn active">Alle 2026</button>
-            <button class="filter-btn">Mars</button>
-            <button class="filter-btn">April</button>
-            <button class="filter-btn">Mai</button>
-        </div>
-
-        <div class="show-card">
-            <div class="show-date-box">
-                <div class="show-day">26</div>
-                <div class="show-month">MAR</div>
+    <!-- Hero -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>GOD NOK</h1>
+            <h2>gir god KOK!</h2>
+            <div class="hero-cta">
+                <a href="#music" class="cta-btn cta-primary">Listen Now</a>
+                <a href="#shows" class="cta-btn cta-secondary">See Shows</a>
             </div>
-            <div class="show-details">
-                <h3>Oslo S (Utendørs)</h3>
-                <p class="show-venue">Oslo Sentralstasjon - Utendørs</p>
-                <p class="show-location">📍 Jernbanetorget, Oslo</p>
-                <p class="show-time">🕒 Dører: 18:00 | Start: 20:00</p>
-                <div class="show-tags">
-                    <span class="tag">Utendørs</span>
-                    <span class="tag">EP Launch</span>
-                    <span class="tag">18+</span>
+        </div>
+    </section>
+
+    <!-- Featured Video -->
+    <section style="padding: 6rem 4rem; background: var(--dark); text-align: center;">
+        <h2 class="section-title" style="margin-bottom: 3rem;">Latest</h2>
+        <div style="max-width: 500px; margin: 0 auto;">
+            <div style="position: relative; padding-bottom: 177.78%; height: 0; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 20px 60px rgba(255,51,102,0.4);">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                    src="https://www.youtube.com/embed/XRqYzoklr8A" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div style="margin-top: 2rem;">
+                <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7);">God Nok - Latest Short</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Countdown -->
+    <section id="countdown">
+        <h2 class="countdown-title">Neste Konsert</h2>
+        <p class="countdown-event">Oslo S (Utendørs) - 26. Mars 2026</p>
+        <div class="countdown-timer">
+            <div class="time-box">
+                <div class="time-number" id="days">00</div>
+                <div class="time-label">Dager</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="hours">00</div>
+                <div class="time-label">Timer</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="minutes">00</div>
+                <div class="time-label">Minutter</div>
+            </div>
+            <div class="time-box">
+                <div class="time-number" id="seconds">00</div>
+                <div class="time-label">Sekunder</div>
+            </div>
+        </div>
+        <div class="countdown-cta">
+            <a href="#shows" class="cta-btn cta-primary">Se Alle Konserter</a>
+        </div>
+    </section>
+
+    <!-- Music -->
+    <section id="music">
+        <h2 class="section-title">Music</h2>
+        <div class="album-grid">
+            <div class="album-card">
+                <div class="album-cover">💰</div>
+                <h3>Penger Talks</h3>
+                <p>EP · 2025</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
                 </div>
             </div>
-            <div class="show-actions">
-                <a href="#" class="ticket-btn">Kjøp Billetter</a>
-                <a href="#" class="info-btn">Mer Info</a>
-            </div>
-        </div>
-
-        <div class="show-card">
-            <div class="show-date-box">
-                <div class="show-day">15</div>
-                <div class="show-month">APR</div>
-            </div>
-            <div class="show-details">
-                <h3>Bergen, Garage</h3>
-                <p class="show-venue">Garage</p>
-                <p class="show-location">📍 Christies gate 14, Bergen</p>
-                <p class="show-time">🕒 Dører: 19:30 | Start: 20:30</p>
-                <div class="show-tags">
-                    <span class="tag">20+</span>
+            <div class="album-card">
+                <div class="album-cover">🎸</div>
+                <h3>Rik & Rå</h3>
+                <p>Single · 2024</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
                 </div>
             </div>
-            <div class="show-actions">
-                <a href="#" class="ticket-btn">Kjøp Billetter</a>
-                <a href="#" class="info-btn">Mer Info</a>
-            </div>
-        </div>
-
-        <div class="show-card">
-            <div class="show-date-box">
-                <div class="show-day">22</div>
-                <div class="show-month">APR</div>
-            </div>
-            <div class="show-details">
-                <h3>Trondheim, Samfundet</h3>
-                <p class="show-venue">Studentersamfundet</p>
-                <p class="show-location">📍 Elgeseter gate 1, Trondheim</p>
-                <p class="show-time">🕒 Dører: 20:00 | Start: 21:00</p>
-                <div class="show-tags">
-                    <span class="tag">Student Night</span>
-                    <span class="tag">18+</span>
+            <div class="album-card">
+                <div class="album-cover">💸</div>
+                <h3>Cash Flow</h3>
+                <p>Single · 2024</p>
+                <div class="album-links">
+                    <a href="#" class="album-link">Spotify</a>
+                    <a href="#" class="album-link">Apple Music</a>
                 </div>
             </div>
-            <div class="show-actions">
-                <a href="#" class="ticket-btn">Kjøp Billetter</a>
-                <a href="#" class="info-btn">Mer Info</a>
+        </div>
+    </section>
+
+    <!-- Video -->
+    <section id="video" style="padding: 8rem 4rem; background: linear-gradient(180deg, var(--gray), var(--dark));">
+        <h2 class="section-title">Video</h2>
+        <div style="max-width: 1200px; margin: 0 auto;">
+            <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; border: 3px solid var(--primary); box-shadow: 0 20px 60px rgba(255,51,102,0.3);">
+                <iframe 
+                    style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"
+                    src="https://www.youtube.com/embed/9GEv1E-_gFM" 
+                    frameborder="0" 
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                    allowfullscreen>
+                </iframe>
+            </div>
+            <div style="text-align: center; margin-top: 2rem;">
+                <p style="font-size: 1.2rem; color: rgba(255,255,255,0.7);">God Nok - Official Music Video</p>
             </div>
         </div>
+    </section>
 
-        <div class="show-card">
-            <div class="show-date-box">
-                <div class="show-day">6</div>
-                <div class="show-month">MAI</div>
+    <!-- Shows -->
+    <section id="shows">
+        <h2 class="section-title">Live Shows</h2>
+        <div class="shows-container">
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">26</div>
+                    <div class="date-month">MAR</div>
+                </div>
+                <div class="show-info">
+                    <h3>Oslo S (Utendørs)</h3>
+                    <p>Oslo, Norge</p>
+                </div>
+                <a href="shows.html" class="ticket-btn">Tickets</a>
             </div>
-            <div class="show-details">
-                <h3>Stavanger, Folken</h3>
-                <p class="show-venue">Folken</p>
-                <p class="show-location">📍 Tou Scene, Stavanger</p>
-                <p class="show-time">🕒 Dører: 19:00 | Start: 20:00</p>
-                <div class="show-tags">
-                    <span class="tag">18+</span>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">15</div>
+                    <div class="date-month">APR</div>
+                </div>
+                <div class="show-info">
+                    <h3>Bergen, Garage</h3>
+                    <p>Bergen, Norge</p>
+                </div>
+                <a href="shows.html" class="ticket-btn">Tickets</a>
+            </div>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">22</div>
+                    <div class="date-month">APR</div>
+                </div>
+                <div class="show-info">
+                    <h3>Trondheim, Samfundet</h3>
+                    <p>Trondheim, Norge</p>
+                </div>
+                <a href="shows.html" class="ticket-btn">Tickets</a>
+            </div>
+            <div class="show-item">
+                <div class="show-date">
+                    <div class="date-day">6</div>
+                    <div class="date-month">MAI</div>
+                </div>
+                <div class="show-info">
+                    <h3>Stavanger, Folken</h3>
+                    <p>Stavanger, Norge</p>
+                </div>
+                <a href="shows.html" class="ticket-btn">Tickets</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- About -->
+    <section id="about">
+        <h2 class="section-title">About</h2>
+        <div class="about-content">
+            <div class="about-text">
+                <p class="highlight">God Nok er bandet som gir deg god KOK – god kvalitet på koken, alltid.</p>
+                <p>Født i Oslo's underground scene i 2023, har God Nok raskt bygget seg et rykte for å levere energiske live-show og låter som treffer rett i hjertet.</p>
+                <p>Med en lyd som blander norsk rock, punk og en dose humor, skaper bandet noe helt unikt. Musikken resonerer med en hel generasjon som navigerer hverdagens absurditeter.</p>
+                <div class="band-members">
+                    <h3>Band Members</h3>
+                    <div class="members-list">
+                        <div class="member"><strong>Lars</strong> - Vokal & Gitar</div>
+                        <div class="member"><strong>Maria</strong> - Bass & Backing Vocals</div>
+                        <div class="member"><strong>Erik</strong> - Trommer</div>
+                        <div class="member"><strong>Sofie</strong> - Keyboards & Synth</div>
+                    </div>
                 </div>
             </div>
-            <div class="show-actions">
-                <button class="ticket-btn sold-out">Utsolgt</button>
-                <a href="#" class="info-btn">Mer Info</a>
+            <div class="about-visual">
+                <span>🎸</span>
+                <p>GOD NOK</p>
             </div>
         </div>
+    </section>
 
-        <div class="show-card">
-            <div class="show-date-box">
-                <div class="show-day">20</div>
-                <div class="show-month">MAI</div>
+    <!-- Merch -->
+    <section id="merch">
+        <h2 class="section-title">Merch</h2>
+        <div class="merch-grid">
+            <div class="merch-item">
+                <div class="merch-image">👕</div>
+                <h3>God Nok T-Shirt</h3>
+                <div class="price">299 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
             </div>
-            <div class="show-details">
-                <h3>Kristiansand, Kick</h3>
-                <p class="show-venue">Kick Scene & Studio</p>
-                <p class="show-location">📍 Tordenskjolds gate 12, Kristiansand</p>
-                <p class="show-time">🕒 Dører: 20:00 | Start: 21:00</p>
-                <div class="show-tags">
-                    <span class="tag">18+</span>
+            <div class="merch-item">
+                <div class="merch-image">🧢</div>
+                <h3>KOK Cap</h3>
+                <div class="price">199 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+            <div class="merch-item">
+                <div class="merch-image">🎧</div>
+                <h3>Limited Hoodie</h3>
+                <div class="price">499 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+            <div class="merch-item">
+                <div class="merch-image">💿</div>
+                <h3>Penger Talks Vinyl</h3>
+                <div class="price">349 kr</div>
+                <a href="#" class="shop-btn">Shop Now</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact -->
+    <section id="contact">
+        <h2 class="section-title">Contact</h2>
+        <div class="contact-container">
+            <div class="contact-info">
+                <h3>Booking</h3>
+                <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
+                
+                <h3>Press</h3>
+                <p><a href="mailto:press@godnok.no">press@godnok.no</a></p>
+                
+                <h3>Follow Us</h3>
+                <div class="social-grid">
+                    <a href="#" class="social-link">Instagram</a>
+                    <a href="#" class="social-link">Facebook</a>
+                    <a href="#" class="social-link">TikTok</a>
+                    <a href="#" class="social-link">YouTube</a>
                 </div>
             </div>
-            <div class="show-actions">
-                <a href="#" class="ticket-btn">Kjøp Billetter</a>
-                <a href="#" class="info-btn">Mer Info</a>
+            <div class="newsletter">
+                <h3>Newsletter</h3>
+                <p>Få de siste nyhetene og eksklusivt innhold.</p>
+                <form class="newsletter-form" onsubmit="return false;">
+                    <input type="email" placeholder="Din e-post" required>
+                    <button type="submit">Subscribe</button>
+                </form>
             </div>
         </div>
+    </section>
 
-        <div class="booking-info">
-            <h2>Book God Nok</h2>
-            <p>Interessert i å booke God Nok for din venue eller festival?</p>
-            <p><a href="mailto:booking@godnok.no">booking@godnok.no</a></p>
-        </div>
-    </div>
-
+    <!-- Footer -->
     <footer>
+        <div class="footer-logo">GOD NOK</div>
         <p>© 2025 God Nok. All rights reserved.</p>
     </footer>
+
+    <script>
+        // Countdown Timer - Updated to ensure it works
+        const countdownDate = new Date("2026-03-26T20:00:00").getTime();
+
+        function updateCountdown() {
+            const now = new Date().getTime();
+            const distance = countdownDate - now;
+
+            if (distance < 0) {
+                document.getElementById("days").textContent = "00";
+                document.getElementById("hours").textContent = "00";
+                document.getElementById("minutes").textContent = "00";
+                document.getElementById("seconds").textContent = "00";
+                return;
+            }
+
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").textContent = String(days).padStart(2, '0');
+            document.getElementById("hours").textContent = String(hours).padStart(2, '0');
+            document.getElementById("minutes").textContent = String(minutes).padStart(2, '0');
+            document.getElementById("seconds").textContent = String(seconds).padStart(2, '0');
+        }
+
+        // Start countdown when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+
+        // Menu functions
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.remove('active');
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+    </script>
 </body>
 </html>
