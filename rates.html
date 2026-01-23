@@ -1,0 +1,744 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Styringsrenter i Europa - GOD NOK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #FF3366;
+            --secondary: #FFD700;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --accent: #00FFB3;
+            --green: #00FF88;
+            --red: #FF3366;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            overflow-x: hidden;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(180deg, rgba(10,10,10,0.95) 0%, transparent 100%);
+            backdrop-filter: blur(10px);
+        }
+
+        .logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            position: relative;
+            transition: color 0.3s;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--primary);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Mobile Menu */
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+
+        /* Header Section */
+        .header-section {
+            padding-top: 150px;
+            padding-bottom: 4rem;
+            text-align: center;
+            background: radial-gradient(circle at 50% 50%, rgba(255,51,102,0.15), transparent 70%),
+                        var(--dark);
+        }
+
+        .page-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(3rem, 8vw, 5rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            letter-spacing: 0.1em;
+        }
+
+        .last-updated {
+            margin-top: 1rem;
+            font-size: 0.9rem;
+            color: var(--accent);
+            font-weight: 500;
+        }
+
+        /* Main Content */
+        .main-content {
+            padding: 4rem 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        /* Filter Section */
+        .filter-section {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 3rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(255,255,255,0.05);
+            border: 2px solid rgba(255,255,255,0.2);
+            color: var(--light);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover,
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        /* Rates Grid */
+        .rates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-bottom: 4rem;
+        }
+
+        .rate-card {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 2rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s;
+        }
+
+        .rate-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .rate-card:hover::before {
+            left: 100%;
+        }
+
+        .rate-card:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 10px 30px rgba(255,51,102,0.3);
+        }
+
+        .rate-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .flag {
+            font-size: 3rem;
+            line-height: 1;
+        }
+
+        .country-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.05em;
+            margin-bottom: 0.3rem;
+        }
+
+        .bank-name {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .rate-display {
+            text-align: center;
+            padding: 2rem 0;
+            margin: 1.5rem 0;
+            background: rgba(0,0,0,0.3);
+            border-top: 1px solid rgba(255,255,255,0.1);
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .rate-value {
+            font-family: 'Antonio', sans-serif;
+            font-size: 4rem;
+            font-weight: 700;
+            line-height: 1;
+            background: linear-gradient(135deg, var(--accent), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .rate-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.2em;
+            margin-top: 0.5rem;
+        }
+
+        .rate-change {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-top: 1rem;
+        }
+
+        .rate-change.positive {
+            background: rgba(255,51,102,0.2);
+            color: var(--red);
+        }
+
+        .rate-change.negative {
+            background: rgba(0,255,136,0.2);
+            color: var(--green);
+        }
+
+        .rate-change.neutral {
+            background: rgba(255,255,255,0.1);
+            color: rgba(255,255,255,0.6);
+        }
+
+        .rate-details {
+            display: grid;
+            gap: 0.8rem;
+        }
+
+        .detail-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            font-size: 0.9rem;
+        }
+
+        .detail-label {
+            color: rgba(255,255,255,0.6);
+        }
+
+        .detail-value {
+            font-weight: 600;
+            color: var(--light);
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: rgba(255,255,255,0.02);
+            border: 2px solid rgba(255,255,255,0.1);
+            padding: 3rem;
+            margin-bottom: 4rem;
+            text-align: center;
+        }
+
+        .summary-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 2rem;
+            color: var(--accent);
+        }
+
+        .summary-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-box {
+            padding: 1.5rem;
+            background: rgba(0,0,0,0.3);
+        }
+
+        .stat-value {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            padding: 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .footer-logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+            font-size: 0.9rem;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s;
+                border-left: 2px solid var(--primary);
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .header-section {
+                padding-top: 120px;
+                padding-bottom: 3rem;
+            }
+
+            .main-content {
+                padding: 2rem 1rem;
+            }
+
+            .rates-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .summary-stats {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">GOD NOK</a>
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+            <li><a href="music.html" onclick="closeMenu()">Music</a></li>
+            <li><a href="shows.html" onclick="closeMenu()">Shows</a></li>
+            <li><a href="rates.html" onclick="closeMenu()">Styringsrenter</a></li>
+        </ul>
+    </nav>
+
+    <!-- Header -->
+    <section class="header-section">
+        <h1 class="page-title">Styringsrenter i Europa</h1>
+        <p class="page-subtitle">Oversikt over sentralbankenes styringsrenter</p>
+        <p class="last-updated" id="lastUpdated">Sist oppdatert: Januar 2026</p>
+    </section>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Filter Section -->
+        <div class="filter-section">
+            <button class="filter-btn active" onclick="filterRates('all')">Alle Land</button>
+            <button class="filter-btn" onclick="filterRates('eurozone')">Eurosonen</button>
+            <button class="filter-btn" onclick="filterRates('nordic')">Norden</button>
+            <button class="filter-btn" onclick="filterRates('other')">Andre</button>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="summary-title">Statistikk</h2>
+            <div class="summary-stats">
+                <div class="stat-box">
+                    <div class="stat-value" id="avgRate">3.05%</div>
+                    <div class="stat-label">Gjennomsnitt</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="highestRate">5.25%</div>
+                    <div class="stat-label">Høyeste</div>
+                </div>
+                <div class="stat-box">
+                    <div class="stat-value" id="lowestRate">0.50%</div>
+                    <div class="stat-label">Laveste</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Rates Grid -->
+        <div class="rates-grid" id="ratesGrid">
+            <!-- Cards will be generated by JavaScript -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-logo">GOD NOK</div>
+        <p>© 2025 God Nok. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Interest rates data
+        const interestRates = [
+            {
+                country: "Eurosonen",
+                flag: "🇪🇺",
+                bank: "Den europeiske sentralbank (ECB)",
+                rate: 3.00,
+                change: -0.25,
+                previousRate: 3.25,
+                lastChange: "Des 2025",
+                nextMeeting: "30. Jan 2026",
+                category: "eurozone"
+            },
+            {
+                country: "Norge",
+                flag: "🇳🇴",
+                bank: "Norges Bank",
+                rate: 4.50,
+                change: 0,
+                previousRate: 4.50,
+                lastChange: "Des 2025",
+                nextMeeting: "23. Jan 2026",
+                category: "nordic"
+            },
+            {
+                country: "Sverige",
+                flag: "🇸🇪",
+                bank: "Sveriges Riksbank",
+                rate: 2.25,
+                change: -0.25,
+                previousRate: 2.50,
+                lastChange: "Nov 2025",
+                nextMeeting: "12. Feb 2026",
+                category: "nordic"
+            },
+            {
+                country: "Danmark",
+                flag: "🇩🇰",
+                bank: "Danmarks Nationalbank",
+                rate: 2.85,
+                change: -0.15,
+                previousRate: 3.00,
+                lastChange: "Des 2025",
+                nextMeeting: "TBA",
+                category: "nordic"
+            },
+            {
+                country: "Storbritannia",
+                flag: "🇬🇧",
+                bank: "Bank of England",
+                rate: 4.75,
+                change: -0.25,
+                previousRate: 5.00,
+                lastChange: "Des 2025",
+                nextMeeting: "6. Feb 2026",
+                category: "other"
+            },
+            {
+                country: "Sveits",
+                flag: "🇨🇭",
+                bank: "Swiss National Bank (SNB)",
+                rate: 0.50,
+                change: -0.25,
+                previousRate: 0.75,
+                lastChange: "Des 2025",
+                nextMeeting: "20. Mar 2026",
+                category: "other"
+            },
+            {
+                country: "Polen",
+                flag: "🇵🇱",
+                bank: "Narodowy Bank Polski",
+                rate: 5.75,
+                change: 0,
+                previousRate: 5.75,
+                lastChange: "Okt 2025",
+                nextMeeting: "5. Feb 2026",
+                category: "other"
+            },
+            {
+                country: "Tsjekkia",
+                flag: "🇨🇿",
+                bank: "Czech National Bank",
+                rate: 4.00,
+                change: -0.25,
+                previousRate: 4.25,
+                lastChange: "Des 2025",
+                nextMeeting: "6. Feb 2026",
+                category: "other"
+            },
+            {
+                country: "Ungarn",
+                flag: "🇭🇺",
+                bank: "Magyar Nemzeti Bank",
+                rate: 6.50,
+                change: -0.25,
+                previousRate: 6.75,
+                lastChange: "Nov 2025",
+                nextMeeting: "28. Jan 2026",
+                category: "other"
+            },
+            {
+                country: "Island",
+                flag: "🇮🇸",
+                bank: "Central Bank of Iceland",
+                rate: 9.25,
+                change: 0,
+                previousRate: 9.25,
+                lastChange: "Nov 2025",
+                nextMeeting: "5. Feb 2026",
+                category: "nordic"
+            },
+            {
+                country: "Romania",
+                flag: "🇷🇴",
+                bank: "National Bank of Romania",
+                rate: 6.50,
+                change: -0.25,
+                previousRate: 6.75,
+                lastChange: "Jan 2026",
+                nextMeeting: "11. Feb 2026",
+                category: "other"
+            },
+            {
+                country: "Tyrkia",
+                flag: "🇹🇷",
+                bank: "Central Bank of Turkey",
+                rate: 50.00,
+                change: 0,
+                previousRate: 50.00,
+                lastChange: "Des 2025",
+                nextMeeting: "23. Jan 2026",
+                category: "other"
+            }
+        ];
+
+        let currentFilter = 'all';
+
+        function renderRates(filter = 'all') {
+            const grid = document.getElementById('ratesGrid');
+            grid.innerHTML = '';
+
+            const filteredRates = filter === 'all'
+                ? interestRates
+                : interestRates.filter(rate => rate.category === filter);
+
+            filteredRates.forEach(rate => {
+                const changeClass = rate.change > 0 ? 'positive' : rate.change < 0 ? 'negative' : 'neutral';
+                const changeSymbol = rate.change > 0 ? '▲' : rate.change < 0 ? '▼' : '●';
+                const changeText = rate.change !== 0 ? `${changeSymbol} ${Math.abs(rate.change).toFixed(2)}%` : 'Uendret';
+
+                const card = `
+                    <div class="rate-card" data-category="${rate.category}">
+                        <div class="rate-header">
+                            <div class="flag">${rate.flag}</div>
+                            <div class="country-info">
+                                <h3>${rate.country}</h3>
+                                <div class="bank-name">${rate.bank}</div>
+                            </div>
+                        </div>
+                        <div class="rate-display">
+                            <div class="rate-value">${rate.rate.toFixed(2)}%</div>
+                            <div class="rate-label">Styringsrente</div>
+                            <div class="rate-change ${changeClass}">
+                                ${changeText}
+                            </div>
+                        </div>
+                        <div class="rate-details">
+                            <div class="detail-row">
+                                <span class="detail-label">Forrige rente:</span>
+                                <span class="detail-value">${rate.previousRate.toFixed(2)}%</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Siste endring:</span>
+                                <span class="detail-value">${rate.lastChange}</span>
+                            </div>
+                            <div class="detail-row">
+                                <span class="detail-label">Neste møte:</span>
+                                <span class="detail-value">${rate.nextMeeting}</span>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                grid.innerHTML += card;
+            });
+
+            // Update statistics
+            updateStatistics(filteredRates);
+        }
+
+        function updateStatistics(rates) {
+            if (rates.length === 0) return;
+
+            const rateValues = rates.map(r => r.rate);
+            const avg = (rateValues.reduce((a, b) => a + b, 0) / rateValues.length).toFixed(2);
+            const highest = Math.max(...rateValues).toFixed(2);
+            const lowest = Math.min(...rateValues).toFixed(2);
+
+            document.getElementById('avgRate').textContent = `${avg}%`;
+            document.getElementById('highestRate').textContent = `${highest}%`;
+            document.getElementById('lowestRate').textContent = `${lowest}%`;
+        }
+
+        function filterRates(category) {
+            currentFilter = category;
+
+            // Update button states
+            document.querySelectorAll('.filter-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Render filtered rates
+            renderRates(category);
+        }
+
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.remove('active');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            renderRates();
+        });
+    </script>
+</body>
+</html>
