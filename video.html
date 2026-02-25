@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AI Video - GOD NOK</title>
+    <title>AI Opplæring - GOD NOK</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -18,15 +18,8 @@
             --accent: #00FFB3;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
 
         body {
             font-family: 'DM Sans', sans-serif;
@@ -73,9 +66,7 @@
         }
 
         .nav-links a:hover,
-        .nav-links a.active {
-            color: var(--primary);
-        }
+        .nav-links a.active { color: var(--primary); }
 
         .menu-toggle {
             display: none;
@@ -105,11 +96,9 @@
         .hero-small::before {
             content: '';
             position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: radial-gradient(circle at 50% 50%, rgba(255,51,102,0.1), transparent 70%);
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: radial-gradient(circle at 30% 50%, rgba(0,255,179,0.08), transparent 60%),
+                        radial-gradient(circle at 70% 50%, rgba(255,51,102,0.08), transparent 60%);
             pointer-events: none;
         }
 
@@ -119,7 +108,7 @@
             font-weight: 700;
             letter-spacing: 0.08em;
             margin-bottom: 1rem;
-            background: linear-gradient(135deg, var(--light), var(--primary));
+            background: linear-gradient(135deg, var(--light), var(--accent));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
@@ -129,10 +118,35 @@
         .page-subtitle {
             font-size: 1.2rem;
             color: rgba(255,255,255,0.6);
-            margin-bottom: 1rem;
-            max-width: 600px;
-            margin-left: auto;
-            margin-right: auto;
+            max-width: 650px;
+            margin: 0 auto 1.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 3rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .hero-stat {
+            text-align: center;
+        }
+
+        .hero-stat .number {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .hero-stat .label {
+            font-size: 0.85rem;
+            color: rgba(255,255,255,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
         }
 
         /* ===== FILTER TABS ===== */
@@ -160,16 +174,8 @@
             transition: all 0.3s;
         }
 
-        .filter-btn:hover {
-            border-color: var(--primary);
-            color: var(--primary);
-        }
-
-        .filter-btn.active {
-            background: var(--primary);
-            border-color: var(--primary);
-            color: var(--light);
-        }
+        .filter-btn:hover { border-color: var(--primary); color: var(--primary); }
+        .filter-btn.active { background: var(--primary); border-color: var(--primary); color: var(--light); }
 
         /* ===== CONTENT ===== */
         .content {
@@ -192,128 +198,63 @@
             font-size: 1.1rem;
             margin-bottom: 3rem;
             max-width: 700px;
-        }
-
-        /* ===== VIDEO GRID ===== */
-        .video-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
-            gap: 3rem;
-            margin-bottom: 5rem;
-        }
-
-        .video-card {
-            background: rgba(255,255,255,0.03);
-            border: 1px solid rgba(255,255,255,0.1);
-            transition: all 0.4s;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .video-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.08), transparent);
-            transition: left 0.6s;
-            z-index: 1;
-            pointer-events: none;
-        }
-
-        .video-card:hover::before {
-            left: 100%;
-        }
-
-        .video-card:hover {
-            transform: translateY(-8px);
-            border-color: var(--primary);
-            box-shadow: 0 20px 50px rgba(255,51,102,0.2);
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-            overflow: hidden;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: none;
-        }
-
-        .video-info {
-            padding: 1.5rem 2rem 2rem;
-        }
-
-        .video-category {
-            display: inline-block;
-            padding: 0.3rem 1rem;
-            background: rgba(255,51,102,0.15);
-            color: var(--primary);
-            font-size: 0.75rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-bottom: 0.8rem;
-        }
-
-        .video-info h3 {
-            font-family: 'Antonio', sans-serif;
-            font-size: 1.5rem;
-            margin-bottom: 0.5rem;
-            letter-spacing: 0.03em;
-            line-height: 1.3;
-        }
-
-        .video-info p {
-            color: rgba(255,255,255,0.5);
-            font-size: 0.95rem;
             line-height: 1.6;
         }
 
-        .video-meta {
-            display: flex;
-            gap: 1.5rem;
-            margin-top: 1rem;
-            padding-top: 1rem;
-            border-top: 1px solid rgba(255,255,255,0.05);
-        }
+        /* ===== FEATURED CARD ===== */
+        .featured-section { margin-bottom: 5rem; }
 
-        .video-meta span {
-            font-size: 0.8rem;
-            color: rgba(255,255,255,0.4);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* ===== FEATURED VIDEO ===== */
-        .featured-section {
-            margin-bottom: 5rem;
-        }
-
-        .featured-video {
+        .featured-card {
             display: grid;
-            grid-template-columns: 2fr 1fr;
-            gap: 3rem;
+            grid-template-columns: 1fr 1fr;
+            gap: 0;
             background: rgba(255,255,255,0.03);
-            border: 2px solid rgba(255,51,102,0.3);
+            border: 2px solid rgba(0,255,179,0.3);
+            overflow: hidden;
+            transition: all 0.4s;
+        }
+
+        .featured-card:hover {
+            border-color: var(--accent);
+            box-shadow: 0 20px 60px rgba(0,255,179,0.15);
+        }
+
+        .featured-visual {
+            background: linear-gradient(135deg, rgba(0,255,179,0.15), rgba(255,51,102,0.1));
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 4rem 3rem;
+            min-height: 400px;
+            position: relative;
             overflow: hidden;
         }
 
-        .featured-video .video-wrapper {
-            padding-bottom: 56.25%;
+        .featured-visual::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.02) 2px, rgba(255,255,255,0.02) 4px);
+            pointer-events: none;
         }
 
-        .featured-info {
-            padding: 2.5rem 2.5rem 2.5rem 0;
+        .featured-icon {
+            font-size: 6rem;
+            margin-bottom: 1.5rem;
+            filter: drop-shadow(0 0 30px rgba(0,255,179,0.5));
+        }
+
+        .featured-visual h4 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.5rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .featured-content {
+            padding: 3rem;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -322,17 +263,17 @@
         .featured-badge {
             display: inline-block;
             padding: 0.4rem 1.2rem;
-            background: linear-gradient(135deg, var(--primary), #FF1744);
-            color: var(--light);
+            background: linear-gradient(135deg, var(--accent), #00cc8f);
+            color: var(--dark);
             font-size: 0.75rem;
             font-weight: 700;
             text-transform: uppercase;
             letter-spacing: 0.15em;
-            margin-bottom: 1rem;
+            margin-bottom: 1.2rem;
             width: fit-content;
         }
 
-        .featured-info h3 {
+        .featured-content h3 {
             font-family: 'Antonio', sans-serif;
             font-size: 2.2rem;
             margin-bottom: 1rem;
@@ -340,41 +281,273 @@
             line-height: 1.2;
         }
 
-        .featured-info p {
+        .featured-content p {
             color: rgba(255,255,255,0.6);
             font-size: 1.05rem;
             line-height: 1.7;
             margin-bottom: 1.5rem;
         }
 
-        .watch-btn {
-            padding: 1rem 2.5rem;
-            background: transparent;
-            border: 2px solid var(--primary);
-            color: var(--primary);
-            font-family: 'DM Sans', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.1em;
-            cursor: pointer;
-            transition: all 0.3s;
-            text-decoration: none;
-            display: inline-block;
-            width: fit-content;
+        .featured-topics {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
         }
 
-        .watch-btn:hover {
+        .topic-tag {
+            padding: 0.3rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.6);
+        }
+
+        /* ===== LESSON CARDS ===== */
+        .lesson-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 2.5rem;
+            margin-bottom: 5rem;
+        }
+
+        .lesson-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .lesson-card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: -100%; width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.06), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .lesson-card:hover::before { left: 100%; }
+
+        .lesson-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(255,51,102,0.15);
+        }
+
+        .lesson-header {
+            background: linear-gradient(135deg, rgba(255,51,102,0.12), rgba(255,215,0,0.08));
+            padding: 2.5rem 2rem;
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            position: relative;
+        }
+
+        .lesson-icon {
+            font-size: 3rem;
+            flex-shrink: 0;
+        }
+
+        .lesson-header-text h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.4rem;
+            letter-spacing: 0.03em;
+            line-height: 1.3;
+            margin-bottom: 0.3rem;
+        }
+
+        .lesson-header-text .level {
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--primary);
+        }
+
+        .lesson-body {
+            padding: 2rem;
+        }
+
+        .lesson-category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(255,51,102,0.15);
+            color: var(--primary);
+            font-size: 0.7rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+        }
+
+        .lesson-body p {
+            color: rgba(255,255,255,0.55);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 1.2rem;
+        }
+
+        .lesson-points {
+            list-style: none;
+            margin-bottom: 1.5rem;
+        }
+
+        .lesson-points li {
+            padding: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .lesson-points li:last-child { border-bottom: none; }
+
+        .lesson-points li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.85rem;
+            width: 6px;
+            height: 6px;
             background: var(--primary);
-            color: var(--dark);
+            transform: rotate(45deg);
+        }
+
+        .lesson-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .lesson-footer .duration {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        .read-more {
+            font-size: 0.85rem;
+            font-weight: 700;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            transition: color 0.3s;
+        }
+
+        .lesson-card:hover .read-more { color: var(--secondary); }
+
+        /* ===== EXPAND CONTENT ===== */
+        .lesson-expand {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+        }
+
+        .lesson-card.open .lesson-expand {
+            max-height: 1000px;
+        }
+
+        .expand-content {
+            padding: 0 2rem 2rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+            padding-top: 1.5rem;
+        }
+
+        .expand-content h4 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.2rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+        }
+
+        .expand-content p {
+            color: rgba(255,255,255,0.6);
+            font-size: 0.95rem;
+            line-height: 1.8;
+            margin-bottom: 1rem;
+        }
+
+        .key-concept {
+            background: rgba(0,255,179,0.05);
+            border-left: 3px solid var(--accent);
+            padding: 1rem 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .key-concept strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 0.3rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .key-concept span {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.6;
+        }
+
+        .step-list {
+            counter-reset: step;
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .step-list li {
+            counter-increment: step;
+            padding: 0.8rem 0 0.8rem 3rem;
+            position: relative;
+            color: rgba(255,255,255,0.7);
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+        }
+
+        .step-list li::before {
+            content: counter(step);
+            position: absolute;
+            left: 0;
+            top: 0.6rem;
+            width: 24px;
+            height: 24px;
+            background: var(--primary);
+            color: var(--light);
+            font-size: 0.75rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
         /* ===== CTA SECTION ===== */
         .cta-section {
             text-align: center;
             padding: 5rem 3rem;
-            background: rgba(255,255,255,0.02);
+            background: linear-gradient(135deg, rgba(255,51,102,0.05), rgba(0,255,179,0.05));
             border: 1px solid rgba(255,255,255,0.1);
             margin-top: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-section::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(255,255,255,0.01) 2px, rgba(255,255,255,0.01) 4px);
+            pointer-events: none;
         }
 
         .cta-section h2 {
@@ -395,8 +568,25 @@
             margin-right: auto;
         }
 
-        .cta-section .watch-btn {
+        .cta-btn {
+            padding: 1rem 2.5rem;
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            border: none;
+            color: var(--light);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
             font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(255,51,102,0.4);
         }
 
         /* ===== FOOTER ===== */
@@ -408,32 +598,21 @@
             margin-top: 5rem;
         }
 
-        footer p {
-            color: rgba(255,255,255,0.4);
-        }
+        footer p { color: rgba(255,255,255,0.4); }
 
         /* ===== RESPONSIVE ===== */
         @media (max-width: 968px) {
-            .featured-video {
-                grid-template-columns: 1fr;
-            }
-
-            .featured-info {
-                padding: 2rem;
-            }
+            .featured-card { grid-template-columns: 1fr; }
+            .featured-visual { min-height: 250px; padding: 3rem 2rem; }
+            .featured-content { padding: 2rem; }
         }
 
         @media (max-width: 768px) {
-            nav {
-                padding: 1.5rem 2rem;
-            }
+            nav { padding: 1.5rem 2rem; }
 
             .nav-links {
                 position: fixed;
-                top: 0;
-                right: -100%;
-                width: 70%;
-                height: 100vh;
+                top: 0; right: -100%; width: 70%; height: 100vh;
                 background: var(--dark);
                 flex-direction: column;
                 padding: 6rem 2rem;
@@ -443,63 +622,27 @@
                 z-index: 999;
             }
 
-            .nav-links.active {
-                right: 0;
-            }
-
-            .menu-toggle {
-                display: flex;
-            }
-
-            .hero-small {
-                padding: 4rem 2rem 3rem;
-            }
-
-            .filter-bar {
-                padding: 1.5rem 2rem;
-                gap: 0.5rem;
-            }
-
-            .filter-btn {
-                padding: 0.6rem 1.2rem;
-                font-size: 0.8rem;
-            }
-
-            .content {
-                padding: 3rem 2rem;
-            }
-
-            .video-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .section-header {
-                font-size: 2rem;
-            }
+            .nav-links.active { right: 0; }
+            .menu-toggle { display: flex; }
+            .hero-small { padding: 4rem 2rem 3rem; }
+            .hero-stats { gap: 2rem; }
+            .filter-bar { padding: 1.5rem 2rem; gap: 0.5rem; }
+            .filter-btn { padding: 0.6rem 1.2rem; font-size: 0.8rem; }
+            .content { padding: 3rem 2rem; }
+            .lesson-grid { grid-template-columns: 1fr; }
+            .section-header { font-size: 2rem; }
         }
 
         /* ===== ANIMATIONS ===== */
         @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
         }
 
-        .video-card {
-            animation: fadeInUp 0.6s ease-out both;
-        }
-
-        .video-card:nth-child(1) { animation-delay: 0.1s; }
-        .video-card:nth-child(2) { animation-delay: 0.2s; }
-        .video-card:nth-child(3) { animation-delay: 0.3s; }
-        .video-card:nth-child(4) { animation-delay: 0.4s; }
-        .video-card:nth-child(5) { animation-delay: 0.5s; }
-        .video-card:nth-child(6) { animation-delay: 0.6s; }
+        .lesson-card { animation: fadeInUp 0.6s ease-out both; }
+        .lesson-card:nth-child(1) { animation-delay: 0.1s; }
+        .lesson-card:nth-child(2) { animation-delay: 0.2s; }
+        .lesson-card:nth-child(3) { animation-delay: 0.3s; }
     </style>
 </head>
 <body>
@@ -522,277 +665,544 @@
 
     <!-- Hero -->
     <div class="hero-small">
-        <h1 class="page-title">AI Video</h1>
-        <p class="page-subtitle">Lær alt om kunstig intelligens med våre kuraterte opplæringsvideoer</p>
+        <h1 class="page-title">AI Opplæring</h1>
+        <p class="page-subtitle">Din komplette guide til kunstig intelligens. Fra grunnleggende konsepter til avanserte verktøy - alt du trenger for å mestre AI.</p>
+        <div class="hero-stats">
+            <div class="hero-stat">
+                <div class="number">12</div>
+                <div class="label">Leksjoner</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">4</div>
+                <div class="label">Kategorier</div>
+            </div>
+            <div class="hero-stat">
+                <div class="number">0-100</div>
+                <div class="label">Alle nivåer</div>
+            </div>
+        </div>
     </div>
 
     <!-- Filter Tabs -->
     <div class="filter-bar">
-        <button class="filter-btn active" onclick="filterVideos('all')">Alle</button>
-        <button class="filter-btn" onclick="filterVideos('intro')">Intro til AI</button>
-        <button class="filter-btn" onclick="filterVideos('chatgpt')">ChatGPT</button>
-        <button class="filter-btn" onclick="filterVideos('tools')">AI-Verktøy</button>
-        <button class="filter-btn" onclick="filterVideos('advanced')">Avansert</button>
+        <button class="filter-btn active" onclick="filterCards('all', this)">Alle</button>
+        <button class="filter-btn" onclick="filterCards('intro', this)">Intro til AI</button>
+        <button class="filter-btn" onclick="filterCards('chatgpt', this)">ChatGPT</button>
+        <button class="filter-btn" onclick="filterCards('tools', this)">AI-Verktøy</button>
+        <button class="filter-btn" onclick="filterCards('advanced', this)">Avansert</button>
     </div>
 
     <!-- Content -->
     <div class="content">
 
-        <!-- Featured Video -->
-        <div class="featured-section">
-            <h2 class="section-header">Anbefalt</h2>
-            <p class="section-description">Vår toppanbefaling for deg som vil komme i gang med AI.</p>
-            <div class="featured-video">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/2ePf9rue1Ao"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+        <!-- Featured -->
+        <div class="featured-section" data-section="featured">
+            <h2 class="section-header">Start her</h2>
+            <p class="section-description">Helt ny til AI? Denne guiden gir deg alt du trenger for å komme i gang.</p>
+            <div class="featured-card">
+                <div class="featured-visual">
+                    <div class="featured-icon">🧠</div>
+                    <h4>AI Grunnkurs</h4>
                 </div>
-                <div class="featured-info">
-                    <div class="featured-badge">Anbefalt</div>
+                <div class="featured-content">
+                    <div class="featured-badge">Anbefalt startpunkt</div>
                     <h3>Hva er kunstig intelligens?</h3>
-                    <p>En komplett introduksjon til AI - hva det er, hvordan det fungerer, og hvorfor det er viktig for alle å forstå denne teknologien.</p>
-                    <div class="video-meta">
-                        <span>Intro til AI</span>
-                        <span>Nybegynner</span>
+                    <p>Kunstig intelligens (AI) er datamaskiner som kan lære og ta beslutninger på egenhånd. Tenk på det som å lære en datamaskin å tenke - ikke som et menneske, men på sin egen måte. AI bruker enorme mengder data til å finne mønstre og gjøre prediksjoner.</p>
+                    <div class="featured-topics">
+                        <span class="topic-tag">Maskinlæring</span>
+                        <span class="topic-tag">Nevrale nettverk</span>
+                        <span class="topic-tag">Generativ AI</span>
+                        <span class="topic-tag">Daglig bruk</span>
+                    </div>
+                    <p>I dag bruker du allerede AI: Spotify anbefaler musikk, Google oversetter tekst, og Siri forstår stemmen din. Men det er bare begynnelsen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- INTRO TIL AI -->
+        <div data-section="intro">
+            <h2 class="section-header" id="section-intro">Intro til AI</h2>
+            <p class="section-description">Forstå grunnlaget. Ingen forkunnskaper kreves.</p>
+            <div class="lesson-grid">
+
+                <!-- Lesson 1 -->
+                <div class="lesson-card" data-category="intro" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🤖</div>
+                        <div class="lesson-header-text">
+                            <h3>AI vs. maskinlæring vs. deep learning</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Intro til AI</div>
+                        <p>Mange blander sammen disse begrepene. Her er den enkle forklaringen på forskjellene og hvordan de henger sammen.</p>
+                        <ul class="lesson-points">
+                            <li>AI er paraplytermet - maskiner som simulerer menneskelig intelligens</li>
+                            <li>Maskinlæring er en metode innen AI - maskinen lærer fra data</li>
+                            <li>Deep learning bruker nevrale nettverk med mange lag</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">5 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Dypere forklaring</h4>
+                            <p><strong>Kunstig intelligens (AI)</strong> er det overordnede feltet som handler om å lage maskiner som kan utføre oppgaver som vanligvis krever menneskelig intelligens. Alt fra en enkel regel-basert chatbot til avanserte selvkjørende biler faller inn under AI.</p>
+                            <div class="key-concept">
+                                <strong>Nøkkelkonsept</strong>
+                                <span>Tenk på det som russiske dukker: AI er den største dukken, maskinlæring er inni der, og deep learning er den minste dukken i midten. Hver er en mer spesifikk versjon av den utenfor.</span>
+                            </div>
+                            <p><strong>Maskinlæring (ML)</strong> er en undergruppe av AI der maskinen lærer fra data uten å bli eksplisitt programmert. I stedet for å skrive regler, gir du maskinen eksempler, og den finner mønstrene selv.</p>
+                            <p><strong>Deep learning</strong> er en undergruppe av ML som bruker kunstige nevrale nettverk inspirert av hjernen. Det er denne teknologien som driver ChatGPT, bildegjenkjenning og stemmeassistenter.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 2 -->
+                <div class="lesson-card" data-category="intro" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🧬</div>
+                        <div class="lesson-header-text">
+                            <h3>Hvordan maskiner lærer</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Intro til AI</div>
+                        <p>Maskinlæring handler om å finne mønstre i data. Her forklarer vi prosessen steg for steg.</p>
+                        <ul class="lesson-points">
+                            <li>Data samles inn og forberedes for trening</li>
+                            <li>En modell trenes ved å se på tusenvis av eksempler</li>
+                            <li>Modellen testes og forbedres iterativt</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">7 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Trening steg for steg</h4>
+                            <ol class="step-list">
+                                <li><strong>Samle data</strong> — Alt starter med data. For å lære en AI å gjenkjenne katter, trenger du tusenvis av bilder av katter (og ting som ikke er katter).</li>
+                                <li><strong>Forberede data</strong> — Dataene må renses, organiseres og deles i trenings-sett og test-sett.</li>
+                                <li><strong>Velge modell</strong> — Du velger en algoritme som passer oppgaven. For bilder brukes ofte konvolusjonelle nevrale nettverk (CNN).</li>
+                                <li><strong>Trene modellen</strong> — Modellen ser på treningsdata, gjør prediksjoner, sammenligner med riktig svar, og justerer seg selv. Dette gjentas millioner av ganger.</li>
+                                <li><strong>Evaluere</strong> — Test modellen på data den aldri har sett før. Hvor nøyaktig er den?</li>
+                                <li><strong>Forbedre</strong> — Juster parametre, legg til mer data, eller prøv en annen tilnærming.</li>
+                            </ol>
+                            <div class="key-concept">
+                                <strong>Viktig å forstå</strong>
+                                <span>En AI-modell er bare så god som dataene den trenes på. Dårlige data gir dårlige resultater - dette kalles "garbage in, garbage out" i bransjen.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 3 -->
+                <div class="lesson-card" data-category="intro" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🌐</div>
+                        <div class="lesson-header-text">
+                            <h3>AI i hverdagen din</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Intro til AI</div>
+                        <p>Du bruker AI hver dag uten å tenke over det. Her er de vanligste stedene AI allerede påvirker livet ditt.</p>
+                        <ul class="lesson-points">
+                            <li>Streaming-tjenester (Spotify, Netflix) — anbefalingsalgoritmer</li>
+                            <li>Sosiale medier — innholdsfiltrering og ansiktsgjenkjenning</li>
+                            <li>Navigasjon — Google Maps beregner optimal rute i sanntid</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">4 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>AI overalt</h4>
+                            <p>Hver gang du åpner telefonen og bruker ansiktsgjenkjenning, bruker du et nevralt nettverk. Når Spotify foreslår en sang, har en AI analysert lyttevanene til millioner av brukere for å forutsi hva du vil like.</p>
+                            <p><strong>E-post:</strong> Gmail sin spam-filter bruker maskinlæring til å blokkere over 99.9% av spam. Smart Reply foreslår korte svar basert på innholdet i meldingen.</p>
+                            <p><strong>Shopping:</strong> Amazon og andre nettbutikker bruker AI til å anbefale produkter, sette priser dynamisk, og forutsi etterspørsel.</p>
+                            <p><strong>Helse:</strong> AI-systemer kan oppdage kreft i røntgenbilder med høyere nøyaktighet enn mange leger, og brukes allerede i norske sykehus.</p>
+                            <div class="key-concept">
+                                <strong>Fremtidens AI i Norge</strong>
+                                <span>Norge er langt fremme på AI-bruk i offentlig sektor. NAV, Skatteetaten og helsevesenet bruker alle AI-løsninger for å forbedre tjenestene sine.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Intro to AI Section -->
-        <h2 class="section-header" id="section-intro">Intro til AI</h2>
-        <p class="section-description">Grunnleggende videoer for deg som er ny til kunstig intelligens.</p>
-        <div class="video-grid">
-            <div class="video-card" data-category="intro">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/ad79nYk2keg"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">Intro til AI</div>
-                    <h3>AI for nybegynnere</h3>
-                    <p>Lær de grunnleggende konseptene bak kunstig intelligens og maskinlæring på en enkel måte.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
+        <!-- CHATGPT & CHATBOTER -->
+        <div data-section="chatgpt">
+            <h2 class="section-header" id="section-chatgpt">ChatGPT & Chatboter</h2>
+            <p class="section-description">Mestre AI-chatboter. Lær å skrive prompts som gir deg akkurat det du trenger.</p>
+            <div class="lesson-grid">
+
+                <!-- Lesson 4 -->
+                <div class="lesson-card" data-category="chatgpt" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">💬</div>
+                        <div class="lesson-header-text">
+                            <h3>ChatGPT fra A til Å</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">ChatGPT</div>
+                        <p>En komplett nybegynner-guide til ChatGPT. Registrering, grunnleggende bruk, og dine første samtaler med AI.</p>
+                        <ul class="lesson-points">
+                            <li>Opprett konto og forstå gratis vs. Plus-versjonen</li>
+                            <li>Lær å formulere spørsmål som gir gode svar</li>
+                            <li>Forstå begrensningene - hva ChatGPT kan og ikke kan</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">8 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Kom i gang</h4>
+                            <p>ChatGPT er en AI-chatbot laget av OpenAI. Den kan svare på spørsmål, skrive tekst, hjelpe med kode, oversette, og mye mer. Den ble lansert i november 2022 og ble den raskest voksende appen noensinne.</p>
+                            <ol class="step-list">
+                                <li><strong>Registrer deg</strong> — Gå til chat.openai.com og opprett en gratis konto med e-post eller Google/Microsoft-konto.</li>
+                                <li><strong>Velg modell</strong> — Gratis-versjonen gir tilgang til GPT-4o mini. Plus ($20/mnd) gir tilgang til GPT-4o og flere funksjoner.</li>
+                                <li><strong>Start en samtale</strong> — Skriv inn spørsmålet ditt i tekstfeltet. Vær så spesifikk som mulig for bedre resultater.</li>
+                                <li><strong>Iterer</strong> — Hvis svaret ikke er perfekt, be om justeringer. "Gjør det kortere", "Forklar det enklere", "Gi meg et eksempel".</li>
+                            </ol>
+                            <div class="key-concept">
+                                <strong>Viktig begrensning</strong>
+                                <span>ChatGPT kan "hallusinere" - det betyr at den kan finne på fakta som høres overbevisende ut. Dobbelsjekk alltid viktig informasjon mot andre kilder.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="video-card" data-category="intro">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/mEsleV16qdo"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">Intro til AI</div>
-                    <h3>Hvordan fungerer maskinlæring?</h3>
-                    <p>Forstå prinsippene bak maskinlæring - fra data til intelligente beslutninger.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
+                <!-- Lesson 5 -->
+                <div class="lesson-card" data-category="chatgpt" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">✍️</div>
+                        <div class="lesson-header-text">
+                            <h3>Prompt engineering</h3>
+                            <span class="level">Middels</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">ChatGPT</div>
+                        <p>Kunsten å skrive gode prompts er nøkkelen til å få maksimalt ut av AI. Lær teknikkene proffene bruker.</p>
+                        <ul class="lesson-points">
+                            <li>Gi kontekst, rolle og format i prompten din</li>
+                            <li>Bruk "chain-of-thought" for komplekse oppgaver</li>
+                            <li>Lær "few-shot" teknikken med eksempler</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">10 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Bli en prompt-mester</h4>
+                            <p>Forskjellen mellom et middelmådig og et fantastisk AI-svar ligger nesten alltid i prompten. Her er de viktigste teknikkene:</p>
+                            <div class="key-concept">
+                                <strong>Teknikk 1: Rolle-setting</strong>
+                                <span>"Du er en erfaren norsk markedsføringskonsulent med 15 års erfaring i B2B-segmentet. Hjelp meg å lage en markedsplan for..."</span>
+                            </div>
+                            <div class="key-concept">
+                                <strong>Teknikk 2: Strukturert output</strong>
+                                <span>"Gi meg svaret som en tabell med kolonnene: Fordel, Ulempe, Kostnad. Bruk norsk og vær konkret."</span>
+                            </div>
+                            <div class="key-concept">
+                                <strong>Teknikk 3: Chain-of-thought</strong>
+                                <span>"Tenk gjennom dette steg for steg. Forklar din resonering underveis før du gir det endelige svaret."</span>
+                            </div>
+                            <p>Det handler om å være spesifikk. Jo mer kontekst du gir, jo bedre blir resultatet. Inkluder alltid: hva du vil oppnå, hvem målgruppen er, og hvilket format du ønsker.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="video-card" data-category="intro">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/a0_lo_GDcFw"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">Intro til AI</div>
-                    <h3>Hva er nevrale nettverk?</h3>
-                    <p>En visuell forklaring av hvordan nevrale nettverk fungerer og hvorfor de er grunnlaget for moderne AI.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
+                <!-- Lesson 6 -->
+                <div class="lesson-card" data-category="chatgpt" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🏢</div>
+                        <div class="lesson-header-text">
+                            <h3>AI for jobb og produktivitet</h3>
+                            <span class="level">Middels</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- ChatGPT Section -->
-        <h2 class="section-header" id="section-chatgpt">ChatGPT & Chatboter</h2>
-        <p class="section-description">Lær å bruke ChatGPT og andre AI-chatboter effektivt.</p>
-        <div class="video-grid">
-            <div class="video-card" data-category="chatgpt">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/JTxsNm9IdYU"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">ChatGPT</div>
-                    <h3>ChatGPT - Komplett guide</h3>
-                    <p>Alt du trenger å vite om ChatGPT - fra registrering til avanserte teknikker for å få bedre svar.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
+                    <div class="lesson-body">
+                        <div class="lesson-category">ChatGPT</div>
+                        <p>Bruk ChatGPT og andre AI-verktøy for å jobbe smartere. Praktiske tips for e-post, presentasjoner og analyse.</p>
+                        <ul class="lesson-points">
+                            <li>Skriv profesjonelle e-poster og rapporter på sekunder</li>
+                            <li>Oppsummer lange dokumenter og møtenotater</li>
+                            <li>Analyser data og lag presentasjoner med AI-hjelp</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">6 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
                     </div>
-                </div>
-            </div>
-
-            <div class="video-card" data-category="chatgpt">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/hhHVMBCm5uA"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">ChatGPT</div>
-                    <h3>Prompt Engineering - Skriv bedre prompts</h3>
-                    <p>Lær kunsten å skrive gode prompts som gir deg presise og nyttige svar fra AI-modeller.</p>
-                    <div class="video-meta">
-                        <span>Middels</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card" data-category="chatgpt">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/jHv63Uvk5VA"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">ChatGPT</div>
-                    <h3>ChatGPT for jobb og skole</h3>
-                    <p>Praktiske tips for å bruke ChatGPT i hverdagen - fra skriving til analyse og problemløsning.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- AI Tools Section -->
-        <h2 class="section-header" id="section-tools">AI-Verktøy</h2>
-        <p class="section-description">Utforsk de beste AI-verktøyene for bilder, video, musikk og mer.</p>
-        <div class="video-grid">
-            <div class="video-card" data-category="tools">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/HK6y8DAPN_0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">AI-Verktøy</div>
-                    <h3>AI Bildegenerering - Midjourney & DALL-E</h3>
-                    <p>Lag fantastiske bilder med AI. Lær å bruke Midjourney, DALL-E og andre bildegenererings-verktøy.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card" data-category="tools">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/HxHMSoMGbQc"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">AI-Verktøy</div>
-                    <h3>AI for videoredigering</h3>
-                    <p>Oppdag hvordan AI kan revolusjonere videoredigeringen din - fra automatisk klipping til effekter.</p>
-                    <div class="video-meta">
-                        <span>Middels</span>
-                    </div>
-                </div>
-            </div>
-
-            <div class="video-card" data-category="tools">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/0GJqB4Bm1s0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">AI-Verktøy</div>
-                    <h3>Topp 10 AI-verktøy du må kjenne til</h3>
-                    <p>De mest nyttige AI-verktøyene samlet - fra produktivitet til kreativitet.</p>
-                    <div class="video-meta">
-                        <span>Nybegynner</span>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>AI på jobben</h4>
+                            <p>AI kan spare deg timer hver uke. Her er de mest effektive bruksområdene:</p>
+                            <p><strong>E-post:</strong> Lim inn en lang e-post og be ChatGPT oppsummere de viktigste punktene. Eller gi den stikkord og la den skrive et profesjonelt svar.</p>
+                            <p><strong>Møter:</strong> Bruk AI-verktøy som Otter.ai eller Microsoft Copilot til å transkribere og oppsummere møter automatisk. Du får handlingspunkter og nøkkelinnsikter uten å ta notater.</p>
+                            <p><strong>Analyse:</strong> Last opp regneark til ChatGPT (Plus) og be den analysere trender, lage grafer, eller forklare tallene i klartekst.</p>
+                            <div class="key-concept">
+                                <strong>Produktivitetstips</strong>
+                                <span>Lag deg "mal-prompts" for oppgaver du gjør ofte. Lagre de beste promptene dine i et dokument slik at du slipper å finne dem opp på nytt hver gang.</span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Advanced Section -->
-        <h2 class="section-header" id="section-advanced">Avansert AI</h2>
-        <p class="section-description">Dykk dypere inn i AI-teknologi og fremtiden.</p>
-        <div class="video-grid">
-            <div class="video-card" data-category="advanced">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/zjkBMFhNj_g"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+        <!-- AI-VERKTØY -->
+        <div data-section="tools">
+            <h2 class="section-header" id="section-tools">AI-Verktøy</h2>
+            <p class="section-description">Praktiske AI-verktøy for bilder, video, musikk og kreativt arbeid.</p>
+            <div class="lesson-grid">
+
+                <!-- Lesson 7 -->
+                <div class="lesson-card" data-category="tools" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🎨</div>
+                        <div class="lesson-header-text">
+                            <h3>AI-bildegenerering</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">AI-Verktøy</div>
+                        <p>Lag fantastiske bilder med tekst-til-bilde AI. Sammenligning av Midjourney, DALL-E og Stable Diffusion.</p>
+                        <ul class="lesson-points">
+                            <li>Midjourney — Best på kunstnerisk kvalitet og estetikk</li>
+                            <li>DALL-E 3 — Enklest å bruke, integrert i ChatGPT</li>
+                            <li>Stable Diffusion — Gratis, open-source, mest kontroll</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">8 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Velg riktig verktøy</h4>
+                            <p><strong>Midjourney</strong> er markedslederen for kunstnerisk bildegenerering. Den skaper visuelt fantastiske bilder med en unik stil. Brukes via Discord, starter på ~$10/mnd.</p>
+                            <p><strong>DALL-E 3</strong> fra OpenAI er den enkleste å bruke — du kan generere bilder direkte i ChatGPT ved å beskrive hva du vil ha. Perfekt for nybegynnere og rask prototyping.</p>
+                            <p><strong>Stable Diffusion</strong> er gratis og open-source. Du kan kjøre det lokalt på din egen maskin. Gir mest kontroll men krever mer teknisk kunnskap.</p>
+                            <div class="key-concept">
+                                <strong>Tips for bedre bilder</strong>
+                                <span>Vær spesifikk med stilen du vil ha: "fotorealistisk portrett med bløt belysning" gir helt andre resultater enn "bilde av en person". Legg til stilreferanser som "i stil med Studio Ghibli" eller "cinematisk, 35mm film".</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <div class="video-info">
-                    <div class="video-category">Avansert</div>
-                    <h3>Hva er store språkmodeller (LLM)?</h3>
-                    <p>Forstå teknologien bak ChatGPT, Claude og andre AI-modeller - fra transformer-arkitektur til trening.</p>
-                    <div class="video-meta">
-                        <span>Avansert</span>
+
+                <!-- Lesson 8 -->
+                <div class="lesson-card" data-category="tools" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🎬</div>
+                        <div class="lesson-header-text">
+                            <h3>AI for video og lyd</h3>
+                            <span class="level">Middels</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">AI-Verktøy</div>
+                        <p>Revolusjonér videoredigering og musikkproduksjon med AI-verktøy som kutter timer av arbeidstiden.</p>
+                        <ul class="lesson-points">
+                            <li>Sora og Runway — Generer video fra tekst-beskrivelser</li>
+                            <li>Descript — Rediger video som et tekstdokument</li>
+                            <li>Suno og Udio — Lag musikk med AI fra tekst-prompts</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">7 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Video-revolusjon</h4>
+                            <p><strong>Tekst-til-video</strong> er det nyeste gjennombruddet innen AI. Verktøy som OpenAIs Sora og Runways Gen-3 kan generere realistiske videoklipp fra en enkel tekstbeskrivelse.</p>
+                            <p><strong>Descript</strong> lar deg redigere video ved å redigere transkripsjonen. Slett et ord fra teksten, og det tilsvarende klippet fjernes fra videoen. Magisk for podcaster og YouTube-innhold.</p>
+                            <p><strong>AI-musikk</strong> har eksplodert med tjenester som Suno og Udio. Beskriv sjangeren, stemningen og teksten du vil ha, og AI-en lager en full sang på sekunder. Perfekt for bakgrunnsmusikk til video.</p>
+                            <div class="key-concept">
+                                <strong>Opphavsrett</strong>
+                                <span>AI-generert innhold har uklare regler rundt opphavsrett. Per 2025 er det fortsatt juridisk debatt om hvem som eier rettighetene til AI-skapt musikk og video. Sjekk alltid lisensvilkårene.</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Lesson 9 -->
+                <div class="lesson-card" data-category="tools" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">⚡</div>
+                        <div class="lesson-header-text">
+                            <h3>De 10 beste AI-verktøyene</h3>
+                            <span class="level">Nybegynner</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">AI-Verktøy</div>
+                        <p>En kuratert liste over de mest nyttige AI-verktøyene akkurat nå, for produktivitet, kreativitet og læring.</p>
+                        <ul class="lesson-points">
+                            <li>ChatGPT, Claude, Gemini — De tre store AI-chatbotene</li>
+                            <li>Notion AI, Grammarly — Skriving og organisering</li>
+                            <li>Canva AI, Remove.bg — Design og bilderedigering</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">6 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Verktøykassen din</h4>
+                            <ol class="step-list">
+                                <li><strong>ChatGPT</strong> — Den mest populære AI-chatboten. Perfekt for skriving, koding, og generelle spørsmål.</li>
+                                <li><strong>Claude</strong> — Anthropics alternativ. Sterk på lange tekster, analyse og nøyaktighet.</li>
+                                <li><strong>Gemini</strong> — Googles AI, integrert med Google-tjenester. Best på søk og oppdatert info.</li>
+                                <li><strong>Midjourney</strong> — Bildegenerering i toppklasse. Brukes av designere og kreative over hele verden.</li>
+                                <li><strong>Notion AI</strong> — AI-assistent for notater, prosjektstyring og skriving i Notion.</li>
+                                <li><strong>Grammarly</strong> — AI-drevet skriveassistent for grammatikk, stil og tone.</li>
+                                <li><strong>Canva AI</strong> — Generer design, fjern bakgrunner, og rediger bilder med AI.</li>
+                                <li><strong>Perplexity</strong> — AI-søkemotor som gir kildehenvisninger. Perfekt for research.</li>
+                                <li><strong>Descript</strong> — Rediger video og podcast som tekst.</li>
+                                <li><strong>GitHub Copilot</strong> — AI-kodeassistent som skriver kode for deg i sanntid.</li>
+                            </ol>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
 
-            <div class="video-card" data-category="advanced">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/cdiD-9MMpb0"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
-                </div>
-                <div class="video-info">
-                    <div class="video-category">Avansert</div>
-                    <h3>AI og fremtiden</h3>
-                    <p>Hvor er AI på vei? Utforsk trender, muligheter og utfordringer som former fremtidens teknologi.</p>
-                    <div class="video-meta">
-                        <span>Avansert</span>
+        <!-- AVANSERT -->
+        <div data-section="advanced">
+            <h2 class="section-header" id="section-advanced">Avansert AI</h2>
+            <p class="section-description">For deg som vil forstå teknologien bak og se inn i fremtiden.</p>
+            <div class="lesson-grid">
+
+                <!-- Lesson 10 -->
+                <div class="lesson-card" data-category="advanced" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">📚</div>
+                        <div class="lesson-header-text">
+                            <h3>Store språkmodeller (LLM)</h3>
+                            <span class="level">Avansert</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Avansert</div>
+                        <p>Forstå teknologien som driver ChatGPT og Claude. Transformer-arkitekturen forklart uten matematikk.</p>
+                        <ul class="lesson-points">
+                            <li>Hva er en transformer og hvorfor var den et gjennombrudd</li>
+                            <li>Pretrening vs. finjustering — to steg til en smart AI</li>
+                            <li>Tokens, kontekstvinduer og hvorfor de har begrensninger</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">12 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Under panseret på ChatGPT</h4>
+                            <p>Store språkmodeller (Large Language Models / LLMs) er AI-systemer trent på enorme mengder tekst fra internett. De lærer seg statistiske mønstre i språk - i praksis forutsier de det mest sannsynlige neste ordet, igjen og igjen.</p>
+                            <div class="key-concept">
+                                <strong>Transformer-arkitekturen</strong>
+                                <span>I 2017 publiserte Google-forskere "Attention Is All You Need" - en artikkel som revolusjonerte AI. Transformer-arkitekturen lar modellen fokusere på relevante deler av teksten uansett avstand, noe som gjorde det mulig å trene mye større modeller.</span>
+                            </div>
+                            <p><strong>Pretrening:</strong> Modellen leser milliarder av nettsider, bøker og artikler. Den lærer språk, fakta, og resonering fra denne prosessen. GPT-4 ble trent på anslagsvis 13 billioner tokens.</p>
+                            <p><strong>Finjustering:</strong> Etter pretrening gjøres modellen nyttig via instruksjons-finjustering (den lærer å følge instruksjoner) og RLHF (Reinforcement Learning from Human Feedback) der mennesker rangerer svarene.</p>
+                            <p><strong>Tokens:</strong> LLMs leser ikke ord, men "tokens" - biter av tekst som kan være et helt ord, en del av et ord, eller et tegn. "Hei, verden!" er ~3-4 tokens. Kontekstvinduet (f.eks. 128K tokens) er grensen for hvor mye tekst modellen kan behandle om gangen.</p>
+                        </div>
                     </div>
                 </div>
-            </div>
 
-            <div class="video-card" data-category="advanced">
-                <div class="video-wrapper">
-                    <iframe
-                        src="https://www.youtube.com/embed/WXuK6gekU1Y"
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                        allowfullscreen>
-                    </iframe>
+                <!-- Lesson 11 -->
+                <div class="lesson-card" data-category="advanced" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🔮</div>
+                        <div class="lesson-header-text">
+                            <h3>AI og fremtiden</h3>
+                            <span class="level">Avansert</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Avansert</div>
+                        <p>Hvor er AI på vei? AGI, AI-agenter, og hvordan teknologien vil forme samfunnet de neste årene.</p>
+                        <ul class="lesson-points">
+                            <li>AI-agenter — selvstendige systemer som utfører oppgaver</li>
+                            <li>Multimodal AI — modeller som forstår tekst, bilde og lyd</li>
+                            <li>AGI-debatten — er generell kunstig intelligens nær?</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">9 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Neste kapittel</h4>
+                            <p><strong>AI-agenter</strong> er det hotteste temaet i 2025. I stedet for at du spør en chatbot om hvert steg, kan AI-agenter utføre hele oppgaver selvstendig - bestille reiser, skrive kode, analysere data, og ta beslutninger underveis.</p>
+                            <p><strong>Multimodal AI</strong> betyr modeller som kan se, høre og lese samtidig. GPT-4o kan analysere bilder, forstå tale, og generere tekst i en sammenhengende samtale. Neste steg er sømløs integrering av video, 3D-modeller og sanntidsinteraksjon.</p>
+                            <div class="key-concept">
+                                <strong>AGI — Kunstig generell intelligens</strong>
+                                <span>AGI refererer til en AI som kan utføre alle intellektuelle oppgaver et menneske kan. Per i dag finnes ikke AGI - dagens modeller er "smale" eksperter. Eksperter er uenige om det tar 5, 20, eller 100+ år å oppnå AGI, eller om det i det hele tatt er mulig.</span>
+                            </div>
+                            <p><strong>Arbeidsmarkedet:</strong> AI vil ikke erstatte alle jobber, men den vil endre dem. De som lærer å bruke AI effektivt vil ha et enormt fortrinn. Nye roller som "AI-trener" og "prompt-ingeniør" har allerede oppstått.</p>
+                        </div>
+                    </div>
                 </div>
-                <div class="video-info">
-                    <div class="video-category">Avansert</div>
-                    <h3>AI-etikk og sikkerhet</h3>
-                    <p>Viktige spørsmål om AI-sikkerhet, personvern og etiske utfordringer vi må ta stilling til.</p>
-                    <div class="video-meta">
-                        <span>Avansert</span>
+
+                <!-- Lesson 12 -->
+                <div class="lesson-card" data-category="advanced" onclick="toggleCard(this)">
+                    <div class="lesson-header">
+                        <div class="lesson-icon">🛡️</div>
+                        <div class="lesson-header-text">
+                            <h3>AI-etikk og sikkerhet</h3>
+                            <span class="level">Avansert</span>
+                        </div>
+                    </div>
+                    <div class="lesson-body">
+                        <div class="lesson-category">Avansert</div>
+                        <p>De viktigste etiske spørsmålene rundt AI. Personvern, bias, deepfakes og ansvarlig bruk.</p>
+                        <ul class="lesson-points">
+                            <li>Bias i AI — modeller arver fordommer fra treningsdataene</li>
+                            <li>Deepfakes — AI-generert falsk media og desinformasjon</li>
+                            <li>EUs AI Act — verdens første omfattende AI-regulering</li>
+                        </ul>
+                        <div class="lesson-footer">
+                            <span class="duration">8 min lesing</span>
+                            <span class="read-more">Les mer ↓</span>
+                        </div>
+                    </div>
+                    <div class="lesson-expand">
+                        <div class="expand-content">
+                            <h4>Ansvarlig AI</h4>
+                            <p><strong>Bias:</strong> AI-modeller trenes på data fra internett, som inneholder fordommer og skjevheter. Hvis treningsdataene er skjeve, vil AI-en også være det. For eksempel har ansettelsesalgoritmer diskriminert kvinner fordi historiske data viste at menn ble ansatt oftere.</p>
+                            <p><strong>Deepfakes:</strong> AI kan nå lage falske bilder, videoer og stemmer som er nesten umulige å skille fra ekte. Dette utgjør en trussel mot valg, personvern og tillit. I 2024 ble deepfakes brukt til å påvirke europeiske valg.</p>
+                            <div class="key-concept">
+                                <strong>EUs AI Act (2024)</strong>
+                                <span>EU vedtok verdens første helhetlige AI-lov i 2024. Den klassifiserer AI-systemer etter risikonivå: noen er forbudt (sosial scoring), noen krever strenge regler (medisinsk AI), og lavrisikobruk er stort sett uregulert.</span>
+                            </div>
+                            <p><strong>Personvern:</strong> Når du skriver inn data i ChatGPT, kan det brukes til å trene fremtidige modeller (med mindre du velger bort dette). Vær forsiktig med sensitiv informasjon. Bedriftsversjoner som ChatGPT Enterprise og Azure OpenAI gir sterkere databeskyttelse.</p>
+                            <p><strong>Hva kan du gjøre?</strong> Vær kritisk til AI-generert innhold, rapporter deepfakes, og lær deg å gjenkjenne AI-skapt materiale. Ansvarlig bruk starter med deg.</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -800,9 +1210,9 @@
 
         <!-- CTA -->
         <div class="cta-section">
-            <h2>Vil du lære mer?</h2>
-            <p>Følg oss for nye opplæringsvideoer om AI, teknologi og kreative verktøy.</p>
-            <a href="index.html#contact" class="watch-btn">Hold meg oppdatert</a>
+            <h2>Klar for å bruke AI?</h2>
+            <p>Hold deg oppdatert med nye leksjoner om AI, teknologi og kreative verktøy.</p>
+            <a href="index.html#contact" class="cta-btn">Meld deg på nyhetsbrevet</a>
         </div>
     </div>
 
@@ -812,67 +1222,44 @@
     </footer>
 
     <script>
-        // Filter functionality
-        function filterVideos(category) {
-            const buttons = document.querySelectorAll('.filter-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+        // Toggle expandable lesson content
+        function toggleCard(card) {
+            card.classList.toggle('open');
+            const readMore = card.querySelector('.read-more');
+            if (readMore) {
+                readMore.textContent = card.classList.contains('open') ? 'Lukk ↑' : 'Les mer ↓';
+            }
+        }
 
-            const cards = document.querySelectorAll('.video-card');
-            const sections = document.querySelectorAll('.section-header, .section-description');
-            const featured = document.querySelector('.featured-section');
+        // Filter functionality
+        function filterCards(category, btn) {
+            document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const sections = document.querySelectorAll('[data-section]');
 
             if (category === 'all') {
-                cards.forEach(card => card.style.display = 'block');
-                sections.forEach(el => el.style.display = 'block');
-                if (featured) featured.style.display = 'block';
-                document.querySelectorAll('.video-grid').forEach(grid => grid.style.display = 'grid');
+                sections.forEach(s => s.style.display = '');
                 return;
             }
 
-            if (featured) featured.style.display = 'none';
-
-            cards.forEach(card => {
-                if (card.dataset.category === category) {
-                    card.style.display = 'block';
+            sections.forEach(section => {
+                const sectionType = section.dataset.section;
+                if (sectionType === category) {
+                    section.style.display = '';
                 } else {
-                    card.style.display = 'none';
-                }
-            });
-
-            // Show/hide section headers based on category
-            const sectionMap = {
-                'intro': 'section-intro',
-                'chatgpt': 'section-chatgpt',
-                'tools': 'section-tools',
-                'advanced': 'section-advanced'
-            };
-
-            document.querySelectorAll('[id^="section-"]').forEach(header => {
-                const nextSibling = header.nextElementSibling;
-                const gridAfter = nextSibling ? nextSibling.nextElementSibling : null;
-
-                if (header.id === sectionMap[category]) {
-                    header.style.display = 'block';
-                    if (nextSibling && nextSibling.classList.contains('section-description')) nextSibling.style.display = 'block';
-                    if (gridAfter && gridAfter.classList.contains('video-grid')) gridAfter.style.display = 'grid';
-                } else {
-                    header.style.display = 'none';
-                    if (nextSibling && nextSibling.classList.contains('section-description')) nextSibling.style.display = 'none';
-                    if (gridAfter && gridAfter.classList.contains('video-grid')) gridAfter.style.display = 'none';
+                    section.style.display = 'none';
                 }
             });
         }
 
         // Mobile menu
         function toggleMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.toggle('active');
+            document.getElementById('navLinks').classList.toggle('active');
         }
 
         function closeMenu() {
-            const nav = document.getElementById('navLinks');
-            nav.classList.remove('active');
+            document.getElementById('navLinks').classList.remove('active');
         }
     </script>
 </body>
