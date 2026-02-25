@@ -1,0 +1,879 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Video - GOD NOK</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Antonio:wght@400;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --primary: #FF3366;
+            --secondary: #FFD700;
+            --dark: #0a0a0a;
+            --light: #ffffff;
+            --gray: #1a1a1a;
+            --accent: #00FFB3;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background: var(--dark);
+            color: var(--light);
+            min-height: 100vh;
+        }
+
+        /* ===== NAVIGATION ===== */
+        nav {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .logo {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: 0.15em;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 3rem;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            transition: color 0.3s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary);
+        }
+
+        .menu-toggle {
+            display: none;
+            flex-direction: column;
+            gap: 6px;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+
+        .menu-toggle span {
+            width: 30px;
+            height: 3px;
+            background: var(--light);
+            transition: all 0.3s;
+        }
+
+        /* ===== HERO ===== */
+        .hero-small {
+            padding: 6rem 4rem 4rem;
+            text-align: center;
+            background: linear-gradient(180deg, var(--dark), var(--gray));
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-small::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at 50% 50%, rgba(255,51,102,0.1), transparent 70%);
+            pointer-events: none;
+        }
+
+        .page-title {
+            font-family: 'Antonio', sans-serif;
+            font-size: clamp(4rem, 10vw, 8rem);
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, var(--light), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-transform: uppercase;
+        }
+
+        .page-subtitle {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.6);
+            margin-bottom: 1rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* ===== FILTER TABS ===== */
+        .filter-bar {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            padding: 2rem 4rem;
+            background: var(--gray);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            flex-wrap: wrap;
+        }
+
+        .filter-btn {
+            padding: 0.8rem 2rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.15);
+            color: rgba(255,255,255,0.7);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn:hover {
+            border-color: var(--primary);
+            color: var(--primary);
+        }
+
+        .filter-btn.active {
+            background: var(--primary);
+            border-color: var(--primary);
+            color: var(--light);
+        }
+
+        /* ===== CONTENT ===== */
+        .content {
+            padding: 5rem 4rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            font-family: 'Antonio', sans-serif;
+            font-size: 3rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            color: var(--accent);
+            text-transform: uppercase;
+        }
+
+        .section-description {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            max-width: 700px;
+        }
+
+        /* ===== VIDEO GRID ===== */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(380px, 1fr));
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .video-card {
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .video-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,51,102,0.08), transparent);
+            transition: left 0.6s;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .video-card:hover::before {
+            left: 100%;
+        }
+
+        .video-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 50px rgba(255,51,102,0.2);
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+        }
+
+        .video-wrapper iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        .video-info {
+            padding: 1.5rem 2rem 2rem;
+        }
+
+        .video-category {
+            display: inline-block;
+            padding: 0.3rem 1rem;
+            background: rgba(255,51,102,0.15);
+            color: var(--primary);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 0.8rem;
+        }
+
+        .video-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.03em;
+            line-height: 1.3;
+        }
+
+        .video-info p {
+            color: rgba(255,255,255,0.5);
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        .video-meta {
+            display: flex;
+            gap: 1.5rem;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .video-meta span {
+            font-size: 0.8rem;
+            color: rgba(255,255,255,0.4);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* ===== FEATURED VIDEO ===== */
+        .featured-section {
+            margin-bottom: 5rem;
+        }
+
+        .featured-video {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 3rem;
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,51,102,0.3);
+            overflow: hidden;
+        }
+
+        .featured-video .video-wrapper {
+            padding-bottom: 56.25%;
+        }
+
+        .featured-info {
+            padding: 2.5rem 2.5rem 2.5rem 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .featured-badge {
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: linear-gradient(135deg, var(--primary), #FF1744);
+            color: var(--light);
+            font-size: 0.75rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1rem;
+            width: fit-content;
+        }
+
+        .featured-info h3 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            letter-spacing: 0.05em;
+            line-height: 1.2;
+        }
+
+        .featured-info p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .watch-btn {
+            padding: 1rem 2.5rem;
+            background: transparent;
+            border: 2px solid var(--primary);
+            color: var(--primary);
+            font-family: 'DM Sans', sans-serif;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            cursor: pointer;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-block;
+            width: fit-content;
+        }
+
+        .watch-btn:hover {
+            background: var(--primary);
+            color: var(--dark);
+        }
+
+        /* ===== CTA SECTION ===== */
+        .cta-section {
+            text-align: center;
+            padding: 5rem 3rem;
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.1);
+            margin-top: 2rem;
+        }
+
+        .cta-section h2 {
+            font-family: 'Antonio', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 0.08em;
+            margin-bottom: 1rem;
+            text-transform: uppercase;
+            color: var(--accent);
+        }
+
+        .cta-section p {
+            color: rgba(255,255,255,0.6);
+            font-size: 1.1rem;
+            margin-bottom: 2rem;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-section .watch-btn {
+            font-size: 1rem;
+        }
+
+        /* ===== FOOTER ===== */
+        footer {
+            background: var(--dark);
+            padding: 3rem 4rem;
+            text-align: center;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            margin-top: 5rem;
+        }
+
+        footer p {
+            color: rgba(255,255,255,0.4);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 968px) {
+            .featured-video {
+                grid-template-columns: 1fr;
+            }
+
+            .featured-info {
+                padding: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 0;
+                right: -100%;
+                width: 70%;
+                height: 100vh;
+                background: var(--dark);
+                flex-direction: column;
+                padding: 6rem 2rem;
+                gap: 2rem;
+                transition: right 0.3s;
+                border-left: 2px solid var(--primary);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .menu-toggle {
+                display: flex;
+            }
+
+            .hero-small {
+                padding: 4rem 2rem 3rem;
+            }
+
+            .filter-bar {
+                padding: 1.5rem 2rem;
+                gap: 0.5rem;
+            }
+
+            .filter-btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.8rem;
+            }
+
+            .content {
+                padding: 3rem 2rem;
+            }
+
+            .video-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .section-header {
+                font-size: 2rem;
+            }
+        }
+
+        /* ===== ANIMATIONS ===== */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .video-card {
+            animation: fadeInUp 0.6s ease-out both;
+        }
+
+        .video-card:nth-child(1) { animation-delay: 0.1s; }
+        .video-card:nth-child(2) { animation-delay: 0.2s; }
+        .video-card:nth-child(3) { animation-delay: 0.3s; }
+        .video-card:nth-child(4) { animation-delay: 0.4s; }
+        .video-card:nth-child(5) { animation-delay: 0.5s; }
+        .video-card:nth-child(6) { animation-delay: 0.6s; }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav>
+        <a href="index.html" class="logo">GOD NOK</a>
+        <button class="menu-toggle" onclick="toggleMenu()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+        <ul class="nav-links" id="navLinks">
+            <li><a href="index.html" onclick="closeMenu()">Home</a></li>
+            <li><a href="music.html" onclick="closeMenu()">Music</a></li>
+            <li><a href="video.html" class="active" onclick="closeMenu()">Video</a></li>
+            <li><a href="shows.html" onclick="closeMenu()">Shows</a></li>
+            <li><a href="rates.html" onclick="closeMenu()">Renter</a></li>
+        </ul>
+    </nav>
+
+    <!-- Hero -->
+    <div class="hero-small">
+        <h1 class="page-title">AI Video</h1>
+        <p class="page-subtitle">Lær alt om kunstig intelligens med våre kuraterte opplæringsvideoer</p>
+    </div>
+
+    <!-- Filter Tabs -->
+    <div class="filter-bar">
+        <button class="filter-btn active" onclick="filterVideos('all')">Alle</button>
+        <button class="filter-btn" onclick="filterVideos('intro')">Intro til AI</button>
+        <button class="filter-btn" onclick="filterVideos('chatgpt')">ChatGPT</button>
+        <button class="filter-btn" onclick="filterVideos('tools')">AI-Verktøy</button>
+        <button class="filter-btn" onclick="filterVideos('advanced')">Avansert</button>
+    </div>
+
+    <!-- Content -->
+    <div class="content">
+
+        <!-- Featured Video -->
+        <div class="featured-section">
+            <h2 class="section-header">Anbefalt</h2>
+            <p class="section-description">Vår toppanbefaling for deg som vil komme i gang med AI.</p>
+            <div class="featured-video">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/2ePf9rue1Ao"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="featured-info">
+                    <div class="featured-badge">Anbefalt</div>
+                    <h3>Hva er kunstig intelligens?</h3>
+                    <p>En komplett introduksjon til AI - hva det er, hvordan det fungerer, og hvorfor det er viktig for alle å forstå denne teknologien.</p>
+                    <div class="video-meta">
+                        <span>Intro til AI</span>
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Intro to AI Section -->
+        <h2 class="section-header" id="section-intro">Intro til AI</h2>
+        <p class="section-description">Grunnleggende videoer for deg som er ny til kunstig intelligens.</p>
+        <div class="video-grid">
+            <div class="video-card" data-category="intro">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/ad79nYk2keg"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Intro til AI</div>
+                    <h3>AI for nybegynnere</h3>
+                    <p>Lær de grunnleggende konseptene bak kunstig intelligens og maskinlæring på en enkel måte.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="intro">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/mEsleV16qdo"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Intro til AI</div>
+                    <h3>Hvordan fungerer maskinlæring?</h3>
+                    <p>Forstå prinsippene bak maskinlæring - fra data til intelligente beslutninger.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="intro">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/a0_lo_GDcFw"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Intro til AI</div>
+                    <h3>Hva er nevrale nettverk?</h3>
+                    <p>En visuell forklaring av hvordan nevrale nettverk fungerer og hvorfor de er grunnlaget for moderne AI.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ChatGPT Section -->
+        <h2 class="section-header" id="section-chatgpt">ChatGPT & Chatboter</h2>
+        <p class="section-description">Lær å bruke ChatGPT og andre AI-chatboter effektivt.</p>
+        <div class="video-grid">
+            <div class="video-card" data-category="chatgpt">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/JTxsNm9IdYU"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">ChatGPT</div>
+                    <h3>ChatGPT - Komplett guide</h3>
+                    <p>Alt du trenger å vite om ChatGPT - fra registrering til avanserte teknikker for å få bedre svar.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="chatgpt">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/hhHVMBCm5uA"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">ChatGPT</div>
+                    <h3>Prompt Engineering - Skriv bedre prompts</h3>
+                    <p>Lær kunsten å skrive gode prompts som gir deg presise og nyttige svar fra AI-modeller.</p>
+                    <div class="video-meta">
+                        <span>Middels</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="chatgpt">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/jHv63Uvk5VA"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">ChatGPT</div>
+                    <h3>ChatGPT for jobb og skole</h3>
+                    <p>Praktiske tips for å bruke ChatGPT i hverdagen - fra skriving til analyse og problemløsning.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- AI Tools Section -->
+        <h2 class="section-header" id="section-tools">AI-Verktøy</h2>
+        <p class="section-description">Utforsk de beste AI-verktøyene for bilder, video, musikk og mer.</p>
+        <div class="video-grid">
+            <div class="video-card" data-category="tools">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/HK6y8DAPN_0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">AI-Verktøy</div>
+                    <h3>AI Bildegenerering - Midjourney & DALL-E</h3>
+                    <p>Lag fantastiske bilder med AI. Lær å bruke Midjourney, DALL-E og andre bildegenererings-verktøy.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="tools">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/HxHMSoMGbQc"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">AI-Verktøy</div>
+                    <h3>AI for videoredigering</h3>
+                    <p>Oppdag hvordan AI kan revolusjonere videoredigeringen din - fra automatisk klipping til effekter.</p>
+                    <div class="video-meta">
+                        <span>Middels</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="tools">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/0GJqB4Bm1s0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">AI-Verktøy</div>
+                    <h3>Topp 10 AI-verktøy du må kjenne til</h3>
+                    <p>De mest nyttige AI-verktøyene samlet - fra produktivitet til kreativitet.</p>
+                    <div class="video-meta">
+                        <span>Nybegynner</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Advanced Section -->
+        <h2 class="section-header" id="section-advanced">Avansert AI</h2>
+        <p class="section-description">Dykk dypere inn i AI-teknologi og fremtiden.</p>
+        <div class="video-grid">
+            <div class="video-card" data-category="advanced">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/zjkBMFhNj_g"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Avansert</div>
+                    <h3>Hva er store språkmodeller (LLM)?</h3>
+                    <p>Forstå teknologien bak ChatGPT, Claude og andre AI-modeller - fra transformer-arkitektur til trening.</p>
+                    <div class="video-meta">
+                        <span>Avansert</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="advanced">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/cdiD-9MMpb0"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Avansert</div>
+                    <h3>AI og fremtiden</h3>
+                    <p>Hvor er AI på vei? Utforsk trender, muligheter og utfordringer som former fremtidens teknologi.</p>
+                    <div class="video-meta">
+                        <span>Avansert</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="video-card" data-category="advanced">
+                <div class="video-wrapper">
+                    <iframe
+                        src="https://www.youtube.com/embed/WXuK6gekU1Y"
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                        allowfullscreen>
+                    </iframe>
+                </div>
+                <div class="video-info">
+                    <div class="video-category">Avansert</div>
+                    <h3>AI-etikk og sikkerhet</h3>
+                    <p>Viktige spørsmål om AI-sikkerhet, personvern og etiske utfordringer vi må ta stilling til.</p>
+                    <div class="video-meta">
+                        <span>Avansert</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA -->
+        <div class="cta-section">
+            <h2>Vil du lære mer?</h2>
+            <p>Følg oss for nye opplæringsvideoer om AI, teknologi og kreative verktøy.</p>
+            <a href="index.html#contact" class="watch-btn">Hold meg oppdatert</a>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2025 God Nok. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Filter functionality
+        function filterVideos(category) {
+            const buttons = document.querySelectorAll('.filter-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            const cards = document.querySelectorAll('.video-card');
+            const sections = document.querySelectorAll('.section-header, .section-description');
+            const featured = document.querySelector('.featured-section');
+
+            if (category === 'all') {
+                cards.forEach(card => card.style.display = 'block');
+                sections.forEach(el => el.style.display = 'block');
+                if (featured) featured.style.display = 'block';
+                document.querySelectorAll('.video-grid').forEach(grid => grid.style.display = 'grid');
+                return;
+            }
+
+            if (featured) featured.style.display = 'none';
+
+            cards.forEach(card => {
+                if (card.dataset.category === category) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+
+            // Show/hide section headers based on category
+            const sectionMap = {
+                'intro': 'section-intro',
+                'chatgpt': 'section-chatgpt',
+                'tools': 'section-tools',
+                'advanced': 'section-advanced'
+            };
+
+            document.querySelectorAll('[id^="section-"]').forEach(header => {
+                const nextSibling = header.nextElementSibling;
+                const gridAfter = nextSibling ? nextSibling.nextElementSibling : null;
+
+                if (header.id === sectionMap[category]) {
+                    header.style.display = 'block';
+                    if (nextSibling && nextSibling.classList.contains('section-description')) nextSibling.style.display = 'block';
+                    if (gridAfter && gridAfter.classList.contains('video-grid')) gridAfter.style.display = 'grid';
+                } else {
+                    header.style.display = 'none';
+                    if (nextSibling && nextSibling.classList.contains('section-description')) nextSibling.style.display = 'none';
+                    if (gridAfter && gridAfter.classList.contains('video-grid')) gridAfter.style.display = 'none';
+                }
+            });
+        }
+
+        // Mobile menu
+        function toggleMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.toggle('active');
+        }
+
+        function closeMenu() {
+            const nav = document.getElementById('navLinks');
+            nav.classList.remove('active');
+        }
+    </script>
+</body>
+</html>
