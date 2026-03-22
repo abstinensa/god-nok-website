@@ -8,31 +8,13 @@
   <style>
     :root {
       --bg: #0a0a0f;
-      --surface: #12121a;
       --card: #1a1a28;
       --border: #2a2a40;
       --accent: #f7c948;
       --accent2: #ff6b6b;
       --text: #e8e8f0;
       --muted: #6b6b8a;
-      --fire: #ff6b35;
-      --water: #4fc3f7;
-      --grass: #66bb6a;
-      --electric: #ffee58;
-      --psychic: #f06292;
-      --ice: #80deea;
-      --dragon: #7e57c2;
-      --dark: #546e7a;
-      --fairy: #f48fb1;
-      --normal: #bdbdbd;
-      --fighting: #ef5350;
-      --flying: #90caf9;
-      --poison: #ab47bc;
-      --ground: #d4a574;
-      --rock: #a1887f;
-      --bug: #9ccc65;
-      --ghost: #5c6bc0;
-      --steel: #78909c;
+      --type-color: #f7c948;
     }
 
     * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -53,16 +35,36 @@
     body::before {
       content: '';
       position: fixed;
-      top: -50%;
-      left: -50%;
-      width: 200%;
-      height: 200%;
-      background: radial-gradient(ellipse at 60% 40%, rgba(247,201,72,0.06) 0%, transparent 60%),
-                  radial-gradient(ellipse at 20% 80%, rgba(255,107,107,0.05) 0%, transparent 50%);
+      top: -50%; left: -50%;
+      width: 200%; height: 200%;
+      background:
+        radial-gradient(ellipse at 60% 40%, rgba(247,201,72,0.06) 0%, transparent 60%),
+        radial-gradient(ellipse at 20% 80%, rgba(255,107,107,0.05) 0%, transparent 50%);
       pointer-events: none;
       z-index: 0;
     }
 
+    /* ── Fixed overlays ── */
+    #confetti-canvas {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    #flash-overlay {
+      position: fixed;
+      inset: 0;
+      background: #fff;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 9998;
+      transition: opacity 0.12s;
+    }
+    #flash-overlay.on { opacity: 1; }
+
+    /* ── Layout ── */
     .container {
       position: relative;
       z-index: 1;
@@ -74,16 +76,13 @@
       gap: 2.5rem;
     }
 
-    header {
-      text-align: center;
-    }
+    header { text-align: center; }
 
     .eyebrow {
       font-family: 'Press Start 2P', monospace;
       font-size: 0.5rem;
       color: var(--accent);
       letter-spacing: 0.3em;
-      text-transform: uppercase;
       margin-bottom: 1rem;
       opacity: 0.8;
     }
@@ -92,22 +91,15 @@
       font-family: 'Press Start 2P', monospace;
       font-size: clamp(1.1rem, 4vw, 1.6rem);
       line-height: 1.6;
-      color: var(--text);
     }
+    h1 span { color: var(--accent); }
 
-    h1 span {
-      color: var(--accent);
-    }
-
+    /* ── Input ── */
     .input-section {
       width: 100%;
       display: flex;
       flex-direction: column;
       gap: 1rem;
-    }
-
-    .input-wrapper {
-      position: relative;
     }
 
     input[type="text"] {
@@ -124,21 +116,15 @@
       outline: none;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
-
-    input[type="text"]::placeholder {
-      color: var(--muted);
-      font-weight: 300;
-    }
-
+    input[type="text"]::placeholder { color: var(--muted); font-weight: 300; }
     input[type="text"]:focus {
       border-color: var(--accent);
       box-shadow: 0 0 0 4px rgba(247,201,72,0.1);
     }
 
-    button {
+    /* ── Buttons ── */
+    .btn {
       width: 100%;
-      background: var(--accent);
-      color: #0a0a0f;
       border: none;
       border-radius: 12px;
       padding: 1.1rem;
@@ -146,209 +132,62 @@
       font-size: 0.65rem;
       letter-spacing: 0.05em;
       cursor: pointer;
-      transition: transform 0.1s, box-shadow 0.2s, background 0.2s;
+      transition: transform 0.1s, box-shadow 0.2s, background 0.2s, opacity 0.2s;
+    }
+    .btn:hover  { transform: translateY(-2px); }
+    .btn:active { transform: translateY(1px); }
+    .btn:disabled { opacity: 0.45; cursor: not-allowed; transform: none; }
+
+    .btn-find {
+      background: var(--accent);
+      color: #0a0a0f;
       box-shadow: 0 4px 20px rgba(247,201,72,0.3);
     }
+    .btn-find:hover { box-shadow: 0 8px 30px rgba(247,201,72,0.5); }
 
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 30px rgba(247,201,72,0.45);
+    .btn-share {
+      background: transparent;
+      color: var(--type-color);
+      border: 2px solid var(--type-color);
+      font-size: 0.55rem;
+      padding: 0.9rem;
+    }
+    .btn-share:hover {
+      background: var(--type-color);
+      color: #0a0a0f;
     }
 
-    button:active {
-      transform: translateY(1px);
-      box-shadow: 0 2px 10px rgba(247,201,72,0.2);
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-      transform: none;
-    }
-
-    /* Card */
-    .card {
-      width: 100%;
-      background: var(--card);
-      border: 2px solid var(--border);
-      border-radius: 20px;
-      padding: 2.5rem 2rem;
+    /* ── Loading ── */
+    #loading {
       display: none;
       flex-direction: column;
       align-items: center;
-      gap: 1.5rem;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .card.visible {
-      display: flex;
-      animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes slideUp {
-      from { opacity: 0; transform: translateY(30px) scale(0.97); }
-      to   { opacity: 1; transform: translateY(0) scale(1); }
-    }
-
-    .card::before {
-      content: '';
-      position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 3px;
-      background: var(--type-color, var(--accent));
-    }
-
-    .pokemon-number {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      color: var(--muted);
-      letter-spacing: 0.2em;
-      align-self: flex-start;
-    }
-
-    .pokemon-img-wrapper {
-      position: relative;
-      width: 180px;
-      height: 180px;
-    }
-
-    .pokemon-img-bg {
-      position: absolute;
-      inset: 0;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(247,201,72,0.08) 0%, transparent 70%);
-    }
-
-    .pokemon-img {
-      width: 180px;
-      height: 180px;
-      image-rendering: pixelated;
-      object-fit: contain;
-      position: relative;
-      z-index: 1;
-      animation: float 3s ease-in-out infinite;
-    }
-
-    @keyframes float {
-      0%, 100% { transform: translateY(0); }
-      50%       { transform: translateY(-8px); }
-    }
-
-    .pokemon-name {
-      font-family: 'Press Start 2P', monospace;
-      font-size: clamp(0.9rem, 3vw, 1.2rem);
-      color: var(--text);
-      text-align: center;
-      text-transform: uppercase;
-    }
-
-    .name-label {
-      font-size: 0.8rem;
-      color: var(--muted);
-      font-weight: 300;
-      text-align: center;
-    }
-
-    .types {
-      display: flex;
-      gap: 0.6rem;
-    }
-
-    .type-badge {
-      padding: 0.35rem 0.9rem;
-      border-radius: 99px;
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.45rem;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-      color: #fff;
-      background: var(--type-bg, #555);
-    }
-
-    .stats {
-      width: 100%;
-      display: flex;
-      flex-direction: column;
-      gap: 0.6rem;
-    }
-
-    .stat-row {
-      display: grid;
-      grid-template-columns: 80px 1fr 40px;
-      align-items: center;
-      gap: 0.8rem;
-    }
-
-    .stat-name {
-      font-size: 0.72rem;
-      color: var(--muted);
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    .stat-bar-bg {
-      height: 6px;
-      background: var(--border);
-      border-radius: 99px;
-      overflow: hidden;
-    }
-
-    .stat-bar {
-      height: 100%;
-      border-radius: 99px;
-      background: var(--accent);
-      transform-origin: left;
-      animation: growBar 0.8s cubic-bezier(0.16, 1, 0.3, 1) both;
-    }
-
-    @keyframes growBar {
-      from { transform: scaleX(0); }
-      to   { transform: scaleX(1); }
-    }
-
-    .stat-value {
-      font-family: 'Press Start 2P', monospace;
-      font-size: 0.5rem;
-      color: var(--text);
-      text-align: right;
-    }
-
-    /* Loading */
-    .loading {
-      display: none;
-      flex-direction: column;
-      align-items: center;
-      gap: 1rem;
+      gap: 1.2rem;
       padding: 2rem;
     }
-
-    .loading.visible { display: flex; }
+    #loading.on { display: flex; }
 
     .pokeball {
-      width: 50px;
-      height: 50px;
+      width: 56px; height: 56px;
       border-radius: 50%;
       background: linear-gradient(180deg, #ff6b6b 50%, #fff 50%);
       border: 3px solid #333;
       position: relative;
       animation: spin 0.8s linear infinite;
     }
+    .pokeball.fast { animation-duration: 0.2s; }
 
     .pokeball::before {
       content: '';
       position: absolute;
       top: 50%; left: 50%;
       transform: translate(-50%, -50%);
-      width: 14px;
-      height: 14px;
+      width: 14px; height: 14px;
       border-radius: 50%;
       background: #fff;
       border: 3px solid #333;
       z-index: 1;
     }
-
     .pokeball::after {
       content: '';
       position: absolute;
@@ -359,20 +198,300 @@
     }
 
     @keyframes spin {
-      from { transform: rotate(0deg); }
-      to   { transform: rotate(360deg); }
+      to { transform: rotate(360deg); }
     }
 
-    .loading-text {
+    #loading-msg {
       font-family: 'Press Start 2P', monospace;
-      font-size: 0.55rem;
+      font-size: 0.5rem;
       color: var(--muted);
       letter-spacing: 0.15em;
+      min-height: 1.2em;
+      text-align: center;
     }
 
-    .error {
+    /* ── Suspense reveal ── */
+    #suspense {
       display: none;
-      background: rgba(255,107,107,0.1);
+      width: 100%;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.2rem;
+    }
+    #suspense.on {
+      display: flex;
+      animation: riseUp 0.45s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .suspense-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.7rem, 3vw, 1rem);
+      color: var(--accent);
+      letter-spacing: 0.12em;
+      animation: throb 0.55s ease-in-out infinite alternate;
+    }
+
+    @keyframes throb {
+      from { opacity: 0.5; transform: scale(0.97); }
+      to   { opacity: 1;   transform: scale(1.03); }
+    }
+
+    .silhouette-wrapper {
+      position: relative;
+      width: 200px; height: 200px;
+    }
+
+    .silhouette-glow {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,201,72,0.15) 0%, transparent 70%);
+      animation: glowPulse 0.7s ease-in-out infinite alternate;
+    }
+
+    @keyframes glowPulse {
+      from { transform: scale(0.85); opacity: 0.4; }
+      to   { transform: scale(1.15); opacity: 1; }
+    }
+
+    #silhouetteImg {
+      width: 200px; height: 200px;
+      image-rendering: pixelated;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      filter: brightness(0);
+    }
+    #silhouetteImg.shake {
+      animation: shake 0.55s cubic-bezier(.36,.07,.19,.97) both;
+    }
+
+    @keyframes shake {
+      10%, 90% { transform: translate(-3px, 0) rotate(-1deg); }
+      20%, 80% { transform: translate( 5px, 0) rotate( 1deg); }
+      30%, 50%, 70% { transform: translate(-7px, 0) rotate(-2deg); }
+      40%, 60% { transform: translate( 7px, 0) rotate( 2deg); }
+    }
+
+    .qmarks {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.2rem;
+      color: var(--muted);
+      opacity: 0.25;
+      letter-spacing: 0.6em;
+      animation: blink 0.6s step-end infinite;
+    }
+    @keyframes blink {
+      50% { opacity: 0.08; }
+    }
+
+    /* ── Result card ── */
+    #card {
+      display: none;
+      width: 100%;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 20px;
+      padding: 2.5rem 2rem;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+      position: relative;
+      overflow: hidden;
+    }
+    #card.on {
+      display: flex;
+      animation: riseUp 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes riseUp {
+      from { opacity: 0; transform: translateY(32px) scale(0.97); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    #card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 4px;
+      background: var(--type-color);
+      transition: background 0.4s;
+    }
+
+    .poke-number {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      color: var(--muted);
+      letter-spacing: 0.2em;
+      align-self: flex-start;
+    }
+
+    /* Title badge */
+    .title-badge {
+      border-radius: 99px;
+      padding: 0.45rem 1.3rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.48rem;
+      letter-spacing: 0.07em;
+      text-align: center;
+      background: var(--type-color);
+      animation: popIn 0.4s cubic-bezier(0.16,1,0.3,1) 0.15s both;
+      max-width: 100%;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.4); opacity: 0; }
+      to   { transform: scale(1);   opacity: 1; }
+    }
+
+    /* Pokémon image */
+    .poke-img-wrapper {
+      position: relative;
+      width: 180px; height: 180px;
+    }
+    .poke-img-bg {
+      position: absolute;
+      inset: 0;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(247,201,72,0.09) 0%, transparent 70%);
+    }
+    #pokemonImg {
+      width: 180px; height: 180px;
+      image-rendering: pixelated;
+      object-fit: contain;
+      position: relative;
+      z-index: 1;
+      animation: float 3s ease-in-out infinite, popIn 0.5s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50%       { transform: translateY(-9px); }
+    }
+
+    .poke-name {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.9rem, 3vw, 1.2rem);
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .name-label {
+      font-size: 0.82rem;
+      color: var(--muted);
+      font-weight: 300;
+      text-align: center;
+      margin-bottom: 0.3rem;
+    }
+
+    /* Types */
+    .types {
+      display: flex;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+    .type-badge {
+      padding: 0.35rem 0.9rem;
+      border-radius: 99px;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.45rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: #fff;
+    }
+
+    /* ── Personality box ── */
+    .personality {
+      width: 100%;
+      border-radius: 14px;
+      padding: 1.4rem 1.5rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.55rem;
+      text-align: center;
+      background: rgba(255,255,255,0.035);
+      border: 1px solid var(--border);
+      transition: border-color 0.4s;
+    }
+    .pers-emoji { font-size: 2.2rem; line-height: 1; }
+    .pers-label {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.52rem;
+      color: var(--type-color);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+    }
+    .pers-desc {
+      font-size: 0.88rem;
+      color: var(--muted);
+      font-weight: 300;
+      line-height: 1.65;
+    }
+
+    /* ── Stats ── */
+    .stats {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 0.65rem;
+    }
+    .stat-row {
+      display: grid;
+      grid-template-columns: 80px 1fr 40px;
+      align-items: center;
+      gap: 0.8rem;
+    }
+    .stat-name {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .stat-bar-bg {
+      height: 6px;
+      background: var(--border);
+      border-radius: 99px;
+      overflow: hidden;
+    }
+    .stat-bar {
+      height: 100%;
+      border-radius: 99px;
+      transform-origin: left;
+      animation: growBar 0.8s cubic-bezier(0.16,1,0.3,1) both;
+    }
+    @keyframes growBar {
+      from { transform: scaleX(0); }
+      to   { transform: scaleX(1); }
+    }
+    .stat-value {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      text-align: right;
+    }
+
+    .divider {
+      width: 100%;
+      height: 1px;
+      background: var(--border);
+    }
+
+    /* Share feedback */
+    .share-feedback {
+      font-size: 0.82rem;
+      color: var(--muted);
+      text-align: center;
+      min-height: 1.2em;
+      transition: color 0.2s;
+    }
+
+    /* Error */
+    #error {
+      display: none;
+      background: rgba(255,107,107,0.08);
       border: 1px solid rgba(255,107,107,0.3);
       border-radius: 10px;
       padding: 1rem 1.5rem;
@@ -380,8 +499,7 @@
       color: var(--accent2);
       text-align: center;
     }
-
-    .error.visible { display: block; }
+    #error.on { display: block; }
 
     footer {
       font-size: 0.72rem;
@@ -389,157 +507,436 @@
       text-align: center;
       font-weight: 300;
     }
-
-    footer a {
-      color: var(--accent);
-      text-decoration: none;
-    }
+    footer a { color: var(--accent); text-decoration: none; }
   </style>
 </head>
 <body>
+
+<canvas id="confetti-canvas"></canvas>
+<div id="flash-overlay"></div>
+
 <div class="container">
+
   <header>
     <p class="eyebrow">✦ Pokémon-finder ✦</p>
     <h1>Hvem er <span>din</span><br>Pokémon?</h1>
   </header>
 
   <div class="input-section">
-    <div class="input-wrapper">
-      <input type="text" id="nameInput" placeholder="Skriv inn navnet ditt..." autocomplete="off" />
+    <input type="text" id="nameInput" placeholder="Skriv inn navnet ditt..." autocomplete="off" />
+    <button class="btn btn-find" id="findBtn" onclick="findPokemon()">FINN MIN POKÉMON</button>
+  </div>
+
+  <!-- Loading -->
+  <div id="loading">
+    <div class="pokeball" id="pokeball"></div>
+    <p id="loading-msg"></p>
+  </div>
+
+  <!-- Suspense / silhouette -->
+  <div id="suspense">
+    <p class="suspense-label">HVEM ER DET?!</p>
+    <div class="silhouette-wrapper">
+      <div class="silhouette-glow"></div>
+      <img id="silhouetteImg" src="" alt="" />
     </div>
-    <button id="findBtn" onclick="findPokemon()">FINN MIN POKÉMON</button>
+    <p class="qmarks">? ? ?</p>
   </div>
 
-  <div class="loading" id="loading">
-    <div class="pokeball"></div>
-    <p class="loading-text">Henter Pokémon...</p>
-  </div>
-
-  <div class="error" id="error"></div>
-
-  <div class="card" id="card">
-    <p class="pokemon-number" id="pokemonNumber">#000</p>
-    <div class="pokemon-img-wrapper">
-      <div class="pokemon-img-bg"></div>
-      <img class="pokemon-img" id="pokemonImg" src="" alt="" />
+  <!-- Result card -->
+  <div id="card">
+    <p class="poke-number" id="pokeNumber">#000</p>
+    <div class="title-badge" id="titleBadge"></div>
+    <div class="poke-img-wrapper">
+      <div class="poke-img-bg"></div>
+      <img id="pokemonImg" src="" alt="" />
     </div>
     <div>
       <p class="name-label" id="nameLabel"></p>
-      <p class="pokemon-name" id="pokemonName"></p>
+      <p class="poke-name" id="pokeName"></p>
     </div>
     <div class="types" id="types"></div>
+    <div class="personality" id="personality">
+      <p class="pers-emoji" id="persEmoji"></p>
+      <p class="pers-label" id="persLabel"></p>
+      <p class="pers-desc"  id="persDesc"></p>
+    </div>
+    <div class="divider"></div>
     <div class="stats" id="stats"></div>
+    <div class="divider"></div>
+    <button class="btn btn-share" id="shareBtn" onclick="sharePokemon()">📤 DEL DIN POKÉMON</button>
+    <p class="share-feedback" id="shareFeedback"></p>
   </div>
 
+  <div id="error"></div>
+
   <footer>
-    Data fra <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · abstinensa.no
+    Data fra <a href="https://pokeapi.co" target="_blank">PokéAPI</a> · god-nok.no
   </footer>
+
 </div>
 
 <script>
+  /* ─── Data ─────────────────────────────────────────────────── */
   const TYPE_COLORS = {
-    fire: '#ff6b35', water: '#4fc3f7', grass: '#66bb6a',
-    electric: '#ffee58', psychic: '#f06292', ice: '#80deea',
-    dragon: '#7e57c2', dark: '#546e7a', fairy: '#f48fb1',
-    normal: '#bdbdbd', fighting: '#ef5350', flying: '#90caf9',
-    poison: '#ab47bc', ground: '#d4a574', rock: '#a1887f',
-    bug: '#9ccc65', ghost: '#5c6bc0', steel: '#78909c',
-    unknown: '#888', shadow: '#888'
+    fire:'#ff6b35', water:'#4fc3f7', grass:'#66bb6a',
+    electric:'#ffee58', psychic:'#f06292', ice:'#80deea',
+    dragon:'#7e57c2', dark:'#546e7a', fairy:'#f48fb1',
+    normal:'#bdbdbd', fighting:'#ef5350', flying:'#90caf9',
+    poison:'#ab47bc', ground:'#d4a574', rock:'#a1887f',
+    bug:'#9ccc65', ghost:'#5c6bc0', steel:'#78909c',
+    unknown:'#888', shadow:'#888'
   };
+
+  // Types where dark text is more readable on the badge
+  const LIGHT_TYPES = new Set(['electric','ice','normal','fairy','flying','grass','ground','bug']);
 
   const STAT_NAMES = {
-    hp: 'HP', attack: 'Angrep', defense: 'Forsvar',
-    'special-attack': 'Sp.angrep', 'special-defense': 'Sp.forsvar', speed: 'Fart'
+    hp:'HP', attack:'Angrep', defense:'Forsvar',
+    'special-attack':'Sp.angrep', 'special-defense':'Sp.forsvar', speed:'Fart'
   };
 
+  const STAT_TITLES = {
+    hp:               ['Udødelig 💀',         'Evig overlever 🏔️',      'Siste mann stående 🛡️'],
+    attack:           ['Ren ødeleggelse 💥',  'Angrepsgud ⚔️',           'Knuser alt 👊'],
+    defense:          ['Levende festning 🏰', 'Uknuselig mur 🪨',        'Stålsatt 🛡️'],
+    'special-attack': ['Tryllekunstner 🔮',   'Magisk kraftbombe ✨',    'Tankeknuser 🧠'],
+    'special-defense':['Mystisk skjold 🌀',   'Magisk beskytter 🌙',    'Tåler alt 🧘'],
+    speed:            ['Speed Demon 💨',       'Lynrask ⚡',               'Usynlig 🌪️']
+  };
+
+  const TYPE_PERSONALITY = {
+    fire:     { emoji:'🔥', label:'Ildsjel',            desc:'Du brenner for alt du gjør. Lidenskapelig, modig og smittende entusiastisk — folk samles rundt deg som møll rundt en flamme.' },
+    water:    { emoji:'💧', label:'Havdypets kraft',     desc:'Rolig på overflaten, uendelig dyp inni. Du tilpasser deg enhver situasjon og er aller sterkest under press.' },
+    grass:    { emoji:'🌿', label:'Naturens sjel',       desc:'Tålmodig, nærende og rotfestet. Du gir energi til alle rundt deg og trives best når ting tar sin naturlige tid.' },
+    electric: { emoji:'⚡', label:'Lynets kraft',        desc:'Du tenner opp ethvert rom du entrer! Energisk, spontan og alltid full av nye idéer — ingen kan holde følge.' },
+    psychic:  { emoji:'🔮', label:'Tankeleseren',        desc:'Du ser gjennom folk lenge før de åpner munnen. Intuitiv, analytisk og mystisk — du vet alltid mer enn du sier.' },
+    ice:      { emoji:'❄️', label:'Iskaldt hode',        desc:'Du mister aldri roen. Presis, analytisk og uforstyrrelig under press — du er personen alle vil ha med i krisen.' },
+    dragon:   { emoji:'🐉', label:'Den legendariske',    desc:'Sjeldne, mektige og omgitt av respekt. Du er en av dem alle snakker om — men få virkelig kjenner.' },
+    dark:     { emoji:'🌑', label:'Skyggedanseren',      desc:'Strategisk og uberegnelig. Du spiller alltid på egne premisser og vet nøyaktig hva motstanderen gjør — før de gjør det.' },
+    fairy:    { emoji:'✨', label:'Magisk sjarm',        desc:'Ser uskyldig ut, men har en indre styrke som sjokkerer alle. Sjarmerende, empatisk og mye farligere enn du ser ut.' },
+    normal:   { emoji:'⭐', label:'Den ekte helten',     desc:'Undervurdert av alle — men det er din hemmelige superkraft. Allsidig, pålitelig og genuint deg selv.' },
+    fighting: { emoji:'👊', label:'Uovervinnelig fighter',desc:'Disiplinert, målrettet og kompromissløst sterk. Du gir aldri opp — uansett hvilke odds du møter.' },
+    flying:   { emoji:'🦅', label:'Fri som fuglen',      desc:'Du ser verden ovenfra og liker det best slik. Fri, uavhengig og alltid ett perspektiv foran alle andre.' },
+    poison:   { emoji:'☠️', label:'Det giftige geniet', desc:'Kontroversiell, fascinerende og ikke for alle. De som forstår deg er til gjengjeld evig lojale.' },
+    ground:   { emoji:'🌍', label:'Jordens fundament',   desc:'Stødig som fjellet og pålitelig som tyngdekraften. Folk vet at du alltid er der — uten drama og uten unntak.' },
+    rock:     { emoji:'🪨', label:'Uknuselig',           desc:'Du lar deg ikke flytte på av noe som helst. Utholdende, robust og sterkere enn noen hadde trodd.' },
+    bug:      { emoji:'🦋', label:'Den skjulte perlen',  desc:'Undervurdert av alle — inntil de ser hva du faktisk kan. Du vokser i det stille og slår til på nøyaktig riktig tidspunkt.' },
+    ghost:    { emoji:'👻', label:'Det uforklarlige',    desc:'Mystisk og dypt annerledes. Du ser verden på en måte ingen andre gjør — og det er akkurat din superkraft.' },
+    steel:    { emoji:'⚙️', label:'Jernvilje',           desc:'Presis, pålitelig og nærmest umulig å knekke. Du er systemet som aldri svikter — personen alle stoler blindt på.' }
+  };
+
+  const LOAD_MSGS = [
+    'Analyserer navn...',
+    'Søker i Pokédex...',
+    'Beregner skjebne...',
+    'Fant noe... 👀'
+  ];
+
+  /* ─── State ─────────────────────────────────────────────────── */
+  let currentData  = null;
+  let currentName  = '';
+  let currentTitle = '';
+  let msgTimer     = null;
+  let msgIdx       = 0;
+
+  /* ─── Helpers ───────────────────────────────────────────────── */
   function hashName(name) {
-    const clean = name.trim().toLowerCase();
-    if (!clean) return 0;
-    let hash = 0;
-    for (let i = 0; i < clean.length; i++) {
-      hash = (hash * 31 + clean.charCodeAt(i)) >>> 0;
-    }
-    return (hash % 898) + 1; // Pokémon #1–898
+    const s = name.trim().toLowerCase();
+    if (s === 'stine') return 39; // Jigglypuff — alltid 🎤
+    let h = 0;
+    for (let i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) >>> 0;
+    return (h % 898) + 1;
   }
 
+  function bestStatTitle(stats, name) {
+    const best = stats.reduce((a, b) => b.base_stat > a.base_stat ? b : a);
+    const opts  = STAT_TITLES[best.stat.name] || ['Allrounder 🌟'];
+    const pick  = opts[Math.floor(Math.random() * opts.length)];
+    return `${name} er en ${pick}`;
+  }
+
+  function delay(ms) { return new Promise(r => setTimeout(r, ms)); }
+
+  /* ─── Confetti ──────────────────────────────────────────────── */
+  function spawnConfetti(hex) {
+    const cv  = document.getElementById('confetti-canvas');
+    cv.width  = window.innerWidth;
+    cv.height = window.innerHeight;
+    const ctx = cv.getContext('2d');
+
+    function hexRgb(h) {
+      return [parseInt(h.slice(1,3),16), parseInt(h.slice(3,5),16), parseInt(h.slice(5,7),16)];
+    }
+    const [r,g,b] = hexRgb(hex.length === 7 ? hex : '#f7c948');
+    const palette = [
+      hex,
+      `rgba(${r},${g},${b},0.65)`,
+      '#f7c948', '#ffffff',
+      `rgb(${Math.min(255,r+70)},${Math.min(255,g+70)},${Math.min(255,b+70)})`
+    ];
+
+    const cx = cv.width  * 0.5;
+    const cy = cv.height * 0.38;
+
+    const ps = Array.from({ length: 160 }, () => ({
+      x: cx + (Math.random() - 0.5) * 60,
+      y: cy,
+      vx: (Math.random() - 0.5) * 16,
+      vy: -(Math.random() * 12 + 4),
+      rot: Math.random() * 360,
+      rv:  (Math.random() - 0.5) * 14,
+      w:   Math.random() * 13 + 6,
+      h:   Math.random() * 5  + 3,
+      color: palette[Math.floor(Math.random() * palette.length)],
+      alpha: 1,
+      round: Math.random() > 0.35
+    }));
+
+    let frame = 0;
+    (function draw() {
+      ctx.clearRect(0, 0, cv.width, cv.height);
+      frame++;
+      let alive = false;
+      for (const p of ps) {
+        p.x  += p.vx;
+        p.y  += p.vy;
+        p.vy += 0.28;
+        p.vx *= 0.985;
+        p.rot += p.rv;
+        if (frame > 45) p.alpha = Math.max(0, p.alpha - 0.014);
+        if (p.alpha <= 0) continue;
+        alive = true;
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.fillStyle   = p.color;
+        ctx.translate(p.x, p.y);
+        ctx.rotate(p.rot * Math.PI / 180);
+        if (p.round) {
+          ctx.beginPath();
+          ctx.arc(0, 0, p.w / 2, 0, Math.PI * 2);
+          ctx.fill();
+        } else {
+          ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+        }
+        ctx.restore();
+      }
+      if (alive) requestAnimationFrame(draw);
+      else ctx.clearRect(0, 0, cv.width, cv.height);
+    })();
+  }
+
+  /* ─── Flash ─────────────────────────────────────────────────── */
+  async function flash() {
+    const el = document.getElementById('flash-overlay');
+    el.classList.add('on');
+    await delay(140);
+    el.classList.remove('on');
+  }
+
+  /* ─── Loading messages ──────────────────────────────────────── */
+  function startMsgs() {
+    msgIdx = 0;
+    document.getElementById('loading-msg').textContent = LOAD_MSGS[0];
+    msgTimer = setInterval(() => {
+      msgIdx = (msgIdx + 1) % LOAD_MSGS.length;
+      document.getElementById('loading-msg').textContent = LOAD_MSGS[msgIdx];
+    }, 650);
+  }
+  function stopMsgs() { clearInterval(msgTimer); }
+
+  /* ─── Main flow ─────────────────────────────────────────────── */
   async function findPokemon() {
     const name = document.getElementById('nameInput').value.trim();
-    if (!name) {
-      document.getElementById('nameInput').focus();
-      return;
-    }
+    if (!name) { document.getElementById('nameInput').focus(); return; }
 
-    const card = document.getElementById('card');
-    const loading = document.getElementById('loading');
-    const error = document.getElementById('error');
-    const btn = document.getElementById('findBtn');
+    currentName = name;
+    currentData = null;
+    currentTitle = '';
 
-    card.classList.remove('visible');
-    error.classList.remove('visible');
-    loading.classList.add('visible');
+    const card     = document.getElementById('card');
+    const suspense = document.getElementById('suspense');
+    const loading  = document.getElementById('loading');
+    const errorEl  = document.getElementById('error');
+    const btn      = document.getElementById('findBtn');
+    const pokeball = document.getElementById('pokeball');
+    const silImg   = document.getElementById('silhouetteImg');
+
+    // Reset UI
+    card.classList.remove('on');
+    suspense.classList.remove('on');
+    errorEl.classList.remove('on');
+    pokeball.classList.remove('fast');
+    silImg.classList.remove('shake');
+    document.getElementById('shareFeedback').textContent = '';
+
+    loading.classList.add('on');
     btn.disabled = true;
-
-    const id = hashName(name);
+    startMsgs();
 
     try {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      if (!res.ok) throw new Error('Fant ikke Pokémon');
+      // Fetch + minimum load time in parallel
+      const [res] = await Promise.all([
+        fetch(`https://pokeapi.co/api/v2/pokemon/${hashName(name)}`),
+        delay(900)
+      ]);
+      if (!res.ok) throw new Error('Ikke funnet');
       const data = await res.json();
+      currentData = data;
 
-      // Image
-      const img = data.sprites?.other?.['official-artwork']?.front_default
-                || data.sprites?.front_default;
-      document.getElementById('pokemonImg').src = img;
-      document.getElementById('pokemonImg').alt = data.name;
+      // Speed up pokéball dramatically
+      stopMsgs();
+      document.getElementById('loading-msg').textContent = 'Fant noe... 👀';
+      pokeball.classList.add('fast');
+      await delay(350);
 
-      // Number & name
-      document.getElementById('pokemonNumber').textContent = `#${String(data.id).padStart(3,'0')}`;
-      document.getElementById('pokemonName').textContent = data.name;
-      document.getElementById('nameLabel').textContent = `${name}s Pokémon`;
+      // ── Suspense phase ──
+      const imgSrc = data.sprites?.other?.['official-artwork']?.front_default
+                  || data.sprites?.front_default;
+      silImg.src = imgSrc;
+      loading.classList.remove('on');
+      suspense.classList.add('on');
 
-      // Types
-      const typesEl = document.getElementById('types');
-      typesEl.innerHTML = '';
-      const primaryType = data.types[0]?.type?.name || 'normal';
-      const typeColor = TYPE_COLORS[primaryType] || '#888';
-      card.style.setProperty('--type-color', typeColor);
+      await delay(1700);
 
-      data.types.forEach(t => {
-        const badge = document.createElement('span');
-        badge.className = 'type-badge';
-        badge.textContent = t.type.name;
-        badge.style.background = TYPE_COLORS[t.type.name] || '#555';
-        typesEl.appendChild(badge);
-      });
+      // Shake silhouette
+      silImg.classList.add('shake');
+      await delay(560);
 
-      // Stats
-      const statsEl = document.getElementById('stats');
-      statsEl.innerHTML = '';
-      data.stats.forEach((s, i) => {
-        const label = STAT_NAMES[s.stat.name] || s.stat.name;
-        const pct = Math.min(100, (s.base_stat / 200) * 100);
-        statsEl.innerHTML += `
-          <div class="stat-row">
-            <span class="stat-name">${label}</span>
-            <div class="stat-bar-bg">
-              <div class="stat-bar" style="width:${pct}%; animation-delay:${i*0.08}s; background:${typeColor}"></div>
-            </div>
-            <span class="stat-value">${s.base_stat}</span>
-          </div>`;
-      });
+      // Flash + switch to card
+      flash(); // don't await — overlap with card appearance
+      await delay(80);
 
-      loading.classList.remove('visible');
-      card.classList.add('visible');
+      suspense.classList.remove('on');
+      buildCard(data, name);
+      card.classList.add('on');
+
+      // Confetti burst
+      const typeColor = TYPE_COLORS[data.types[0]?.type?.name || 'normal'] || '#888';
+      spawnConfetti(typeColor);
 
     } catch (e) {
-      loading.classList.remove('visible');
-      error.textContent = 'Noe gikk galt. Prøv igjen!';
-      error.classList.add('visible');
+      stopMsgs();
+      loading.classList.remove('on');
+      suspense.classList.remove('on');
+      errorEl.textContent = 'Noe gikk galt. Prøv igjen! 🙈';
+      errorEl.classList.add('on');
     } finally {
       btn.disabled = false;
     }
   }
 
+  /* ─── Build result card ─────────────────────────────────────── */
+  function buildCard(data, name) {
+    const primaryType = data.types[0]?.type?.name || 'normal';
+    const typeColor   = TYPE_COLORS[primaryType] || '#888';
+    const card        = document.getElementById('card');
+
+    // CSS vars
+    card.style.setProperty('--type-color', typeColor);
+    document.querySelector('.btn-share').style.setProperty('--type-color', typeColor);
+
+    // Pokédex number
+    document.getElementById('pokeNumber').textContent = `#${String(data.id).padStart(3,'0')}`;
+
+    // Title badge
+    currentTitle = bestStatTitle(data.stats, name);
+    const badge  = document.getElementById('titleBadge');
+    badge.textContent   = currentTitle;
+    badge.style.background = typeColor;
+    badge.style.color      = LIGHT_TYPES.has(primaryType) ? '#0a0a0f' : '#ffffff';
+
+    // Image
+    const src = data.sprites?.other?.['official-artwork']?.front_default
+             || data.sprites?.front_default;
+    const img = document.getElementById('pokemonImg');
+    img.src = src;
+    img.alt = data.name;
+
+    // Name
+    document.getElementById('nameLabel').textContent = `${name}s Pokémon`;
+    document.getElementById('pokeName').textContent  = data.name;
+
+    // Types
+    const typesEl = document.getElementById('types');
+    typesEl.innerHTML = '';
+    data.types.forEach(t => {
+      const b = document.createElement('span');
+      b.className        = 'type-badge';
+      b.textContent      = t.type.name;
+      b.style.background = TYPE_COLORS[t.type.name] || '#555';
+      typesEl.appendChild(b);
+    });
+
+    // Personality
+    const pers = TYPE_PERSONALITY[primaryType] || { emoji:'❓', label:'Det ukjente', desc:'Mysterier er alltid interessante.' };
+    document.getElementById('persEmoji').textContent = pers.emoji;
+    document.getElementById('persLabel').textContent = pers.label;
+    document.getElementById('persDesc').textContent  = pers.desc;
+    document.getElementById('personality').style.borderColor = typeColor + '55';
+
+    // Stats
+    const statsEl = document.getElementById('stats');
+    statsEl.innerHTML = '';
+    data.stats.forEach((s, i) => {
+      const label = STAT_NAMES[s.stat.name] || s.stat.name;
+      const pct   = Math.min(100, (s.base_stat / 200) * 100);
+      statsEl.innerHTML += `
+        <div class="stat-row">
+          <span class="stat-name">${label}</span>
+          <div class="stat-bar-bg">
+            <div class="stat-bar" style="width:${pct}%;animation-delay:${i*0.08}s;background:${typeColor}"></div>
+          </div>
+          <span class="stat-value">${s.base_stat}</span>
+        </div>`;
+    });
+  }
+
+  /* ─── Share ─────────────────────────────────────────────────── */
+  async function sharePokemon() {
+    if (!currentData) return;
+
+    const primaryType = currentData.types[0]?.type?.name || 'normal';
+    const pers        = TYPE_PERSONALITY[primaryType] || { emoji:'❓', label:'Det ukjente', desc:'' };
+    const pokeName    = currentData.name.charAt(0).toUpperCase() + currentData.name.slice(1);
+    const shortDesc   = pers.desc.split('—')[0].trim().replace(/\.$/, '');
+
+    const text =
+      `Mitt Pokémon er ${pokeName}! ${pers.emoji}\n` +
+      `Jeg er en ${pers.label} — ${shortDesc}.\n` +
+      `Og jeg er: "${currentTitle}"\n\n` +
+      `Finn ditt Pokémon 👉 god-nok.no/pokemon.html`;
+
+    const fb = document.getElementById('shareFeedback');
+
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: 'Mitt Pokémon', text });
+        showFeedback(fb, '✓ Delt!');
+        return;
+      } catch (e) {
+        if (e.name === 'AbortError') return;
+      }
+    }
+
+    if (navigator.clipboard) {
+      try {
+        await navigator.clipboard.writeText(text);
+        showFeedback(fb, '✓ Kopiert til utklippstavlen!');
+      } catch {
+        showFeedback(fb, 'Prøv å kopiere manuelt!');
+      }
+    } else {
+      showFeedback(fb, 'Prøv å kopiere manuelt!');
+    }
+  }
+
+  function showFeedback(el, msg) {
+    el.textContent = msg;
+    setTimeout(() => el.textContent = '', 3000);
+  }
+
+  /* ─── Keyboard shortcut ──────────────────────────────────────── */
   document.getElementById('nameInput').addEventListener('keydown', e => {
     if (e.key === 'Enter') findPokemon();
   });
