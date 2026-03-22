@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Din Pokémon</title>
+  <title>Finn din Pokémon 🤾‍♀️</title>
   <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@300;400;600&display=swap" rel="stylesheet">
   <style>
     :root {
@@ -508,6 +508,68 @@
       font-weight: 300;
     }
     footer a { color: var(--accent); text-decoration: none; }
+
+    .sub-header {
+      font-size: 0.82rem;
+      color: var(--muted);
+      margin-top: 0.7rem;
+      font-weight: 300;
+    }
+
+    /* ── Karoline special banner ── */
+    #karoline-banner {
+      display: none;
+      width: 100%;
+      border-radius: 16px;
+      padding: 1.2rem 1.5rem;
+      text-align: center;
+      background: linear-gradient(135deg, #ff6b9d, #c44dff, #ff6b9d);
+      background-size: 200% 200%;
+      animation: gradientShift 2s ease infinite;
+      box-shadow: 0 0 30px rgba(196, 77, 255, 0.4);
+      flex-direction: column;
+      gap: 0.4rem;
+    }
+    #karoline-banner.on { display: flex; }
+    @keyframes gradientShift {
+      0%   { background-position: 0% 50%; }
+      50%  { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+    .karoline-title {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.55rem, 2.5vw, 0.75rem);
+      color: #fff;
+      letter-spacing: 0.05em;
+      text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+    }
+    .karoline-hearts {
+      font-size: 1.8rem;
+      animation: heartBeat 0.8s ease-in-out infinite alternate;
+    }
+    @keyframes heartBeat {
+      from { transform: scale(0.9); }
+      to   { transform: scale(1.15); }
+    }
+    .karoline-sub {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.85);
+      font-weight: 300;
+    }
+
+    /* ── Handball badge on card ── */
+    .handball-badge {
+      display: none;
+      border-radius: 99px;
+      padding: 0.3rem 0.9rem;
+      background: rgba(255,255,255,0.12);
+      border: 1px solid rgba(255,255,255,0.3);
+      font-size: 0.72rem;
+      color: #fff;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+    }
+    .handball-badge.on { display: inline-block; }
   </style>
 </head>
 <body>
@@ -518,8 +580,9 @@
 <div class="container">
 
   <header>
-    <p class="eyebrow">✦ Pokémon-finder ✦</p>
+    <p class="eyebrow">🤾‍♀️ Pokémon-finder 🤾‍♀️</p>
     <h1>Hvem er <span>din</span><br>Pokémon?</h1>
+    <p class="sub-header">For deg som spiller på et helt annet nivå 💪</p>
   </header>
 
   <div class="input-section">
@@ -541,6 +604,14 @@
       <img id="silhouetteImg" src="" alt="" />
     </div>
     <p class="qmarks">? ? ?</p>
+  </div>
+
+  <!-- Karoline special banner -->
+  <div id="karoline-banner">
+    <p class="karoline-hearts">❤️ ❤️ ❤️</p>
+    <p class="karoline-title">KAROLINE ER VERDENS KULESTE!</p>
+    <p class="karoline-sub">Ingen diskusjon. Fakta. Vitenskapelig bevist. 🏆</p>
+    <p class="karoline-hearts">❤️ ❤️ ❤️</p>
   </div>
 
   <!-- Result card -->
@@ -597,12 +668,12 @@
   };
 
   const STAT_TITLES = {
-    hp:               ['Udødelig 💀',         'Evig overlever 🏔️',      'Siste mann stående 🛡️'],
-    attack:           ['Ren ødeleggelse 💥',  'Angrepsgud ⚔️',           'Knuser alt 👊'],
-    defense:          ['Levende festning 🏰', 'Uknuselig mur 🪨',        'Stålsatt 🛡️'],
-    'special-attack': ['Tryllekunstner 🔮',   'Magisk kraftbombe ✨',    'Tankeknuser 🧠'],
-    'special-defense':['Mystisk skjold 🌀',   'Magisk beskytter 🌙',    'Tåler alt 🧘'],
-    speed:            ['Speed Demon 💨',       'Lynrask ⚡',               'Usynlig 🌪️']
+    hp:               ['Udødelig 💀',              'Evig overlever 🏔️',        'Siste mann stående 🛡️'],
+    attack:           ['Ren ødeleggelse 💥',        'Drømmeskuddet 🤾‍♀️',         'Knuser alt 👊'],
+    defense:          ['Levende festning 🏰',       'Uknuselig mur 🪨',          'Stålsatt 🛡️'],
+    'special-attack': ['Tryllekunstner 🔮',         'Magisk kraftbombe ✨',      'Tankeknuser 🧠'],
+    'special-defense':['Mystisk skjold 🌀',         'Magisk beskytter 🌙',      'Tåler alt 🧘'],
+    speed:            ['Speed Demon 💨',             'Raskest på banen ⚡',       'Usynlig 🌪️']
   };
 
   const TYPE_PERSONALITY = {
@@ -616,7 +687,7 @@
     dark:     { emoji:'🌑', label:'Skyggedanseren',      desc:'Strategisk og uberegnelig. Du spiller alltid på egne premisser og vet nøyaktig hva motstanderen gjør — før de gjør det.' },
     fairy:    { emoji:'✨', label:'Magisk sjarm',        desc:'Ser uskyldig ut, men har en indre styrke som sjokkerer alle. Sjarmerende, empatisk og mye farligere enn du ser ut.' },
     normal:   { emoji:'⭐', label:'Den ekte helten',     desc:'Undervurdert av alle — men det er din hemmelige superkraft. Allsidig, pålitelig og genuint deg selv.' },
-    fighting: { emoji:'👊', label:'Uovervinnelig fighter',desc:'Disiplinert, målrettet og kompromissløst sterk. Du gir aldri opp — uansett hvilke odds du møter.' },
+    fighting: { emoji:'🤾‍♀️', label:'Håndball-legende',   desc:'Disiplinert, målrettet og kompromissløst sterk. Du gir aldri opp — ikke i trening, ikke i kamp, ikke noen gang.' },
     flying:   { emoji:'🦅', label:'Fri som fuglen',      desc:'Du ser verden ovenfra og liker det best slik. Fri, uavhengig og alltid ett perspektiv foran alle andre.' },
     poison:   { emoji:'☠️', label:'Det giftige geniet', desc:'Kontroversiell, fascinerende og ikke for alle. De som forstår deg er til gjengjeld evig lojale.' },
     ground:   { emoji:'🌍', label:'Jordens fundament',   desc:'Stødig som fjellet og pålitelig som tyngdekraften. Folk vet at du alltid er der — uten drama og uten unntak.' },
@@ -627,9 +698,10 @@
   };
 
   const LOAD_MSGS = [
-    'Analyserer navn...',
+    'Analyserer navn... 🤾‍♀️',
     'Søker i Pokédex...',
     'Beregner skjebne...',
+    'Varmer opp... 🔥',
     'Fant noe... 👀'
   ];
 
@@ -767,6 +839,7 @@
     card.classList.remove('on');
     suspense.classList.remove('on');
     errorEl.classList.remove('on');
+    document.getElementById('karoline-banner').classList.remove('on');
     pokeball.classList.remove('fast');
     silImg.classList.remove('shake');
     document.getElementById('shareFeedback').textContent = '';
@@ -829,9 +902,13 @@
 
   /* ─── Build result card ─────────────────────────────────────── */
   function buildCard(data, name) {
-    const primaryType = data.types[0]?.type?.name || 'normal';
-    const typeColor   = TYPE_COLORS[primaryType] || '#888';
-    const card        = document.getElementById('card');
+    const primaryType  = data.types[0]?.type?.name || 'normal';
+    const typeColor    = TYPE_COLORS[primaryType] || '#888';
+    const card         = document.getElementById('card');
+    const isKaroline   = name.trim().toLowerCase() === 'karoline';
+    const karolineBanner = document.getElementById('karoline-banner');
+    if (isKaroline) karolineBanner.classList.add('on');
+    else karolineBanner.classList.remove('on');
 
     // CSS vars
     card.style.setProperty('--type-color', typeColor);
