@@ -1,0 +1,638 @@
+<!DOCTYPE html>
+<html lang="no">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konsert-Hop · God Nok</title>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=DM+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0f;
+      --surface: #12121a;
+      --card: #1a1a28;
+      --border: #2a2a40;
+      --accent: #f7c948;
+      --accent2: #ff6b6b;
+      --text: #e8e8f0;
+      --muted: #6b6b8a;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'DM Sans', sans-serif;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 1.5rem 1rem;
+      overflow-x: hidden;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: -50%;
+      background: radial-gradient(ellipse at 60% 40%, rgba(247,201,72,0.06) 0%, transparent 60%),
+                  radial-gradient(ellipse at 20% 80%, rgba(255,107,107,0.05) 0%, transparent 50%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .nav-back {
+      position: relative;
+      z-index: 2;
+      align-self: flex-start;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--muted);
+      text-decoration: none;
+      letter-spacing: 0.15em;
+      padding: 0.6rem 1rem;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s, border-color 0.2s;
+    }
+    .nav-back:hover { color: var(--accent); border-color: var(--accent); }
+
+    .container {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 860px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.5rem;
+    }
+
+    header { text-align: center; }
+
+    .eyebrow {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.5rem;
+      color: var(--accent);
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      margin-bottom: 1rem;
+      opacity: 0.8;
+    }
+
+    h1 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(1.1rem, 4vw, 1.6rem);
+      line-height: 1.6;
+      color: var(--text);
+    }
+    h1 span { color: var(--accent); }
+
+    .tagline {
+      margin-top: 0.8rem;
+      color: var(--muted);
+      font-size: 0.9rem;
+      max-width: 480px;
+      line-height: 1.5;
+    }
+
+    .game-wrap {
+      width: 100%;
+      max-width: 860px;
+      background: var(--card);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hud {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0.8rem 1.2rem;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
+    }
+
+    .hud-item { display: flex; gap: 0.6rem; align-items: center; }
+    .hud-label { color: var(--muted); }
+    .hud-value { color: var(--accent); }
+    .hud-value.red { color: var(--accent2); }
+
+    canvas {
+      display: block;
+      width: 100%;
+      height: auto;
+      background: linear-gradient(180deg, #1a1a28 0%, #12121a 70%, #0a0a0f 100%);
+      image-rendering: pixelated;
+      touch-action: manipulation;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.2rem;
+      background: rgba(10,10,15,0.88);
+      backdrop-filter: blur(6px);
+      padding: 2rem 1rem;
+      text-align: center;
+    }
+    .overlay.hidden { display: none; }
+
+    .overlay h2 {
+      font-family: 'Press Start 2P', monospace;
+      font-size: clamp(0.9rem, 3vw, 1.4rem);
+      color: var(--accent);
+      letter-spacing: 0.05em;
+    }
+    .overlay .sub {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem;
+      color: var(--text);
+      max-width: 420px;
+      line-height: 1.5;
+    }
+    .overlay .score-big {
+      font-family: 'Press Start 2P', monospace;
+      font-size: 1.6rem;
+      color: var(--accent2);
+      margin: 0.4rem 0;
+    }
+    .overlay .controls {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+    .overlay .controls kbd {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      padding: 0.15rem 0.5rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.55rem;
+      color: var(--text);
+      margin: 0 0.2rem;
+    }
+
+    button.play {
+      background: var(--accent);
+      color: #0a0a0f;
+      border: none;
+      border-radius: 10px;
+      padding: 1rem 2rem;
+      font-family: 'Press Start 2P', monospace;
+      font-size: 0.65rem;
+      letter-spacing: 0.1em;
+      cursor: pointer;
+      transition: transform 0.1s, box-shadow 0.2s;
+      box-shadow: 0 4px 20px rgba(247,201,72,0.3);
+    }
+    button.play:hover { transform: translateY(-2px); box-shadow: 0 8px 30px rgba(247,201,72,0.45); }
+    button.play:active { transform: translateY(1px); }
+
+    footer {
+      margin-top: 2rem;
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-align: center;
+      font-weight: 300;
+    }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+  <a href="index.html" class="nav-back">← TILBAKE</a>
+
+  <div class="container">
+    <header>
+      <p class="eyebrow">✦ Mini-spill ✦</p>
+      <h1>Konsert-<span>Hop</span></h1>
+      <p class="tagline">Samle mikrofoner. Unngå dårlige anmeldelser. Bli god nok.</p>
+    </header>
+
+    <div class="game-wrap">
+      <div class="hud">
+        <div class="hud-item"><span class="hud-label">MIKS</span><span class="hud-value" id="score">0</span></div>
+        <div class="hud-item"><span class="hud-label">BESTE</span><span class="hud-value" id="best">0</span></div>
+        <div class="hud-item"><span class="hud-label">FART</span><span class="hud-value red" id="speed">1.0x</span></div>
+      </div>
+
+      <canvas id="game" width="800" height="360"></canvas>
+
+      <div class="overlay" id="startOverlay">
+        <h2>KLAR TIL Å SPILLE?</h2>
+        <p class="sub">Du er frontfiguren. Hopp over dårlige anmeldelser ★ og fang mikrofonene 🎤. Hver mikrofon = ett nytt triks i showet.</p>
+        <button class="play" id="startBtn">START KONSERT</button>
+        <p class="controls">
+          <kbd>SPACE</kbd> / <kbd>↑</kbd> hopper · <kbd>↓</kbd> dukker · tap skjermen på mobil
+        </p>
+      </div>
+
+      <div class="overlay hidden" id="gameOverOverlay">
+        <h2>SHOWET ER SLUTT</h2>
+        <div class="score-big" id="finalScore">0</div>
+        <p class="sub" id="gameOverMsg">Ikke god nok denne gangen. Prøv igjen!</p>
+        <button class="play" id="restartBtn">NY KONSERT</button>
+      </div>
+    </div>
+
+    <footer>
+      God Nok · <a href="pokemon.html">Pokémon</a> · <a href="index.html">Tilbake til forsiden</a>
+    </footer>
+  </div>
+
+<script>
+(() => {
+  const canvas = document.getElementById('game');
+  const ctx = canvas.getContext('2d');
+  const W = canvas.width;
+  const H = canvas.height;
+  const GROUND_Y = H - 60;
+
+  const scoreEl = document.getElementById('score');
+  const bestEl = document.getElementById('best');
+  const speedEl = document.getElementById('speed');
+  const startOverlay = document.getElementById('startOverlay');
+  const gameOverOverlay = document.getElementById('gameOverOverlay');
+  const startBtn = document.getElementById('startBtn');
+  const restartBtn = document.getElementById('restartBtn');
+  const finalScoreEl = document.getElementById('finalScore');
+  const gameOverMsgEl = document.getElementById('gameOverMsg');
+
+  let best = parseInt(localStorage.getItem('konsertHopBest') || '0', 10);
+  bestEl.textContent = best;
+
+  const state = {
+    running: false,
+    score: 0,
+    speed: 4,
+    player: { x: 80, y: GROUND_Y - 40, w: 26, h: 40, vy: 0, jumping: false, ducking: false, animT: 0 },
+    obstacles: [],
+    mics: [],
+    stars: [],
+    spawnTimer: 0,
+    micTimer: 0,
+    elapsed: 0,
+  };
+
+  const GRAVITY = 0.75;
+  const JUMP_V = -13.5;
+
+  function resetState() {
+    state.running = true;
+    state.score = 0;
+    state.speed = 4;
+    state.player.y = GROUND_Y - state.player.h;
+    state.player.vy = 0;
+    state.player.jumping = false;
+    state.player.ducking = false;
+    state.obstacles = [];
+    state.mics = [];
+    state.stars = makeStars();
+    state.spawnTimer = 60;
+    state.micTimer = 90;
+    state.elapsed = 0;
+    scoreEl.textContent = 0;
+    speedEl.textContent = '1.0x';
+  }
+
+  function makeStars() {
+    const arr = [];
+    for (let i = 0; i < 40; i++) {
+      arr.push({
+        x: Math.random() * W,
+        y: Math.random() * (GROUND_Y - 40),
+        size: Math.random() < 0.2 ? 2 : 1,
+        alpha: 0.2 + Math.random() * 0.6,
+        parallax: 0.15 + Math.random() * 0.35,
+      });
+    }
+    return arr;
+  }
+
+  function jump() {
+    if (!state.running) return;
+    if (!state.player.jumping) {
+      state.player.vy = JUMP_V;
+      state.player.jumping = true;
+    }
+  }
+
+  function duck(isDown) {
+    if (!state.running) return;
+    state.player.ducking = isDown && !state.player.jumping;
+  }
+
+  function spawnObstacle() {
+    const big = Math.random() < 0.3;
+    const w = big ? 28 : 20;
+    const h = big ? 34 : 24;
+    state.obstacles.push({
+      x: W + 20,
+      y: GROUND_Y - h,
+      w, h,
+      rot: 0,
+    });
+  }
+
+  function spawnMic() {
+    const lowPath = Math.random() < 0.5;
+    const y = lowPath ? GROUND_Y - 34 : GROUND_Y - 90;
+    state.mics.push({
+      x: W + 20,
+      y,
+      w: 18,
+      h: 26,
+      bob: Math.random() * Math.PI * 2,
+      alive: true,
+    });
+  }
+
+  function update(dt) {
+    state.elapsed += dt;
+    // Ramp speed up over time
+    const targetSpeed = 4 + Math.min(7, state.elapsed / 8);
+    state.speed += (targetSpeed - state.speed) * 0.02;
+    speedEl.textContent = (state.speed / 4).toFixed(1) + 'x';
+
+    // Player physics
+    const p = state.player;
+    p.vy += GRAVITY;
+    p.y += p.vy;
+    p.h = p.ducking ? 24 : 40;
+    const floor = GROUND_Y - p.h;
+    if (p.y >= floor) {
+      p.y = floor;
+      p.vy = 0;
+      p.jumping = false;
+    }
+    p.animT += dt * state.speed;
+
+    // Stars parallax
+    for (const s of state.stars) {
+      s.x -= state.speed * s.parallax;
+      if (s.x < 0) s.x += W;
+    }
+
+    // Obstacles
+    state.spawnTimer -= state.speed * 0.4;
+    if (state.spawnTimer <= 0) {
+      spawnObstacle();
+      state.spawnTimer = 70 + Math.random() * 70;
+    }
+    for (const o of state.obstacles) {
+      o.x -= state.speed;
+      o.rot += 0.05;
+    }
+    state.obstacles = state.obstacles.filter(o => o.x + o.w > -20);
+
+    // Mics
+    state.micTimer -= state.speed * 0.4;
+    if (state.micTimer <= 0) {
+      spawnMic();
+      state.micTimer = 100 + Math.random() * 110;
+    }
+    for (const m of state.mics) {
+      m.x -= state.speed;
+      m.bob += 0.08;
+    }
+    state.mics = state.mics.filter(m => m.alive && m.x + m.w > -20);
+
+    // Collision
+    const pBox = { x: p.x + 3, y: p.y + 3, w: p.w - 6, h: p.h - 6 };
+    for (const o of state.obstacles) {
+      if (rectHit(pBox, o)) {
+        gameOver();
+        return;
+      }
+    }
+    for (const m of state.mics) {
+      if (m.alive && rectHit(pBox, m)) {
+        m.alive = false;
+        state.score += 10;
+        scoreEl.textContent = state.score;
+      }
+    }
+
+    // Passive score (surviving)
+    if (Math.random() < 0.05) {
+      state.score += 1;
+      scoreEl.textContent = state.score;
+    }
+  }
+
+  function rectHit(a, b) {
+    return a.x < b.x + b.w && a.x + a.w > b.x && a.y < b.y + b.h && a.y + a.h > b.y;
+  }
+
+  function draw() {
+    ctx.clearRect(0, 0, W, H);
+
+    // Stars
+    for (const s of state.stars) {
+      ctx.fillStyle = `rgba(247,201,72,${s.alpha})`;
+      ctx.fillRect(s.x, s.y, s.size, s.size);
+    }
+
+    // Distant skyline silhouette (stage)
+    ctx.fillStyle = '#1a1a28';
+    for (let i = 0; i < 6; i++) {
+      const bx = ((i * 160 - (state.elapsed * 20) % 160) + W) % (W + 160) - 80;
+      ctx.fillRect(bx, GROUND_Y - 80, 60, 80);
+      ctx.fillRect(bx + 70, GROUND_Y - 50, 40, 50);
+    }
+
+    // Ground
+    ctx.fillStyle = '#2a2a40';
+    ctx.fillRect(0, GROUND_Y, W, 2);
+    ctx.fillStyle = 'rgba(247,201,72,0.1)';
+    for (let i = 0; i < 20; i++) {
+      const gx = ((i * 50 - (state.elapsed * state.speed * 10) % 50) + W) % (W + 50) - 25;
+      ctx.fillRect(gx, GROUND_Y + 4, 30, 1);
+    }
+
+    // Obstacles (bad reviews — red squares with strikethrough star)
+    for (const o of state.obstacles) {
+      ctx.save();
+      ctx.translate(o.x + o.w/2, o.y + o.h/2);
+      ctx.fillStyle = '#ff6b6b';
+      ctx.fillRect(-o.w/2, -o.h/2, o.w, o.h);
+      ctx.fillStyle = '#0a0a0f';
+      drawStar(ctx, 0, -2, o.w * 0.3, 5);
+      ctx.strokeStyle = '#0a0a0f';
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.moveTo(-o.w/2 + 2, -o.h/2 + 2);
+      ctx.lineTo(o.w/2 - 2, o.h/2 - 2);
+      ctx.stroke();
+      ctx.restore();
+    }
+
+    // Mics
+    for (const m of state.mics) {
+      if (!m.alive) continue;
+      const yOff = Math.sin(m.bob) * 3;
+      ctx.save();
+      ctx.translate(m.x + m.w/2, m.y + m.h/2 + yOff);
+      // glow
+      ctx.fillStyle = 'rgba(247,201,72,0.2)';
+      ctx.beginPath();
+      ctx.arc(0, -4, 14, 0, Math.PI * 2);
+      ctx.fill();
+      // head
+      ctx.fillStyle = '#f7c948';
+      ctx.beginPath();
+      ctx.arc(0, -6, 7, 0, Math.PI * 2);
+      ctx.fill();
+      ctx.fillStyle = '#0a0a0f';
+      ctx.beginPath();
+      ctx.arc(0, -6, 4, 0, Math.PI * 2);
+      ctx.fill();
+      // stand
+      ctx.fillStyle = '#f7c948';
+      ctx.fillRect(-1.5, -2, 3, 10);
+      ctx.fillRect(-5, 7, 10, 2);
+      ctx.restore();
+    }
+
+    // Player
+    drawPlayer(state.player);
+  }
+
+  function drawStar(ctx, cx, cy, r, points) {
+    ctx.beginPath();
+    for (let i = 0; i < points * 2; i++) {
+      const a = (i / (points * 2)) * Math.PI * 2 - Math.PI / 2;
+      const rr = i % 2 === 0 ? r : r * 0.45;
+      const x = cx + Math.cos(a) * rr;
+      const y = cy + Math.sin(a) * rr;
+      if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  function drawPlayer(p) {
+    ctx.save();
+    const runPhase = Math.floor(p.animT) % 2;
+    const legOffset = p.jumping ? 0 : (runPhase === 0 ? 3 : -3);
+
+    // Shadow
+    ctx.fillStyle = 'rgba(0,0,0,0.3)';
+    ctx.beginPath();
+    ctx.ellipse(p.x + p.w/2, GROUND_Y + 3, p.w/2 + 2, 3, 0, 0, Math.PI * 2);
+    ctx.fill();
+
+    // Body (shirt)
+    ctx.fillStyle = '#f7c948';
+    ctx.fillRect(p.x + 4, p.y + (p.ducking ? 4 : 14), p.w - 8, p.ducking ? 14 : 18);
+
+    // Head
+    ctx.fillStyle = '#e8d5b7';
+    ctx.fillRect(p.x + 6, p.y + (p.ducking ? 0 : 2), p.w - 12, 12);
+
+    // Hair
+    ctx.fillStyle = '#2a2a40';
+    ctx.fillRect(p.x + 6, p.y + (p.ducking ? 0 : 2), p.w - 12, 4);
+
+    // Legs
+    if (!p.ducking) {
+      ctx.fillStyle = '#1a1a28';
+      ctx.fillRect(p.x + 6, p.y + 32, 5, 8 - legOffset);
+      ctx.fillRect(p.x + p.w - 11, p.y + 32, 5, 8 + legOffset);
+    }
+
+    // Mic in hand
+    ctx.fillStyle = '#f7c948';
+    const armX = p.x + p.w - 4;
+    const armY = p.y + (p.ducking ? 10 : 18);
+    ctx.fillRect(armX, armY, 3, 6);
+    ctx.beginPath();
+    ctx.arc(armX + 1.5, armY - 1, 3, 0, Math.PI * 2);
+    ctx.fill();
+
+    ctx.restore();
+  }
+
+  let lastTime = 0;
+  function loop(ts) {
+    if (!state.running) return;
+    const dt = Math.min(0.05, (ts - lastTime) / 1000 || 0.016);
+    lastTime = ts;
+    update(dt);
+    if (!state.running) return;
+    draw();
+    requestAnimationFrame(loop);
+  }
+
+  function startGame() {
+    resetState();
+    startOverlay.classList.add('hidden');
+    gameOverOverlay.classList.add('hidden');
+    lastTime = performance.now();
+    requestAnimationFrame(loop);
+  }
+
+  function gameOver() {
+    state.running = false;
+    finalScoreEl.textContent = state.score;
+    let msg = 'Ikke god nok denne gangen. Prøv igjen!';
+    if (state.score >= 200) msg = 'Godt nok! Publikum elsket det.';
+    else if (state.score >= 100) msg = 'Solid show — men kan bli bedre.';
+    gameOverMsgEl.textContent = msg;
+    if (state.score > best) {
+      best = state.score;
+      localStorage.setItem('konsertHopBest', String(best));
+      bestEl.textContent = best;
+      gameOverMsgEl.textContent = '🏆 NY REKORD! ' + msg;
+    }
+    gameOverOverlay.classList.remove('hidden');
+    draw();
+  }
+
+  // Controls
+  window.addEventListener('keydown', e => {
+    if (e.code === 'Space' || e.code === 'ArrowUp') {
+      e.preventDefault();
+      if (!state.running && !gameOverOverlay.classList.contains('hidden')) {
+        startGame();
+      } else if (!state.running) {
+        startGame();
+      } else {
+        jump();
+      }
+    } else if (e.code === 'ArrowDown') {
+      e.preventDefault();
+      duck(true);
+    }
+  });
+  window.addEventListener('keyup', e => {
+    if (e.code === 'ArrowDown') duck(false);
+  });
+
+  canvas.addEventListener('pointerdown', e => {
+    e.preventDefault();
+    if (!state.running) startGame(); else jump();
+  });
+
+  startBtn.addEventListener('click', startGame);
+  restartBtn.addEventListener('click', startGame);
+
+  // Idle draw so the canvas isn't empty before start
+  (function idleDraw() {
+    state.stars = makeStars();
+    draw();
+  })();
+})();
+</script>
+</body>
+</html>
